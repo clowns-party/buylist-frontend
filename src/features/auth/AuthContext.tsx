@@ -10,17 +10,17 @@ import {
 
 interface AuthContextValue {
   logout: () => void;
-  getUserLoading: any;
-  getUserError: ApolloError | any;
-  user: GetProfileQuery | undefined;
+  loading: boolean | undefined;
+  error: ApolloError | undefined;
+  user: GetProfileQuery["profile"] | undefined;
   setApolloClient: (token: string) => void;
   refetch: any;
 }
 
 const defaultAuthContext: AuthContextValue = {
   logout: () => {},
-  getUserLoading: false,
-  getUserError: undefined,
+  loading: false,
+  error: undefined,
   user: undefined,
   setApolloClient: (token: string) => {},
   refetch: () => {},
@@ -38,20 +38,12 @@ export const AuthProvider: React.FC<Props> = ({
   setApolloClient,
 }) => {
   const [token, __, removeTokenFromCookie] = useCookie(AUTH_TOKEN);
-  const identityData =
-    token &&
-    useGetProfileQuery({
-      notifyOnNetworkStatusChange: true,
-    });
 
-  let data,
-    loading,
-    refetch,
-    error = null;
-
-  if (identityData) {
-    ({ data, loading, error, refetch } = identityData);
-  }
+  const identityData = token
+    ? useGetProfileQuery({
+        notifyOnNetworkStatusChange: true,
+      })
+    : null;
 
   const router = useRouter();
   const apolloClient = useApolloClient();
@@ -66,11 +58,11 @@ export const AuthProvider: React.FC<Props> = ({
     <AuthContext.Provider
       value={{
         logout,
-        getUserLoading: loading,
-        getUserError: error,
-        user: data,
+        loading: identityData?.loading,
+        error: identityData?.error,
+        user: identityData?.data?.profile,
         setApolloClient,
-        refetch,
+        refetch: identityData?.refetch,
       }}
     >
       {children}

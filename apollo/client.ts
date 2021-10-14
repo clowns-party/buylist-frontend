@@ -66,7 +66,7 @@ const client = (
   if (!process.browser) {
     return createClient(token, initialState);
   }
-  if (!apolloClient) {
+  if (!apolloClient || token) {
     apolloClient = createClient(token, initialState);
   }
   return apolloClient;

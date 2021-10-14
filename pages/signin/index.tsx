@@ -1,139 +1,75 @@
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
+import { Form, Input, Button, Checkbox } from "antd";
 import { useCookie } from "react-use";
 import { AUTH_TOKEN } from "../../apollo/client";
 import { useAuth } from "../../src/features/auth/AuthContext";
 import { useLoginMutation } from "../../src/features/auth/sigin.mutation.generated";
 
-const StyledTypor = styled(Typography)`
-  background: #efecec;
-`;
-
-function Copyright(props: any) {
-  return (
-    <StyledTypor
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </StyledTypor>
-  );
-}
-
-const theme = createTheme();
-
-export default function SignIn() {
+const SignIn = () => {
   const [_, setToken] = useCookie(AUTH_TOKEN);
-  const [login, { loading }] = useLoginMutation();
+  const [login, { loading, error }] = useLoginMutation();
+  const { user, setApolloClient } = useAuth();
 
-  const { user } = useAuth();
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  const handleSubmit = async (values: { email: string; password: string }) => {
+    const { email, password } = values;
     const loginData = await login({
       variables: {
-        email: formData.get("email") as string,
-        password: formData.get("password") as string,
+        email,
+        password,
       },
     });
     const access = loginData?.data?.login;
+    setApolloClient(access || "");
     setToken(access || "");
   };
 
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
-    <ThemeProvider theme={theme}>
-      <h2>{user?.profile?.email}</h2>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+    <>
+      <h2>{user?.email}</h2>
+      <Form
+        name="basic"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        initialValues={{ remember: true }}
+        onFinish={handleSubmit}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
+        <Form.Item
+          label="Username"
+          name="email"
+          rules={[{ required: true, message: "Please input your username!" }]}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={loading}
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: "Please input your password!" }]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          name="remember"
+          valuePropName="checked"
+          wrapperCol={{ offset: 8, span: 16 }}
+        >
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
   );
-}
+};
+
+export default SignIn;

@@ -4,10 +4,11 @@ import {
   NormalizedCacheObject,
 } from "@apollo/client";
 import type { AppProps } from "next/app";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import client, { useApollo } from "../apollo/client";
 import { AuthProvider } from "../src/features/auth/AuthContext";
 import "../styles/globals.css";
+import 'antd/dist/antd.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps, "");
@@ -27,8 +28,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     token && setApolloClient(client(token, {}));
   };
 
+  const currentApolloClient = useMemo(() => {
+    const client = apolloClientAuth || apolloClient;
+    return client;
+  }, [apolloClientAuth, apolloClient]);
+
   return (
-    <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={currentApolloClient}>
       <AuthProvider setApolloClient={updateTokenLink}>
         <Component {...pageProps} />
       </AuthProvider>
