@@ -1,15 +1,9 @@
-mutation register(
-  $firstName: String!
-  $lastName: String!
-  $phone: String!
-  $email: String!
-  $password: String!
-) {
-  register {
-    firstName: $firstName
-    lastName: $lastName
-    phone: $phone
-    email: $email
-    password: $password
+mutation register($input: AuthRegisterInput!) {
+  register(input: $input) {
+    id
+    lastName
+    firstName
+    phone
+    email
   }
 }

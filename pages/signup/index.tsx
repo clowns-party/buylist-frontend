@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Form, Input, Select, Button } from "antd";
 import styled from "styled-components";
+import { useRegisterMutation } from "../../src/features/auth/signup/signup.mutation.generated";
+import { AuthRegisterInput } from "../../src/types/types.generated";
+import { useRouter } from "next/router";
 
 const { Option } = Select;
 
@@ -27,31 +30,44 @@ const tailFormItemLayout = {
   },
 };
 
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const RegistrForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: 600px;
-  padding: 20px;
-  border: 1px solid #1890ff;
-  border-radius: 12px;
-`;
-const Title = styled.h1``;
+interface FormValues {
+  email: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+  phone: string;
+  prefix: string;
+}
 
 const SignUp = () => {
+  const router = useRouter();
   const [form] = Form.useForm();
+  const [register, { loading }] = useRegisterMutation();
 
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-    debugger;
+  const onFinish = async (values: FormValues) => {
+    const input: AuthRegisterInput = {
+      email: values?.email,
+      firstName: values?.first_name,
+      lastName: values?.last_name,
+      password: values?.password,
+      phone: `${values?.prefix}${values?.phone}`,
+    };
+
+    try {
+      await register({
+        variables: { input },
+      });
+      router.push("/signin");
+    } catch (error: any) {
+      const message = error?.message;
+
+      form.setFields([
+        {
+          name: "email",
+          errors: [message],
+        },
+      ]);
+    }
   };
 
   const prefixSelector = (
@@ -63,9 +79,9 @@ const SignUp = () => {
   );
 
   return (
-    <Container>
-      <RegistrForm>
-        <Title>Registration</Title>
+    <SignUp.Container>
+      <SignUp.RegistrForm>
+        <SignUp.Title>Registration</SignUp.Title>
         <Form
           {...formItemLayout}
           form={form}
@@ -79,11 +95,11 @@ const SignUp = () => {
         >
           <Form.Item
             name="first_name"
-            label="FirstName"
+            label="Firstname"
             rules={[
               {
                 required: true,
-                message: "Please input your nickname!",
+                message: "Please input your firstname!",
                 whitespace: true,
               },
             ]}
@@ -92,11 +108,11 @@ const SignUp = () => {
           </Form.Item>
           <Form.Item
             name="last_name"
-            label="LastName"
+            label="Lastname"
             rules={[
               {
                 required: true,
-                message: "Please input your nickname!",
+                message: "Please input your lastname!",
                 whitespace: true,
               },
             ]}
@@ -135,7 +151,8 @@ const SignUp = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your password!",
+                message: "The password must be at least 5 characters",
+                min: 5,
               },
             ]}
             hasFeedback
@@ -143,14 +160,33 @@ const SignUp = () => {
             <Input.Password />
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={loading}>
               Register
             </Button>
           </Form.Item>
         </Form>
-      </RegistrForm>
-    </Container>
+      </SignUp.RegistrForm>
+    </SignUp.Container>
   );
 };
+
+SignUp.Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+SignUp.RegistrForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #1890ff;
+  border-radius: 12px;
+`;
+SignUp.Title = styled.h1``;
 
 export default SignUp;
