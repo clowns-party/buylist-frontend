@@ -2,7 +2,7 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { useCookie } from "react-use";
 import { AUTH_TOKEN } from "../../apollo/client";
 import { useAuth } from "../../src/features/auth/AuthContext";
-import { useLoginMutation } from "../../src/features/auth/sigin.mutation.generated";
+import { useLoginMutation } from "../../src/features/auth/signin/sigin.mutation.generated";
 
 const SignIn = () => {
   const [_, setToken] = useCookie(AUTH_TOKEN);
