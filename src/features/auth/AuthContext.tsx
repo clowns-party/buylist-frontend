@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { ApolloError, useApolloClient } from "@apollo/client";
 import { useRouter } from "next/router";
-import React, { createContext, useContext } from "react";
+import React, { createContext } from "react";
 import { useCookie } from "react-use";
 import { AUTH_TOKEN } from "../../../apollo/client";
 import {
@@ -68,9 +69,4 @@ export const AuthProvider: React.FC<Props> = ({
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  return context;
 };

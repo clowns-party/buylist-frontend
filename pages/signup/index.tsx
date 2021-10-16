@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { useRegisterMutation } from "../../src/features/auth/signup/signup.mutation.generated";
 import { AuthRegisterInput } from "../../src/types/types.generated";
 import { useRouter } from "next/router";
+import Container from "../../src/components/Container";
+import { useAuthRedirect } from '../../src/features/auth/hooks/useAuth';
 
 const { Option } = Select;
 
@@ -40,6 +42,8 @@ interface FormValues {
 }
 
 const SignUp = () => {
+  useAuthRedirect();
+
   const router = useRouter();
   const [form] = Form.useForm();
   const [register, { loading }] = useRegisterMutation();
@@ -170,12 +174,8 @@ const SignUp = () => {
   );
 };
 
-SignUp.Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+SignUp.Container = styled(Container.Center)`
+  padding-top: 20px;
 `;
 SignUp.RegistrForm = styled.div`
   display: flex;
