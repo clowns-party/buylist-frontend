@@ -1,7 +1,5 @@
 import { Form, Input, Button, Checkbox } from "antd";
-import { useCookie } from "react-use";
 import styled from "styled-components";
-import { AUTH_TOKEN } from "../../apollo/client";
 import Container from "../../src/components/Container";
 import {
   useAuth,
@@ -11,32 +9,48 @@ import { useLoginMutation } from "../../src/features/auth/signin/sigin.mutation.
 
 const SignIn = () => {
   useAuthRedirect();
-
-  const [_, setToken] = useCookie(AUTH_TOKEN);
-  const [login, { loading, error }] = useLoginMutation();
-  const { setApolloClient } = useAuth();
+  const [form] = Form.useForm();
+  const [login, { loading }] = useLoginMutation();
+  const { syncLogin, loading: userLoading } = useAuth();
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     const { email, password } = values;
-    const loginData = await login({
-      variables: {
-        email,
-        password,
-      },
-    });
-    const access = loginData?.data?.login;
-    setApolloClient(access || "");
-    setToken(access || "");
+    try {
+      const loginData = await login({
+        variables: {
+          email,
+          password,
+        },
+      });
+      const access = loginData?.data?.login || "";
+      syncLogin(access);
+    } catch (error: any) {
+      const message = error?.message;
+
+      form.setFields([
+        {
+          name: "email",
+          errors: [message],
+        },
+        {
+          name: "password",
+          errors: [""],
+        },
+      ]);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
 
+  const dataLoad = userLoading || loading;
+
   return (
     <SignIn.Container>
       <SignIn.Form>
         <Form
+          form={form}
           name="basic"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
@@ -70,7 +84,7 @@ const SignIn = () => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={dataLoad}>
               Submit
             </Button>
           </Form.Item>

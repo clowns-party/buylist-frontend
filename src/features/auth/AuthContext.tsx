@@ -1,9 +1,12 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { ApolloError, useApolloClient } from "@apollo/client";
-import { useRouter } from "next/router";
+import {
+  ApolloError,
+  ApolloQueryResult,
+  useApolloClient,
+} from "@apollo/client";
 import React, { createContext } from "react";
 import { useCookie } from "react-use";
 import { AUTH_TOKEN } from "../../../apollo/client";
+import { Exact } from "../../types/types.generated";
 import {
   GetProfileQuery,
   useGetProfileQuery,
@@ -11,20 +14,30 @@ import {
 
 interface AuthContextValue {
   logout: () => void;
+  syncLogin: (access: string) => void;
   loading: boolean | undefined;
   error: ApolloError | undefined;
   user: GetProfileQuery["profile"] | undefined;
+  token?: string | null;
   setApolloClient: (token: string) => void;
-  refetch: any;
+  refetch?: (
+    variables?:
+      | Partial<
+          Exact<{
+            [key: string]: never;
+          }>
+        >
+      | undefined
+  ) => Promise<ApolloQueryResult<GetProfileQuery>>;
 }
 
 const defaultAuthContext: AuthContextValue = {
   logout: () => {},
+  syncLogin: (access: string) => {},
   loading: false,
   error: undefined,
   user: undefined,
   setApolloClient: (token: string) => {},
-  refetch: () => {},
 };
 
 export const AuthContext = createContext<AuthContextValue>(defaultAuthContext);
@@ -38,32 +51,36 @@ export const AuthProvider: React.FC<Props> = ({
   children,
   setApolloClient,
 }) => {
-  const [token, __, removeTokenFromCookie] = useCookie(AUTH_TOKEN);
-
-  const identityData = token
-    ? useGetProfileQuery({
-        notifyOnNetworkStatusChange: true,
-      })
-    : null;
-
-  const router = useRouter();
   const apolloClient = useApolloClient();
+  const cookie = useCookie(AUTH_TOKEN);
+  const [token, setToken, removeTokenFromCookie] = cookie;
+
+  const { data, loading, error, refetch } = useGetProfileQuery({
+    notifyOnNetworkStatusChange: true,
+    skip: !token,
+  });
 
   const logout = (): void => {
     removeTokenFromCookie();
     apolloClient.clearStore();
-    router.reload();
+  };
+
+  const syncLogin = (access: string) => {
+    setApolloClient(access || "");
+    setToken(access || "");
   };
 
   return (
     <AuthContext.Provider
       value={{
         logout,
-        loading: identityData?.loading,
-        error: identityData?.error,
-        user: identityData?.data?.profile,
+        syncLogin,
+        loading,
+        error,
+        user: data?.profile,
         setApolloClient,
-        refetch: identityData?.refetch,
+        refetch,
+        token,
       }}
     >
       {children}

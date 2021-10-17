@@ -4,12 +4,14 @@ import Meta from "antd/lib/card/Meta";
 import React from "react";
 import styled from "styled-components";
 import Container from "../../src/components/Container";
-import { useAuth } from "../../src/features/auth/hooks/useAuth";
-import EditProfile from '../../src/features/profile/modals/EditProfile';
+import { useAuth, useAuthGuard } from "../../src/features/auth/hooks/useAuth";
+import EditProfile from "../../src/features/profile/modals/EditProfile";
 
 const Profile = () => {
-  const { user, loading } = useAuth();
+  useAuthGuard();
+  const { user, loading, logout } = useAuth();
   const name = user ? `${user?.firstName} ${user?.lastName}` : "";
+
   return (
     <Profile.Wrap>
       <Card style={{ width: "100%", marginTop: 16 }}>
@@ -23,7 +25,12 @@ const Profile = () => {
               description="This is the description"
             />
           </Skeleton>
-          <EditProfile />
+          <Profile.Actions>
+            <EditProfile />
+            <Button onClick={logout} danger type="primary">
+              Logout
+            </Button>
+          </Profile.Actions>
         </Profile.CardWrap>
       </Card>
       <Empty
@@ -43,6 +50,16 @@ const Profile = () => {
     </Profile.Wrap>
   );
 };
+
+Profile.Actions = styled.div`
+  display: flex;
+  flex-direction: column;
+  button {
+    &:first-child {
+      margin-bottom: 5px;
+    }
+  }
+`;
 
 Profile.Wrap = styled(Container.Root)`
   padding-top: 20px;
