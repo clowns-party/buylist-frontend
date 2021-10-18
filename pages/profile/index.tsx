@@ -1,10 +1,11 @@
-import { EditOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Button, Card, Empty, Skeleton } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card, Skeleton } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React from "react";
 import styled from "styled-components";
 import Container from "../../src/components/Container";
 import { useAuth, useAuthGuard } from "../../src/features/auth/hooks/useAuth";
+import MyBuylists from "../../src/features/buylist/MyBuylists";
 import EditProfile from "../../src/features/profile/modals/EditProfile";
 
 const Profile = () => {
@@ -33,23 +34,16 @@ const Profile = () => {
           </Profile.Actions>
         </Profile.CardWrap>
       </Card>
-      <Empty
-        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-        style={{ paddingTop: 20 }}
-        imageStyle={{
-          height: 60,
-        }}
-        description={
-          <span>
-            You no have <a href="#API">buylists</a>
-          </span>
-        }
-      >
-        <Button type="primary">Create Now</Button>
-      </Empty>
+      <Profile.Details>
+        <MyBuylists />
+      </Profile.Details>
     </Profile.Wrap>
   );
 };
+
+Profile.Details = styled.div`
+  padding-top: 20px;
+`;
 
 Profile.Actions = styled.div`
   display: flex;

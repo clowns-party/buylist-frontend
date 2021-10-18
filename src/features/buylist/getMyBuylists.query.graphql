@@ -1,0 +1,10 @@
+query getMyBuylists {
+  myBuylists {
+    id
+    name
+    description
+    totalPrice
+    status
+    ownerId
+  }
+}
