@@ -10,7 +10,7 @@ import { Exact } from "../../types/types.generated";
 import {
   GetProfileQuery,
   useGetProfileQuery,
-} from "../profile/getProfile.query.generated";
+} from "../profile/queries/getProfile.query.generated";
 
 interface AuthContextValue {
   logout: () => void;

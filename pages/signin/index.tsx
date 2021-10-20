@@ -1,11 +1,11 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import styled from "styled-components";
-import Container from "../../src/components/Container";
+import Container from "../../src/Elements/Container";
 import {
   useAuth,
   useAuthRedirect,
 } from "../../src/features/auth/hooks/useAuth";
-import { useLoginMutation } from "../../src/features/auth/signin/sigin.mutation.generated";
+import { useLoginMutation } from "../../src/features/auth/mutations/signin/sigin.mutation.generated";
 
 const SignIn = () => {
   useAuthRedirect();

@@ -2,7 +2,7 @@ import { useQuery, gql } from "@apollo/client";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useGetProfileQuery } from "../src/features/profile/getProfile.query.generated";
+import { useGetProfileQuery } from "../src/features/profile/queries/getProfile.query.generated";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {

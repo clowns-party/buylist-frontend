@@ -1,0 +1,10 @@
+mutation createBuylist($input: CreateBuylistInput!) {
+  createList(input: $input) {
+    id
+    name
+    description
+    totalPrice
+    status
+    ownerId
+  }
+}

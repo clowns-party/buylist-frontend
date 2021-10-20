@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Form, Input, Select, Button } from "antd";
 import styled from "styled-components";
-import { useRegisterMutation } from "../../src/features/auth/signup/signup.mutation.generated";
+import { useRegisterMutation } from "../../src/features/auth/mutations/signup/signup.mutation.generated";
 import { AuthRegisterInput } from "../../src/types/types.generated";
 import { useRouter } from "next/router";
-import Container from "../../src/components/Container";
+import Container from "../../src/Elements/Container";
 import { useAuthRedirect } from '../../src/features/auth/hooks/useAuth';
 
 const { Option } = Select;

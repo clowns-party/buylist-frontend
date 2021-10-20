@@ -3,9 +3,9 @@ import { Avatar, Button, Card, Skeleton } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React from "react";
 import styled from "styled-components";
-import Container from "../../src/components/Container";
+import Container from "../../src/Elements/Container";
 import { useAuth, useAuthGuard } from "../../src/features/auth/hooks/useAuth";
-import MyBuylists from "../../src/features/buylist/MyBuylists";
+import MyBuylists from "../../src/features/buylist/components/MyBuylists";
 import EditProfile from "../../src/features/profile/modals/EditProfile";
 
 const Profile = () => {

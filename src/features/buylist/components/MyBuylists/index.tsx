@@ -1,21 +1,26 @@
 import { Button, Empty, Space, Table, Tag } from "antd";
+import { useRouter } from "next/router";
 import React from "react";
-import { Statuses } from "../../../types/types.generated";
-import { useAuth } from "../../auth/hooks/useAuth";
+import { Statuses } from "../../../../types/types.generated";
+import { useAuth } from "../../../auth/hooks/useAuth";
 import {
   GetMyBuylistsQuery,
   useGetMyBuylistsQuery,
-} from "../getMyBuylists.query.generated";
+} from "../../queries/getMyBuylists.query.generated";
 
 type Buylist = GetMyBuylistsQuery["myBuylists"][0];
 
 const MyBuylists = () => {
+  const router = useRouter();
   const { user } = useAuth();
   const { data, loading, error } = useGetMyBuylistsQuery({
     skip: !user,
   });
 
   const buylists = data?.myBuylists;
+  const createNowLink = () => {
+    router.push("/buylist/create");
+  };
   if (!loading && !buylists?.length) {
     return (
       <Empty
@@ -30,7 +35,9 @@ const MyBuylists = () => {
           </span>
         }
       >
-        <Button type="primary">Create Now</Button>
+        <Button type="primary" onClick={createNowLink}>
+          Create Now
+        </Button>
       </Empty>
     );
   }
@@ -93,7 +100,7 @@ const MyBuylists = () => {
         dataSource={dataTable}
         loading={loading}
         title={() => <h2>Your buylists</h2>}
-        footer={() => <Button>Create Now</Button>}
+        footer={() => <Button onClick={createNowLink}>Create Now</Button>}
       />
     </div>
   );
