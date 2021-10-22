@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Input } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import { useAuth } from "../../auth/hooks/useAuth";
+import { useAuth } from "../../auth/lib/hooks/useAuth";
 
 const EditProfile = () => {
   const { user } = useAuth();

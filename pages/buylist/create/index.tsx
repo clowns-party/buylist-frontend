@@ -1,20 +1,12 @@
-import {
-  Button,
-  Cascader,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  message,
-  Radio,
-  Select,
-  Switch,
-} from "antd";
-import { SizeType } from "antd/lib/config-provider/SizeContext";
-import TreeSelect from "rc-tree-select";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import { Button, Form, Input, message } from "antd";
+import { Typography } from "antd";
+import Text from "antd/lib/typography/Text";
+import { useState } from "react";
 import React from "react";
+import styled from "styled-components";
 import Container from "../../../src/Elements/Container";
-import { useAuthGuard } from "../../../src/features/auth/hooks/useAuth";
+import { useAuthGuard } from "../../../src/features/auth/lib/hooks/useAuth";
 import { useCreateBuylistMutation } from "../../../src/features/buylist/mutations/createBuylist.mutation.generated";
 import {
   CreateBuylistInput,
@@ -22,6 +14,8 @@ import {
 } from "../../../src/types/types.generated";
 
 const CreateBuylist = () => {
+  const [products, setProducts] = useState<any[]>([{ id: 1 }]);
+
   useAuthGuard();
   const [create, { data, loading }] = useCreateBuylistMutation();
   const [form] = Form.useForm();
@@ -58,47 +52,111 @@ const CreateBuylist = () => {
     }
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+  const onAddProduct = () => {
+    const last = products[0]?.id || 0;
+
+    setProducts([...products, { id: last + 1 }]);
   };
 
+  const onRemoveProduct = (id: number) => {
+    const removed = products.filter((product) => product.id !== id);
+    setProducts(removed);
+  };
+
+  const productsSorted = products?.sort((a, b) => b.id - a.id);
+
   return (
-    <Container>
-      <h2>Create your buylist</h2>
-      <Form
-        form={form}
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 12 }}
-        initialValues={{ remember: true }}
-        onFinish={handleSubmit}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: "Please input name" }]}
-        >
-          <Input />
-        </Form.Item>
+    <CreateBuylist.Container>
+      <h2>Create buylist</h2>
 
-        <Form.Item
-          label="Description"
-          name="description"
-          rules={[{ required: false }]}
+      <CreateBuylist.Description>
+        Create your buylist that you want to schedule alone or together.
+      </CreateBuylist.Description>
+      <CreateBuylist.FormWrap>
+        <CreateBuylist.Form
+          form={form}
+          name="basic"
+          initialValues={{ remember: true }}
+          autoComplete="off"
         >
-          <Input />
-        </Form.Item>
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[{ required: true, message: "Please input name" }]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" loading={loading}>
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </Container>
+          <Form.Item
+            label="Description"
+            name="description"
+            rules={[{ required: false }]}
+          >
+            <Input />
+          </Form.Item>
+        </CreateBuylist.Form>
+      </CreateBuylist.FormWrap>
+      <h2>Add some products</h2>
+      <PlusCircleOutlined onClick={onAddProduct} />
+      {productsSorted?.map((product) => (
+        <CreateBuylist.FormWrap key={product.id}>
+          <h2>product {product.id}</h2>
+          <p onClick={() => onRemoveProduct(product.id)}>remove</p>
+        </CreateBuylist.FormWrap>
+      ))}
+
+      <CreateBuylist.FormWrap>
+        <h2>Invite someone</h2>
+      </CreateBuylist.FormWrap>
+
+      <CreateBuylist.Footer>
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={loading}
+          // onClick={handleSubmit}
+        >
+          Submit
+        </Button>
+      </CreateBuylist.Footer>
+    </CreateBuylist.Container>
   );
 };
+
+CreateBuylist.Container = styled(Container.Root)`
+  padding-top: 16px;
+`;
+
+CreateBuylist.Form = styled(Form)`
+  .ant-row.ant-form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ant-col.ant-form-item-label {
+    label {
+      font-weight: 500;
+    }
+  }
+`;
+
+CreateBuylist.Footer = styled.div`
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+`;
+CreateBuylist.Description = styled.p`
+  color: #918d8c;
+  width: 215px;
+`;
+CreateBuylist.FormWrap = styled.div`
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 1em;
+`;
 
 export default CreateBuylist;

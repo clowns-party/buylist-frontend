@@ -1,42 +1,40 @@
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Skeleton } from "antd";
-import Meta from "antd/lib/card/Meta";
+import { useState } from "react";
 import React from "react";
 import styled from "styled-components";
 import Container from "../../src/Elements/Container";
-import { useAuth, useAuthGuard } from "../../src/features/auth/hooks/useAuth";
-import MyBuylists from "../../src/features/buylist/components/MyBuylists";
-import EditProfile from "../../src/features/profile/modals/EditProfile";
+import {
+  useAuth,
+  useAuthGuard,
+} from "../../src/features/auth/lib/hooks/useAuth";
+import ProfileEdit from "../../src/features/profile/ui/edit";
+import ProfileInfo from "../../src/features/profile/ui/info";
+import MyBuylists from "../../src/features/buylist/ui/MyBuylists";
+import { useGetMyBuylistsQuery } from "../../src/features/buylist/queries/getMyBuylists.query.generated";
 
 const Profile = () => {
   useAuthGuard();
+  const [showEdit, toggleEdit] = useState(false);
   const { user, loading, logout } = useAuth();
-  const name = user ? `${user?.firstName} ${user?.lastName}` : "";
+  const onEdit = () => {
+    toggleEdit(!showEdit);
+  };
+
+  const { data: userBuylists, error } = useGetMyBuylistsQuery({
+    skip: !user,
+  });
+
+  if (showEdit) {
+    return (
+      <Profile.Wrap>
+        <ProfileEdit closeEdit={onEdit} user={user} />
+      </Profile.Wrap>
+    );
+  }
 
   return (
     <Profile.Wrap>
-      <Card style={{ width: "100%", marginTop: 16 }}>
-        <Profile.CardWrap>
-          <Skeleton loading={loading} avatar active>
-            <Meta
-              avatar={
-                <Avatar shape="square" size={64} icon={<UserOutlined />} />
-              }
-              title={name}
-              description="This is the description"
-            />
-          </Skeleton>
-          <Profile.Actions>
-            <EditProfile />
-            <Button onClick={logout} danger type="primary">
-              Logout
-            </Button>
-          </Profile.Actions>
-        </Profile.CardWrap>
-      </Card>
-      <Profile.Details>
-        <MyBuylists />
-      </Profile.Details>
+      <ProfileInfo user={user} onEdit={onEdit} />
+      <MyBuylists buylists={userBuylists?.myBuylists} />
     </Profile.Wrap>
   );
 };

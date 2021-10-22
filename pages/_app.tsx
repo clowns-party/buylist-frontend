@@ -7,8 +7,8 @@ import type { AppProps } from "next/app";
 import { useEffect, useState, useMemo } from "react";
 import client, { useApollo } from "../apollo/client";
 import { AuthProvider } from "../src/features/auth/AuthContext";
-import "../styles/globals.css";
-import 'antd/dist/antd.css';
+import "tailwindcss/tailwind.css";
+import Header from "../src/entities/header/ui";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps, "");
@@ -36,6 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={currentApolloClient}>
       <AuthProvider setApolloClient={updateTokenLink}>
+        <Header />
         <Component {...pageProps} />
       </AuthProvider>
     </ApolloProvider>

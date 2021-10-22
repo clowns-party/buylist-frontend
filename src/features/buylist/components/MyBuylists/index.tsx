@@ -2,7 +2,7 @@ import { Button, Empty, Space, Table, Tag } from "antd";
 import { useRouter } from "next/router";
 import React from "react";
 import { Statuses } from "../../../../types/types.generated";
-import { useAuth } from "../../../auth/hooks/useAuth";
+import { useAuth } from "../../../auth/lib/hooks/useAuth";
 import {
   GetMyBuylistsQuery,
   useGetMyBuylistsQuery,
