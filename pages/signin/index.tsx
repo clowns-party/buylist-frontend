@@ -28,7 +28,7 @@ export default function SignInPage() {
 
   return (
     <>
-      <SignIn submit={handleSubmit} />
+      <SignIn submit={handleSubmit} loading={Boolean(loading || userLoading)} />
     </>
   );
 }

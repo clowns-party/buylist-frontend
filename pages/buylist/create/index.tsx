@@ -1,9 +1,4 @@
-import { PlusCircleOutlined } from "@ant-design/icons";
-import { Button, Form, Input, message } from "antd";
-import { Typography } from "antd";
-import Text from "antd/lib/typography/Text";
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Container from "../../../src/Elements/Container";
 import { useAuthGuard } from "../../../src/features/auth/lib/hooks/useAuth";
@@ -18,7 +13,6 @@ const CreateBuylist = () => {
 
   useAuthGuard();
   const [create, { data, loading }] = useCreateBuylistMutation();
-  const [form] = Form.useForm();
 
   const handleSubmit = async (values: {
     name: string;
@@ -35,20 +29,8 @@ const CreateBuylist = () => {
       const createdBuylist = await create({
         variables: { input },
       });
-      message.info("Buylist was created!");
-      form.resetFields();
     } catch (error: any) {
       const message = error?.message;
-      form.setFields([
-        {
-          name: "name",
-          errors: [message],
-        },
-        {
-          name: "description",
-          errors: [""],
-        },
-      ]);
     }
   };
 
@@ -74,30 +56,11 @@ const CreateBuylist = () => {
       </CreateBuylist.Description>
       <CreateBuylist.FormWrap>
         <CreateBuylist.Form
-          form={form}
           name="basic"
-          initialValues={{ remember: true }}
           autoComplete="off"
-        >
-          <Form.Item
-            label="Name"
-            name="name"
-            rules={[{ required: true, message: "Please input name" }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Description"
-            name="description"
-            rules={[{ required: false }]}
-          >
-            <Input />
-          </Form.Item>
-        </CreateBuylist.Form>
+        ></CreateBuylist.Form>
       </CreateBuylist.FormWrap>
       <h2>Add some products</h2>
-      <PlusCircleOutlined onClick={onAddProduct} />
       {productsSorted?.map((product) => (
         <CreateBuylist.FormWrap key={product.id}>
           <h2>product {product.id}</h2>
@@ -110,14 +73,12 @@ const CreateBuylist = () => {
       </CreateBuylist.FormWrap>
 
       <CreateBuylist.Footer>
-        <Button
-          type="primary"
-          htmlType="submit"
-          loading={loading}
-          // onClick={handleSubmit}
+        <button
+
+        // onClick={handleSubmit}
         >
           Submit
-        </Button>
+        </button>
       </CreateBuylist.Footer>
     </CreateBuylist.Container>
   );
@@ -127,18 +88,7 @@ CreateBuylist.Container = styled(Container.Root)`
   padding-top: 16px;
 `;
 
-CreateBuylist.Form = styled(Form)`
-  .ant-row.ant-form-item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .ant-col.ant-form-item-label {
-    label {
-      font-weight: 500;
-    }
-  }
-`;
+CreateBuylist.Form = styled.form``;
 
 CreateBuylist.Footer = styled.div`
   padding-top: 16px;

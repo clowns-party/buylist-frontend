@@ -1,9 +1,14 @@
 import { LockClosedIcon } from "@heroicons/react/solid";
-import { FormEvent } from "react";
+import React, { FormEvent } from "react";
+import Button from "../../../../shared/ui/Button";
+import Input from "../../../../shared/ui/Input";
+import { LoginMutationVariables } from "../../model/mutations/signin/sigin.mutation.generated";
+
 interface Props {
-  submit: (values: { email: string; password: string }) => void;
+  submit: (values: LoginMutationVariables) => void;
+  loading: boolean;
 }
-export default function SignIn({ submit }: Props) {
+export default function SignIn({ submit, loading }: Props) {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
@@ -46,13 +51,12 @@ export default function SignIn({ submit }: Props) {
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>
-                <input
+                <Input
                   id="email-address"
                   name="email"
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                 />
               </div>
@@ -60,13 +64,12 @@ export default function SignIn({ submit }: Props) {
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>
-                <input
+                <Input
                   id="password"
                   name="password"
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
               </div>
@@ -99,9 +102,10 @@ export default function SignIn({ submit }: Props) {
             </div>
 
             <div>
-              <button
+              <Button
                 type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="h-auto group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                loading={loading}
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                   <LockClosedIcon
@@ -110,7 +114,7 @@ export default function SignIn({ submit }: Props) {
                   />
                 </span>
                 Sign in
-              </button>
+              </Button>
             </div>
           </form>
         </div>
