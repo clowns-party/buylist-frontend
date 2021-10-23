@@ -1,7 +1,10 @@
 import { LockClosedIcon } from "@heroicons/react/solid";
-import React, { FormEvent } from "react";
+import { Formik } from "formik";
+import Link from "next/link";
+import React from "react";
 import Button from "../../../../shared/ui/Button";
 import Input from "../../../../shared/ui/Input";
+import { emailValidate } from "../../lib/validators";
 import { LoginMutationVariables } from "../../model/mutations/signin/sigin.mutation.generated";
 
 interface Props {
@@ -9,13 +12,6 @@ interface Props {
   loading: boolean;
 }
 export default function SignIn({ submit, loading }: Props) {
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    submit({ email, password });
-  };
   return (
     <>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -31,92 +27,127 @@ export default function SignIn({ submit, loading }: Props) {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               Or{" "}
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                start your 14-day free trial
-              </a>
-            </p>
-          </div>
-          <form
-            className="mt-8 space-y-6"
-            action="#"
-            method="POST"
-            onSubmit={onSubmit}
-          >
-            <input type="hidden" name="remember" defaultValue="true" />
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <Input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  placeholder="Email address"
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  placeholder="Password"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
+              <Link href="/signup">
                 <a
-                  href="#"
+                  href="/signup"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  Forgot your password?
+                  sign up
                 </a>
-              </div>
-            </div>
+              </Link>
+            </p>
+          </div>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validate={(values) => {
+              const errors: Partial<typeof values> = {};
+              if (emailValidate(values.email)) {
+                errors.email = "Invalid email address";
+              }
+              return errors;
+            }}
+            onSubmit={async (values, actions) => {
+              try {
+                await submit(values);
+              } catch (error: any) {
+                actions.setErrors({
+                  email: error?.message,
+                  password: " ",
+                });
+              }
+            }}
+          >
+            {({
+              errors,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                <input type="hidden" name="remember" defaultValue="true" />
+                <div className="rounded-md shadow-sm -space-y-px ">
+                  <div className="gap-4 mb-2 ">
+                    <label htmlFor="email-address" className="sr-only">
+                      Email address
+                    </label>
+                    <Input
+                      id="email-address"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      placeholder="Email address"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors?.email}
+                      disabled={loading}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="password" className="sr-only">
+                      Password
+                    </label>
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="current-password"
+                      required
+                      placeholder="Password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors?.password}
+                      disabled={loading}
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <Button
-                type="submit"
-                className="h-auto group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                loading={loading}
-              >
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <LockClosedIcon
-                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                    aria-hidden="true"
-                  />
-                </span>
-                Sign in
-              </Button>
-            </div>
-          </form>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <input
+                      id="remember-me"
+                      name="remember-me"
+                      type="checkbox"
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                    />
+                    <label
+                      htmlFor="remember-me"
+                      className="ml-2 block text-sm text-gray-900"
+                    >
+                      Remember me
+                    </label>
+                  </div>
+
+                  <div className="text-sm">
+                    <a
+                      href="#"
+                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                    >
+                      Forgot your password?
+                    </a>
+                  </div>
+                </div>
+
+                <div>
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    loading={loading}
+                    disabled={isSubmitting || loading}
+                  >
+                    <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                      <LockClosedIcon
+                        className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                    Sign in
+                  </Button>
+                </div>
+              </form>
+            )}
+          </Formik>
         </div>
       </div>
     </>

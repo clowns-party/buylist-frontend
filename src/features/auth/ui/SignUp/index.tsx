@@ -1,20 +1,19 @@
-import { LockClosedIcon } from "@heroicons/react/solid";
-import { FormEvent } from "react";
+import { Formik } from "formik";
+import Link from "next/link";
+import React, { FormEvent } from "react";
+import Button from "../../../../shared/ui/Button";
+import Input from "../../../../shared/ui/Input";
 import { AuthRegisterInput } from "../../../../types/types.generated";
+import {
+  emailValidate,
+  phoneValidate,
+  validateName,
+} from "../../lib/validators";
 interface Props {
   submit: (values: AuthRegisterInput) => void;
+  loading: boolean;
 }
-export default function SignUp({ submit }: Props) {
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const firstName = formData.get("firstname") as string;
-    const lastName = formData.get("lastname") as string;
-    const phone = formData.get("phone") as string;
-    submit({ email, password, firstName, lastName, phone });
-  };
+export default function SignUp({ submit, loading }: Props) {
   return (
     <>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -26,128 +25,146 @@ export default function SignUp({ submit }: Props) {
               alt="Workflow"
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Sign up to your account
+              Create a new account
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              Or{" "}
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                start your 14-day free trial
-              </a>
-            </p>
-          </div>
-          <form
-            className="mt-8 space-y-6"
-            action="#"
-            method="POST"
-            onSubmit={onSubmit}
-          >
-            <input type="hidden" name="remember" defaultValue="true" />
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Firstname
-                </label>
-                <input
-                  id="firstname"
-                  name="firstname"
-                  type="firstname"
-                  autoComplete="firstname"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Firstname"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Lastname
-                </label>
-                <input
-                  id="lastname"
-                  name="lastname"
-                  type="lastname"
-                  autoComplete="lastname"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Lastname"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Phone
-                </label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="phone"
-                  autoComplete="phone"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="+7"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-end">
-              <div className="text-sm">
+              Already have an account ?{" "}
+              <Link href="/signin">
                 <a
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  You have account? Sign in
+                  Sign in
                 </a>
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <LockClosedIcon
-                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                    aria-hidden="true"
-                  />
-                </span>
-                Sign up
-              </button>
-            </div>
-          </form>
+              </Link>
+            </p>
+          </div>
+          <Formik
+            initialValues={{
+              email: "",
+              firstName: "",
+              lastName: "",
+              password: "",
+              phone: "",
+            }}
+            validate={(values) => {
+              const errors: Partial<typeof values> = {};
+              if (emailValidate(values.email)) {
+                errors.email = "Invalid email address";
+              }
+              if (phoneValidate(values.phone)) {
+                errors.phone = "Wrong phone";
+              }
+              if (validateName(values.firstName)) {
+                errors.firstName = "Wrong first name!";
+              }
+              if (validateName(values.lastName)) {
+                errors.lastName = "Wrong last name!";
+              }
+              if (!values.password) {
+                errors.password = "Is required!";
+              }
+              return errors;
+            }}
+            onSubmit={async (values, actions) => {
+              try {
+                await submit(values);
+              } catch (error: any) {
+                actions.setErrors({
+                  email: error?.message,
+                });
+              }
+            }}
+          >
+            {({
+              errors,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <form onSubmit={handleSubmit}>
+                <div className="flex flex-col mb-2">
+                  <div className=" relative ">
+                    <Input
+                      type="tel"
+                      id="create-account-phone"
+                      name="phone"
+                      placeholder="Phone"
+                      error={errors.phone}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      disabled={loading}
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-4 mb-2 justify-between">
+                  <div className=" relative ">
+                    <Input
+                      type="text"
+                      id="create-account-first-name"
+                      name="firstName"
+                      placeholder="First name"
+                      error={errors.firstName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      disabled={loading}
+                    />
+                  </div>
+                  <div className=" relative ">
+                    <Input
+                      type="text"
+                      id="create-account-last-name"
+                      name="lastName"
+                      placeholder="Last name"
+                      error={errors.lastName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      disabled={loading}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col mb-2">
+                  <div className=" relative ">
+                    <Input
+                      type="text"
+                      id="create-account-email"
+                      name="email"
+                      placeholder="Email"
+                      error={errors.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      disabled={loading}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col mb-2">
+                  <div className=" relative ">
+                    <Input
+                      type="password"
+                      id="create-account-password"
+                      name="password"
+                      placeholder="Password"
+                      error={errors.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      disabled={loading}
+                    />
+                  </div>
+                </div>
+                <div className="flex w-full my-4">
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    loading={loading}
+                    disabled={loading}
+                  >
+                    Sign Up
+                  </Button>
+                </div>
+              </form>
+            )}
+          </Formik>
         </div>
       </div>
     </>

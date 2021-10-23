@@ -14,7 +14,7 @@ function Input({ error, ...props }: Props) {
     : Input.VariantClasses.Base;
 
   return (
-    <div className={`relative mb-6`}>
+    <div className={`relative ${error ? "mb-6" : ""}`}>
       <input {...props} className={`${className} ${props?.className || ""}`} />
       {error && (
         <>
