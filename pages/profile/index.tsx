@@ -1,15 +1,15 @@
 import { useState } from "react";
 import React from "react";
 import styled from "styled-components";
-import Container from "../../src/Elements/Container";
+
 import {
   useAuth,
   useAuthGuard,
 } from "../../src/features/auth/lib/hooks/useAuth";
-import ProfileEdit from "../../src/features/profile/ui/edit";
-import ProfileInfo from "../../src/features/profile/ui/info";
-import MyBuylists from "../../src/features/buylist/ui/MyBuylists";
 import { useGetMyBuylistsQuery } from "../../src/features/buylist/queries/getMyBuylists.query.generated";
+import { MyBuylists } from "features/buylist/ui";
+import { ProfileEdit, ProfileInfo } from "features/profile/ui";
+import { Container } from "shared/ui";
 
 const Profile = () => {
   useAuthGuard();

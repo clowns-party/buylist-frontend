@@ -2,6 +2,7 @@ import { LockClosedIcon } from "@heroicons/react/solid";
 import { Formik } from "formik";
 import Link from "next/link";
 import React from "react";
+import { Routes } from "shared/routes";
 import Button from "../../../../shared/ui/Button";
 import Input from "../../../../shared/ui/Input";
 import { emailValidate } from "../../lib/validators";
@@ -27,9 +28,9 @@ export default function SignIn({ submit, loading }: Props) {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               Or{" "}
-              <Link href="/signup">
+              <Link href={Routes.signup}>
                 <a
-                  href="/signup"
+                  href={Routes.signup}
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   sign up

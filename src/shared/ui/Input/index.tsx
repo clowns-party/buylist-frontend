@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
-import styled from "styled-components";
-import { ReactComponent as ErrorWaring } from "../../icons/error-warning.svg";
+import { ErrorWaring } from "shared/icons";
 
 type Props = {
   error?: string;

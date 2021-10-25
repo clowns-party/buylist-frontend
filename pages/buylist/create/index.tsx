@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { Container } from 'shared/ui';
 import styled from "styled-components";
-import Container from "../../../src/Elements/Container";
 import { useAuthGuard } from "../../../src/features/auth/lib/hooks/useAuth";
 import { useCreateBuylistMutation } from "../../../src/features/buylist/mutations/createBuylist.mutation.generated";
 import {

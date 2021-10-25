@@ -1,6 +1,7 @@
 import { Formik } from "formik";
 import Link from "next/link";
 import React, { FormEvent } from "react";
+import { Routes } from 'shared/routes';
 import Button from "../../../../shared/ui/Button";
 import Input from "../../../../shared/ui/Input";
 import { AuthRegisterInput } from "../../../../types/types.generated";
@@ -29,7 +30,7 @@ export default function SignUp({ submit, loading }: Props) {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               Already have an account ?{" "}
-              <Link href="/signin">
+              <Link href={Routes.signin}>
                 <a
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500"

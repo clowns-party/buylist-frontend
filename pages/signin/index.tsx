@@ -1,6 +1,7 @@
+import { SignInForm } from 'features/auth/ui';
 import { useAuthRedirect } from "../../src/features/auth/lib/hooks/useAuth";
 import { useLogin } from "../../src/features/auth/lib/hooks/useLogin";
-import SignIn from "../../src/features/auth/ui/SignIn";
+
 
 export default function SignInPage() {
   useAuthRedirect();
@@ -8,7 +9,7 @@ export default function SignInPage() {
 
   return (
     <>
-      <SignIn submit={handleSubmit} loading={loading} />
+      <SignInForm submit={handleSubmit} loading={loading} />
     </>
   );
 }

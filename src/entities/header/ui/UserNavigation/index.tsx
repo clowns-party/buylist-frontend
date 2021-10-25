@@ -4,6 +4,7 @@ import { UserIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import Link from "next/link";
 import React, { Fragment } from "react";
+import { Routes } from "shared/routes";
 import { GetProfileQuery } from "../../../../features/profile/queries/getProfile.query.generated";
 import Button from "../../../../shared/ui/Button";
 
@@ -24,8 +25,8 @@ const UserNavigation = ({ logout, user }: Props) => {
   const userNavigation = makeUserLinks(logout);
   if (!user) {
     return (
-      <Link href="/signin">
-        <a href="/signin">
+      <Link href={Routes.signin}>
+        <a href={Routes.signin}>
           <Button>Sign in</Button>
         </a>
       </Link>
@@ -80,8 +81,8 @@ UserNavigation.Mobile = ({ logout, user }: Props) => {
   const userNavigation = makeUserLinks(logout);
   if (!user) {
     return (
-      <Link href="/signin">
-        <a href="/signin">
+      <Link href={Routes.signin}>
+        <a href={Routes.signin}>
           <Button>Sign in</Button>
         </a>
       </Link>
