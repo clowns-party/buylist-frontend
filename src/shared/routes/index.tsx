@@ -2,5 +2,6 @@ export const Routes = {
   home: "/",
   createBuylist: "/buylist/create",
   signin: "/signin",
-  signup: "/signup"
+  signup: "/signup",
+  profile: "/profile",
 };

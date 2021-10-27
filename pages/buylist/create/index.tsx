@@ -1,5 +1,6 @@
+import { CreateBuylist } from "features/buylist/ui";
 import React, { useState } from "react";
-import { Container } from 'shared/ui';
+import { Container } from "shared/ui";
 import styled from "styled-components";
 import { useAuthGuard } from "../../../src/features/auth/lib/hooks/useAuth";
 import { useCreateBuylistMutation } from "../../../src/features/buylist/mutations/createBuylist.mutation.generated";
@@ -8,7 +9,7 @@ import {
   Statuses,
 } from "../../../src/types/types.generated";
 
-const CreateBuylist = () => {
+const CreatePage = () => {
   const [products, setProducts] = useState<any[]>([{ id: 1 }]);
 
   useAuthGuard();
@@ -48,65 +49,23 @@ const CreateBuylist = () => {
   const productsSorted = products?.sort((a, b) => b.id - a.id);
 
   return (
-    <CreateBuylist.Container>
-      <h2>Create buylist</h2>
+    <CreatePage.Container>
+      <CreateBuylist />
 
-      <CreateBuylist.Description>
-        Create your buylist that you want to schedule alone or together.
-      </CreateBuylist.Description>
-      <CreateBuylist.FormWrap>
-        <CreateBuylist.Form
-          name="basic"
-          autoComplete="off"
-        ></CreateBuylist.Form>
-      </CreateBuylist.FormWrap>
       <h2>Add some products</h2>
+
       {productsSorted?.map((product) => (
-        <CreateBuylist.FormWrap key={product.id}>
+        <div key={product.id}>
           <h2>product {product.id}</h2>
           <p onClick={() => onRemoveProduct(product.id)}>remove</p>
-        </CreateBuylist.FormWrap>
+        </div>
       ))}
-
-      <CreateBuylist.FormWrap>
-        <h2>Invite someone</h2>
-      </CreateBuylist.FormWrap>
-
-      <CreateBuylist.Footer>
-        <button
-
-        // onClick={handleSubmit}
-        >
-          Submit
-        </button>
-      </CreateBuylist.Footer>
-    </CreateBuylist.Container>
+    </CreatePage.Container>
   );
 };
 
-CreateBuylist.Container = styled(Container.Root)`
+CreatePage.Container = styled(Container.Root)`
   padding-top: 16px;
 `;
 
-CreateBuylist.Form = styled.form``;
-
-CreateBuylist.Footer = styled.div`
-  padding-top: 16px;
-  display: flex;
-  justify-content: flex-end;
-`;
-CreateBuylist.Description = styled.p`
-  color: #918d8c;
-  width: 215px;
-`;
-CreateBuylist.FormWrap = styled.div`
-  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 1em;
-`;
-
-export default CreateBuylist;
+export default CreatePage;

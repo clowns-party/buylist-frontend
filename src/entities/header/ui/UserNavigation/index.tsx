@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { UserIcon } from "@heroicons/react/outline";
 import classNames from "classnames";

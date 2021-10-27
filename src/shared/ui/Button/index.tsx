@@ -1,15 +1,29 @@
+import classNames from "classnames";
+
+export type ButtonVariants = "primary" | "text" | "light";
+
 type Props = {
   loading?: boolean;
+  variant?: ButtonVariants;
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
-const Button = ({ children, loading, ...props }: Props) => {
+
+const Button = ({
+  children,
+  loading,
+  variant = "primary",
+  ...props
+}: Props) => {
+  const className = classNames(
+    "h-auto group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white",
+    VariantsClassnames[variant],
+    props?.className || ""
+  );
   return (
     <>
       <button
         {...props}
-        className={`h-auto group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
-          props?.className || ""
-        }`}
+        className={className}
         disabled={props?.disabled || loading}
       >
         {loading ? (
@@ -22,6 +36,16 @@ const Button = ({ children, loading, ...props }: Props) => {
       </button>
     </>
   );
+};
+
+const VariantsClassnames = {
+  primary:
+    "bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2",
+  text: "",
+  light:
+    "rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent",
+} as {
+  [index in ButtonVariants]: string;
 };
 
 export default Button;

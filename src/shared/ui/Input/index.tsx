@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { ErrorWaring } from "shared/icons";
 
 type Props = {

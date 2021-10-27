@@ -14,13 +14,19 @@ const EmptyList = () => {
         Create a buylist so as not to miss the most important thing.
       </p>
       <div className="flex flex-col items-center justify-center mt-4 space-y-1 md:flex-row md:space-y-0 md:space-x-1">
-        <Link href={Routes.createBuylist}>
-          <a href={Routes.createBuylist}>
-            <Button>Create now</Button>
-          </a>
-        </Link>
+        <EmptyList.CreateNow />
       </div>
     </section>
+  );
+};
+
+EmptyList.CreateNow = () => {
+  return (
+    <Link href={Routes.createBuylist}>
+      <a href={Routes.createBuylist}>
+        <Button>Create now</Button>
+      </a>
+    </Link>
   );
 };
 export default EmptyList;
