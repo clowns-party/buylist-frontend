@@ -1,9 +1,9 @@
-import { CreateBuylist } from "features/buylist/ui";
+import { useCreateBuylistMutation } from "features/create-buylist/hooks";
+import { CreateBuylistForm } from "features/create-buylist/ui";
 import React, { useState } from "react";
 import { Container } from "shared/ui";
 import styled from "styled-components";
 import { useAuthGuard } from "../../../src/features/auth/lib/hooks/useAuth";
-import { useCreateBuylistMutation } from "../../../src/features/buylist/mutations/createBuylist.mutation.generated";
 import {
   CreateBuylistInput,
   Statuses,
@@ -50,7 +50,7 @@ const CreatePage = () => {
 
   return (
     <CreatePage.Container>
-      <CreateBuylist />
+      <CreateBuylistForm />
 
       <h2>Add some products</h2>
 
