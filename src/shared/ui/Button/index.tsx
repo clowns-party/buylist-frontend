@@ -15,7 +15,7 @@ const Button = ({
   ...props
 }: Props) => {
   const className = classNames(
-    "h-auto group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white",
+    "h-auto group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed",
     VariantsClassnames[variant],
     props?.className || ""
   );

@@ -93,7 +93,7 @@ export default function SignIn({ submit, loading }: Props) {
                       id="password"
                       name="password"
                       type="password"
-                      autoComplete="current-password"
+                      autoComplete="password"
                       required
                       placeholder="Password"
                       onChange={handleChange}
