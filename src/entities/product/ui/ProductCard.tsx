@@ -1,12 +1,9 @@
 import Map from "entities/map";
 import { FC } from "hoist-non-react-statics/node_modules/@types/react";
-import { Product } from "types/types.generated";
+import { CreateProductBuyListInput } from "types/types.generated";
 
 type Props = {
-  product: {
-    imageUrl: string;
-    name: string;
-  };
+  product: CreateProductBuyListInput;
 };
 
 const Card: FC<Props> = ({ product }) => {
@@ -46,7 +43,7 @@ const Card: FC<Props> = ({ product }) => {
           </div>
         </div>
         <div className="flex-auto">
-          <Map />
+          <Map center={product.coordinate as any} />
         </div>
       </div>
     </div>

@@ -1,13 +1,27 @@
-import Map from "entities/map";
+import SearchGeo from "entities/map/ui/search";
 import { ProductCard } from "entities/product";
+import { LngLatLike } from "mapbox-gl";
 import { useState } from "react";
 import { Button, Input } from "shared/ui";
+import { CreateProductBuyListInput } from "../../../../types/types.generated";
 
 const Form = () => {
+  const [geo, setGeo] = useState<LngLatLike>([-74.5, 40]);
   const [preview, showPreview] = useState(false);
   // TODO is duplicate wrap from BuylistForm, refactor later
   const onShow = () => {
     showPreview(!preview);
+  };
+  const product: CreateProductBuyListInput = {
+    comment: "",
+    price: 0,
+    buyBefore: 23213,
+    color: "3",
+    coordinate: geo as any,
+    link: "",
+    imageUrl:
+      "https://www.pivokom.ru/upload/iblock/1f5/1f5e23a8c12e69cdb2872e05570e32f8.JPG",
+    name: "test",
   };
   return (
     <div className="relative py-3 sm:mx-auto">
@@ -28,23 +42,61 @@ const Form = () => {
             </div>
 
             {preview ? (
-              <ProductCard
-                product={{
-                  imageUrl:
-                    "https://www.pivokom.ru/upload/iblock/1f5/1f5e23a8c12e69cdb2872e05570e32f8.JPG",
-                  name: "test",
-                }}
-              />
+              <ProductCard product={product} />
             ) : (
-              <>
-                <div className="flex flex-col">
-                  <label className="leading-loose">Title</label>
-                  <Input type="text" placeholder="Buylist name" name="name" />
+              <div>
+                <div className="flex items-center space-x-4 justify-between">
+                  <div className="flex flex-col flex-auto">
+                    <label className="leading-loose">Name</label>
+                    <Input type="text" placeholder="Name" name="name" />
+                  </div>
+                  <div className="flex flex-col flex-auto">
+                    <label className="leading-loose">Comment</label>
+                    <Input type="text" placeholder="Comment" name="comment" />
+                  </div>
+                  <div className="flex flex-col flex-auto">
+                    <label className="leading-loose">Price</label>
+                    <Input type="text" placeholder="Price" name="price" />
+                  </div>
                 </div>
-                <Input />
-                <Input />
-                <Input />
-              </>
+
+                <div className="flex flex-col">
+                  <label className="leading-loose">Buy before</label>
+                  <Input
+                    type="date"
+                    placeholder="Buy before"
+                    name="buyBefore"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="leading-loose">Color</label>
+                  <Input type="color" placeholder="Color" name="color" />
+                </div>
+
+                <div className="flex items-center space-x-4 justify-between">
+                  <div className="flex flex-col flex-auto">
+                    <label className="leading-loose">Image Url</label>
+                    <Input
+                      type="text"
+                      placeholder="Image url"
+                      name="imageUrl"
+                    />
+                  </div>
+                  <div className="flex flex-col flex-auto">
+                    <label className="leading-loose">Link</label>
+                    <Input type="text" placeholder="Link" name="link" />
+                  </div>
+                </div>
+
+                <div className="flex flex-col">
+                  <label className="leading-loose">Coordinate</label>
+                  <SearchGeo
+                    changeGeo={(geo) => {
+                      setGeo(geo);
+                    }}
+                  />
+                </div>
+              </div>
             )}
           </div>
         </div>
