@@ -6,7 +6,7 @@ import { Input } from "shared/ui";
 import styled from "styled-components";
 
 type Props = {
-  changeGeo?: (value: LngLatLike) => void;
+  changeGeo?: (value: string[]) => void;
 };
 const SearchGeo: FC<Props> = ({ changeGeo }) => {
   const input = useRef<HTMLDivElement | null>(null);
@@ -23,7 +23,7 @@ const SearchGeo: FC<Props> = ({ changeGeo }) => {
 
       // Add geocoder result to container.
       geocoder.on("result", (event) => {
-        changeGeo?.(event.result.center as LngLatLike);
+        changeGeo?.(event.result.center as string[]);
       });
 
       // Clear results container when search is cleared.

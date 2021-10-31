@@ -1,27 +1,26 @@
-import SearchGeo from "entities/map/ui/search";
+import { SearchGeo } from "entities/map";
 import { ProductCard } from "entities/product";
-import { LngLatLike } from "mapbox-gl";
 import { useState } from "react";
 import { Button, Input } from "shared/ui";
 import { CreateProductBuyListInput } from "../../../../types/types.generated";
 
 const Form = () => {
-  const [geo, setGeo] = useState<LngLatLike>([-74.5, 40]);
+  const [geo, setGeo] = useState<string[]>(["0", "0"]);
   const [preview, showPreview] = useState(false);
   // TODO is duplicate wrap from BuylistForm, refactor later
   const onShow = () => {
     showPreview(!preview);
   };
   const product: CreateProductBuyListInput = {
-    comment: "",
-    price: 0,
+    comment: "Awesome product lorem",
+    price: 43,
     buyBefore: 23213,
     color: "3",
-    coordinate: geo as any,
+    coordinate: geo,
     link: "",
     imageUrl:
       "https://www.pivokom.ru/upload/iblock/1f5/1f5e23a8c12e69cdb2872e05570e32f8.JPG",
-    name: "test",
+    name: "My product",
   };
   return (
     <div className="relative py-3 sm:mx-auto">

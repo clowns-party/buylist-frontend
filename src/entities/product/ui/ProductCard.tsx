@@ -1,4 +1,5 @@
-import Map from "entities/map";
+import { Mark } from "entities/hooks/useMark";
+import { Map } from "entities/map";
 import { FC } from "hoist-non-react-statics/node_modules/@types/react";
 import { CreateProductBuyListInput } from "types/types.generated";
 
@@ -7,6 +8,13 @@ type Props = {
 };
 
 const Card: FC<Props> = ({ product }) => {
+  const mark: Mark = {
+    position: product?.coordinate,
+    content: {
+      body: product?.comment,
+      header: product?.name,
+    },
+  };
   return (
     <div className="shadow-lg rounded-2xl bg-white w-auto m-auto p-2">
       <div className="flex">
@@ -20,10 +28,12 @@ const Card: FC<Props> = ({ product }) => {
             />
           )}
           <div className="bg-pink-200 m-3 p-4 rounded-lg">
-            <p className="text-white text-xl font-bold ">Adidas</p>
-            <p className="text-gray-50 text-xs">Live your dream</p>
+            <p className="text-white text-xl font-bold ">
+              {product?.name || "-"}
+            </p>
+            <p className="text-gray-50 text-xs">{product?.comment || "-"}</p>
             <div className="flex items-center justify-between ">
-              <p className="text-white">$98.00</p>
+              <p className="text-white">${product?.price || 0}</p>
               <button
                 type="button"
                 className="w-10 h-10 text-base font-medium rounded-full text-white bg-pink-500 hover:bg-pink-700"
@@ -43,7 +53,7 @@ const Card: FC<Props> = ({ product }) => {
           </div>
         </div>
         <div className="flex-auto">
-          <Map center={product.coordinate as any} />
+          <Map center={product.coordinate as any} marks={[mark]} />
         </div>
       </div>
     </div>
