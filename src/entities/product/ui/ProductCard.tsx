@@ -27,7 +27,7 @@ const Card: FC<Props> = ({ product }) => {
               style={{ borderRadius: 30 }}
             />
           )}
-          <div className="bg-pink-200 m-3 p-4 rounded-lg">
+          <div className={`bg-${product?.color} m-3 p-4 rounded-lg`}>
             <p className="text-white text-xl font-bold ">
               {product?.name || "-"}
             </p>

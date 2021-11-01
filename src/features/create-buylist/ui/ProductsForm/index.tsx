@@ -1,11 +1,12 @@
 import { SearchGeo } from "entities/map";
 import { ProductCard } from "entities/product";
 import { useState } from "react";
-import { Button, Input } from "shared/ui";
+import { Button, ColorPicker, Input } from "shared/ui";
 import { CreateProductBuyListInput } from "../../../../types/types.generated";
 
 const Form = () => {
   const [geo, setGeo] = useState<string[]>(["0", "0"]);
+  const [color, setColor] = useState("gray-400");
   const [preview, showPreview] = useState(false);
   // TODO is duplicate wrap from BuylistForm, refactor later
   const onShow = () => {
@@ -15,7 +16,7 @@ const Form = () => {
     comment: "Awesome product lorem",
     price: 43,
     buyBefore: 23213,
-    color: "3",
+    color,
     coordinate: geo,
     link: "",
     imageUrl:
@@ -67,10 +68,6 @@ const Form = () => {
                     name="buyBefore"
                   />
                 </div>
-                <div className="flex flex-col">
-                  <label className="leading-loose">Color</label>
-                  <Input type="color" placeholder="Color" name="color" />
-                </div>
 
                 <div className="flex items-center space-x-4 justify-between">
                   <div className="flex flex-col flex-auto">
@@ -92,6 +89,16 @@ const Form = () => {
                   <SearchGeo
                     changeGeo={(geo) => {
                       setGeo(geo);
+                    }}
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label className="leading-loose">Color</label>
+                  <ColorPicker
+                    color={color}
+                    setColor={(color) => {
+                      setColor(color);
                     }}
                   />
                 </div>
