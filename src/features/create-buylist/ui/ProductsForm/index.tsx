@@ -5,9 +5,10 @@ import { Button, ColorPicker, Input } from "shared/ui";
 import { CreateProductBuyListInput } from "../../../../types/types.generated";
 
 const Form = () => {
-  const [geo, setGeo] = useState<string[]>(["0", "0"]);
-  const [color, setColor] = useState("gray-400");
+  const [geo, setGeo] = useState<string[]>();
+  const [color, setColor] = useState("indigo-500");
   const [preview, showPreview] = useState(false);
+  const [date, setDate] = useState("");
   // TODO is duplicate wrap from BuylistForm, refactor later
   const onShow = () => {
     showPreview(!preview);
@@ -15,10 +16,10 @@ const Form = () => {
   const product: CreateProductBuyListInput = {
     comment: "Awesome product lorem",
     price: 43,
-    buyBefore: 23213,
+    buyBefore: date,
     color,
     coordinate: geo,
-    link: "",
+    link: "sss",
     imageUrl:
       "https://www.pivokom.ru/upload/iblock/1f5/1f5e23a8c12e69cdb2872e05570e32f8.JPG",
     name: "My product",
@@ -66,6 +67,9 @@ const Form = () => {
                     type="date"
                     placeholder="Buy before"
                     name="buyBefore"
+                    onChange={(event) => {
+                      setDate(event.target.value);
+                    }}
                   />
                 </div>
 
@@ -85,7 +89,7 @@ const Form = () => {
                 </div>
 
                 <div className="flex flex-col">
-                  <label className="leading-loose">Coordinate</label>
+                  <label className="leading-loose">Address</label>
                   <SearchGeo
                     changeGeo={(geo) => {
                       setGeo(geo);
@@ -94,7 +98,7 @@ const Form = () => {
                 </div>
 
                 <div className="flex flex-col">
-                  <label className="leading-loose">Color</label>
+                  <label className="leading-loose">Card color</label>
                   <ColorPicker
                     color={color}
                     setColor={(color) => {

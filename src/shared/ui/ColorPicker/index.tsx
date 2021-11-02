@@ -15,7 +15,8 @@ const data = {
     "purple",
     "pink",
   ],
-  variants: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+  // variants: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+  variants: [500],
 };
 
 type Props = {

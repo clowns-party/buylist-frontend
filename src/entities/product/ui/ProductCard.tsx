@@ -1,13 +1,18 @@
 import { Mark } from "entities/hooks/useMark";
 import { Map } from "entities/map";
-import { FC } from "hoist-non-react-statics/node_modules/@types/react";
+import MapModal from "entities/map/ui/Modal";
+import { FC, useState } from "react";
+import { Button } from "shared/ui";
+import styled from "styled-components";
 import { CreateProductBuyListInput } from "types/types.generated";
+import { cardFontColor, isDateExpired } from "../lib";
 
 type Props = {
   product: CreateProductBuyListInput;
 };
 
 const Card: FC<Props> = ({ product }) => {
+  let [isOpen, setIsOpen] = useState(false);
   const mark: Mark = {
     position: product?.coordinate,
     content: {
@@ -15,48 +20,76 @@ const Card: FC<Props> = ({ product }) => {
       header: product?.name,
     },
   };
+  const { titleColor, textColor } = cardFontColor(product?.color || "");
+
   return (
-    <div className="shadow-lg rounded-2xl bg-white w-auto m-auto p-2">
-      <div className="flex">
-        <div className="w-64">
-          {product?.imageUrl && (
-            <img
-              src={product?.imageUrl}
-              alt={product?.name || ""}
-              className="w-max-32 p-4 h-36 m-auto"
-              style={{ borderRadius: 30 }}
-            />
-          )}
-          <div className={`bg-${product?.color} m-3 p-4 rounded-lg`}>
-            <p className="text-white text-xl font-bold ">
-              {product?.name || "-"}
-            </p>
-            <p className="text-gray-50 text-xs">{product?.comment || "-"}</p>
-            <div className="flex items-center justify-between ">
-              <p className="text-white">${product?.price || 0}</p>
-              <button
-                type="button"
-                className="w-10 h-10 text-base font-medium rounded-full text-white bg-pink-500 hover:bg-pink-700"
+    <div className="shadow-lg rounded-2xl bg-white w-80 m-auto p-2">
+      {product?.imageUrl && (
+        <img
+          src={product?.imageUrl}
+          alt={product?.name || ""}
+          className="w-max-32 p-4 h-36 m-auto"
+          style={{ borderRadius: 30 }}
+        />
+      )}
+      <div className={`bg-${product?.color} m-3 p-4 rounded-lg relative`}>
+        <p className={`${titleColor} text-xl font-semibold `}>
+          {product?.name || "-"}
+        </p>
+        <p className={`${textColor} text-xs`}>{product?.comment || "-"}</p>
+        {product?.buyBefore && (
+          <p className={`${textColor}`}>
+            Buy before:{" "}
+            <b
+              className={`${textColor} font-medium ${
+                isDateExpired(product?.buyBefore) && "line-through"
+              }`}
+            >
+              {product?.buyBefore}
+            </b>
+          </p>
+        )}
+
+        <Footer>
+          {product?.coordinate?.length && (
+            <>
+              <Button
+                className="bg-white py-2 px-3 mr-2 hover:bg-gray-100"
+                variant="textBordered"
+                style={{ borderRadius: 22 }}
+                onClick={() => {
+                  setIsOpen(true);
+                }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  className="mx-auto"
-                  fill="white"
-                  viewBox="0 0 1792 1792"
-                >
-                  <path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex-auto">
-          <Map center={product.coordinate as any} marks={[mark]} />
-        </div>
+                Look on map
+              </Button>
+
+              <MapModal
+                coordinate={product?.coordinate}
+                marks={[mark]}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+              />
+            </>
+          )}
+          <Button
+            variant="textBordered"
+            className="bg-white py-2 px-3 hover:bg-gray-50"
+            style={{ borderRadius: 22 }}
+          >
+            <a href={product.link || ""} target="_blank" rel="noreferrer">
+              ${product?.price || 0}
+            </a>
+          </Button>
+        </Footer>
       </div>
     </div>
   );
 };
+const Footer = styled.div`
+  justify-content: end;
+  margin-top: 40px;
+  display: flex;
+  align-items: end;
+`;
 export default Card;
