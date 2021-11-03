@@ -8,9 +8,14 @@ import { CreateBuylistSteps } from "features/create-buylist/model";
 
 const Form = () => {
   const router = useRouter();
-  const { form, setForm, setStep } = useStoreCreateBuylist();
+  const [form, setForm, setStep] = useStoreCreateBuylist((state) => [
+    state.form,
+    state.setForm,
+    state.setStep,
+  ]);
   const submit = (values: CreateBuylistInput) => {
     setForm(values);
+
     setStep(CreateBuylistSteps.Products);
   };
   return (
@@ -144,7 +149,7 @@ const Form = () => {
 
 Form.Wrap = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div className="relative py-10 sm:max-w-xl sm:mx-auto">
       <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
         <div className="max-w-md mx-auto">{children}</div>
       </div>

@@ -2,9 +2,9 @@ import { CreateBuylistInput, Statuses } from "types/types.generated";
 import { GetState, SetState } from "zustand/vanilla";
 
 export enum CreateBuylistSteps {
-  Buylist = "Buylist",
-  Products = "Products",
-  Final = "Final",
+  Buylist,
+  Products,
+  Final,
 }
 
 export interface CreateBuylistState {
@@ -34,7 +34,7 @@ const state: State = (set, get) => ({
     const removed = products.filter((product) => product.id !== id);
     set({ products: removed });
   },
-  step: CreateBuylistSteps.Products,
+  step: CreateBuylistSteps.Buylist,
   setStep: (step) => {
     set({ step });
   },
