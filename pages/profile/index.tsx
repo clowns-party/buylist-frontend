@@ -1,7 +1,5 @@
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-
 import {
   useAuth,
   useAuthGuard,
@@ -10,6 +8,7 @@ import { useGetMyBuylistsQuery } from "../../src/features/buylist/queries/getMyB
 import { MyBuylists } from "features/buylist/ui";
 import { ProfileEdit, ProfileInfo } from "features/profile/ui";
 import { Container } from "shared/ui";
+import { useUpdateUserMutation } from "features/profile/hooks";
 
 const Profile = () => {
   useAuthGuard();

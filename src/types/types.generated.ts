@@ -111,6 +111,7 @@ export type Mutation = {
   register: User;
   updateList: Buylist;
   updateProduct: Buylist;
+  updateUser: User;
 };
 
 export type MutationAcceptInviteArgs = {
@@ -165,6 +166,10 @@ export type MutationUpdateProductArgs = {
   buyListId: Scalars["Int"];
   input: UpdateProductBuyListInput;
   productId: Scalars["Int"];
+};
+
+export type MutationUpdateUserArgs = {
+  input: UpdateUserInput;
 };
 
 export type Product = {
@@ -231,6 +236,13 @@ export type UpdateProductBuyListInput = {
   link?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
   price?: Maybe<Scalars["Float"]>;
+};
+
+export type UpdateUserInput = {
+  email?: Maybe<Scalars["String"]>;
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
 };
 
 export type User = {
