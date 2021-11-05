@@ -1,15 +1,17 @@
 import { CreateBuylistInput, Statuses } from "types/types.generated";
 import { GetState, SetState } from "zustand/vanilla";
+import { MockedProduct } from "../lib/types";
 
 export enum CreateBuylistSteps {
   Buylist,
   Products,
+  Preview,
   Final,
 }
 
 export interface CreateBuylistState {
-  products: { id: number }[];
-  addProduct: () => void;
+  products: MockedProduct[];
+  addProduct: (newProduct: Omit<MockedProduct, "id">) => void;
   removeProduct: (id: number) => void;
   step: CreateBuylistSteps;
   setStep: (step: CreateBuylistSteps) => void;
@@ -23,11 +25,23 @@ type State = (
 ) => CreateBuylistState;
 
 const state: State = (set, get) => ({
-  products: [{ id: 1 }, { id: 2 }],
-  addProduct: () => {
+  products: [
+    {
+      id: 0,
+      comment: "",
+      price: 0,
+      buyBefore: "",
+      color: "indigo-500",
+      coordinate: undefined,
+      link: "",
+      imageUrl: "",
+      name: "My product",
+    },
+  ],
+  addProduct: (newProduct) => {
     const products = get().products;
     const last = products[0]?.id || 0;
-    set({ products: [...products, { id: last + 1 }] });
+    set({ products: [...products, { ...newProduct, id: last + 1 }] });
   },
   removeProduct: (id) => {
     const products = get().products;

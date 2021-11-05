@@ -7,7 +7,7 @@ export const cardFontColor = (color: string) => {
 
 /// yyyy-mm-dd
 export const formatDate = (date: string) => {
-  const [year = 0, month = 0, day = 0] = date.split("-");
+  const [year = 0, month = 0, day = 0] = date?.split?.("-") ?? "0-0-0";
   const asDate = new Date(Number(year), Number(month) - 1, Number(day));
   return asDate;
 };

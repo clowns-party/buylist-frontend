@@ -3,6 +3,7 @@ import { CreateBuylistSteps } from "features/create-buylist/model";
 import { ProgressBar } from "shared/ui";
 import { ProgressSteps } from "shared/ui/ProgressBar";
 import { CreateBuylistForm, CreateProductsForm } from "..";
+import BuylistPreview from "../BuylistPreview";
 
 const Process = () => {
   const step = useStoreCreateBuylist((state) => state.step);
@@ -20,7 +21,7 @@ const Process = () => {
     },
     {
       percent: 0,
-      step: Number(CreateBuylistSteps.Final),
+      step: Number(CreateBuylistSteps.Preview),
       currentStep: step,
     },
   ];
@@ -34,6 +35,7 @@ const Process = () => {
       <ProgressBar steps={steps} onChangeStep={onChangeStep} />
       {step === CreateBuylistSteps.Buylist && <CreateBuylistForm />}
       {step === CreateBuylistSteps.Products && <CreateProductsForm />}
+      {step === CreateBuylistSteps.Preview && <BuylistPreview />}
     </div>
   );
 };
