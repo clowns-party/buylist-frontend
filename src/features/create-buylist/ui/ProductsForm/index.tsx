@@ -1,28 +1,20 @@
 import { SearchGeo } from "entities/map";
 import { ProductCard } from "entities/product";
+import { useStoreCreateBuylist } from "features/create-buylist/hooks";
+import { Formik } from "formik";
 import { useState } from "react";
 import { Button, ColorPicker, Input } from "shared/ui";
-import { CreateProductBuyListInput } from "../../../../types/types.generated";
 
 const Form = () => {
-  const [geo, setGeo] = useState<string[]>();
-  const [color, setColor] = useState("indigo-500");
+  const productForm = useStoreCreateBuylist((state) => state.products[0]);
   const [preview, showPreview] = useState(false);
-  const [date, setDate] = useState("");
-  // TODO is duplicate wrap from BuylistForm, refactor later
   const onShow = () => {
     showPreview(!preview);
   };
-  const product: CreateProductBuyListInput = {
-    comment: "Awesome product lorem",
-    price: 43,
-    buyBefore: date,
-    color,
-    coordinate: geo,
-    link: "sss",
-    imageUrl:
-      "https://www.pivokom.ru/upload/iblock/1f5/1f5e23a8c12e69cdb2872e05570e32f8.JPG",
-    name: "My product",
+
+  const submit = (values: any) => {
+    // setForm(values);
+    // setStep(CreateBuylistSteps.Products);
   };
   return (
     <div className="relative py-3 sm:mx-auto">
@@ -42,72 +34,129 @@ const Form = () => {
               </Button>
             </div>
 
-            {preview ? (
-              <ProductCard product={product} />
-            ) : (
-              <div>
-                <div className="flex items-center space-x-4 justify-between">
-                  <div className="flex flex-col flex-auto">
-                    <label className="leading-loose">Name</label>
-                    <Input type="text" placeholder="Name" name="name" />
-                  </div>
-                  <div className="flex flex-col flex-auto">
-                    <label className="leading-loose">Comment</label>
-                    <Input type="text" placeholder="Comment" name="comment" />
-                  </div>
-                  <div className="flex flex-col flex-auto">
-                    <label className="leading-loose">Price</label>
-                    <Input type="text" placeholder="Price" name="price" />
-                  </div>
-                </div>
+            <Formik
+              initialValues={productForm}
+              validate={(values) => {
+                const errors: Partial<typeof values> = {};
+                if (values.name?.length < 5) {
+                  errors.name = "The name must be more than 5 characters";
+                }
+                return errors;
+              }}
+              onSubmit={submit}
+            >
+              {({
+                errors,
+                handleChange,
+                setFieldValue,
 
-                <div className="flex flex-col">
-                  <label className="leading-loose">Buy before</label>
-                  <Input
-                    type="date"
-                    placeholder="Buy before"
-                    name="buyBefore"
-                    onChange={(event) => {
-                      setDate(event.target.value);
-                    }}
-                  />
-                </div>
+                handleBlur,
+                handleSubmit,
+                values,
+                isValid,
+                touched,
+                setTouched,
+              }) => {
+                if (preview) {
+                  return <ProductCard product={values} />;
+                }
+                return (
+                  <div>
+                    <div className="flex items-center space-x-4 justify-between">
+                      <div className="flex flex-col flex-auto">
+                        <label className="leading-loose">Name</label>
+                        <Input
+                          type="text"
+                          placeholder="Name"
+                          name="name"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values?.name || ""}
+                        />
+                      </div>
+                      <div className="flex flex-col flex-auto">
+                        <label className="leading-loose">Comment</label>
+                        <Input
+                          type="text"
+                          placeholder="Comment"
+                          name="comment"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values?.comment || ""}
+                        />
+                      </div>
+                      <div className="flex flex-col flex-auto">
+                        <label className="leading-loose">Price</label>
+                        <Input
+                          type="text"
+                          placeholder="Price"
+                          name="price"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values?.price || 0}
+                        />
+                      </div>
+                    </div>
 
-                <div className="flex items-center space-x-4 justify-between">
-                  <div className="flex flex-col flex-auto">
-                    <label className="leading-loose">Image Url</label>
-                    <Input
-                      type="text"
-                      placeholder="Image url"
-                      name="imageUrl"
-                    />
+                    <div className="flex flex-col">
+                      <label className="leading-loose">Buy before</label>
+                      <Input
+                        type="date"
+                        placeholder="Buy before"
+                        name="buyBefore"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values?.buyBefore || ""}
+                      />
+                    </div>
+
+                    <div className="flex items-center space-x-4 justify-between">
+                      <div className="flex flex-col flex-auto">
+                        <label className="leading-loose">Image Url</label>
+                        <Input
+                          type="text"
+                          placeholder="Image url"
+                          name="imageUrl"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values?.imageUrl || ""}
+                        />
+                      </div>
+                      <div className="flex flex-col flex-auto">
+                        <label className="leading-loose">Link</label>
+                        <Input
+                          type="text"
+                          placeholder="Link"
+                          name="link"
+                          value={values?.link || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col">
+                      <label className="leading-loose">Address</label>
+                      <SearchGeo
+                        changeGeo={(geo) => {
+                          setFieldValue("coordinate", geo);
+                        }}
+                      />
+                    </div>
+
+                    <div className="flex flex-col">
+                      <label className="leading-loose">Card color</label>
+                      <ColorPicker
+                        color={values.color as string}
+                        setColor={(color) => {
+                          setFieldValue("color", color);
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div className="flex flex-col flex-auto">
-                    <label className="leading-loose">Link</label>
-                    <Input type="text" placeholder="Link" name="link" />
-                  </div>
-                </div>
-
-                <div className="flex flex-col">
-                  <label className="leading-loose">Address</label>
-                  <SearchGeo
-                    changeGeo={(geo) => {
-                      setGeo(geo);
-                    }}
-                  />
-                </div>
-
-                <div className="flex flex-col">
-                  <label className="leading-loose">Card color</label>
-                  <ColorPicker
-                    color={color}
-                    setColor={(color) => {
-                      setColor(color);
-                    }}
-                  />
-                </div>
-              </div>
-            )}
+                );
+              }}
+            </Formik>
           </div>
         </div>
       </div>

@@ -48,7 +48,7 @@ const state: State = (set, get) => ({
     const removed = products.filter((product) => product.id !== id);
     set({ products: removed });
   },
-  step: CreateBuylistSteps.Buylist,
+  step: CreateBuylistSteps.Products,
   setStep: (step) => {
     set({ step });
   },
