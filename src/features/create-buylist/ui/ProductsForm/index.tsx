@@ -134,8 +134,8 @@ const Form = () => {
           }}
         </Formik>
         <div className="flex justify-between flex-col h-124 md:mt-0 mt-32">
-          <div className="overflow-auto h-full">
-            <ProductCard product={productForm} className="mb-10" />
+          <div className="overflow-auto h-full pl-16 pr-16">
+            <ProductCard product={productForm} className="mb-10 border-indigo-500 border-2 border-opacity-25" />
             <ProductCard product={productForm} className="mb-10" />
             <ProductCard product={productForm} className="mb-10" />
             <ProductCard product={productForm} className="mb-10" />
