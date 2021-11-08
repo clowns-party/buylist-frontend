@@ -13,6 +13,7 @@ export interface CreateBuylistState {
   products: MockedProduct[];
   addProduct: (newProduct: Omit<MockedProduct, "id">) => void;
   removeProduct: (id: number) => void;
+  updateProduct: (id: number, product: Omit<MockedProduct, "id">) => void;
   step: CreateBuylistSteps;
   setStep: (step: CreateBuylistSteps) => void;
   form: CreateBuylistInput;
@@ -47,6 +48,26 @@ const state: State = (set, get) => ({
     const products = get().products;
     const removed = products.filter((product) => product.id !== id);
     set({ products: removed });
+  },
+  updateProduct: (id, fields) => {
+    const products = get().products;
+    const productsUpdated = products.reduce(
+      (products: MockedProduct[], product: MockedProduct) => {
+        if (product.id === id) {
+          return [
+            ...products,
+            {
+              ...product,
+              ...fields,
+            },
+          ];
+        }
+        return products;
+      },
+      []
+    );
+
+    set({ products: productsUpdated });
   },
   step: CreateBuylistSteps.Products,
   setStep: (step) => {
