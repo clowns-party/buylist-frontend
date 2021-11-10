@@ -69,7 +69,7 @@ const state: State = (set, get) => ({
 
     set({ products: productsUpdated });
   },
-  step: CreateBuylistSteps.Products,
+  step: CreateBuylistSteps.Preview,
   setStep: (step) => {
     set({ step });
   },
