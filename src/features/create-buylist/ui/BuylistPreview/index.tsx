@@ -1,5 +1,5 @@
+import { BuylistCard } from "entities/buylist/ui";
 import { useAuth } from "features/auth/lib/hooks/useAuth";
-import { Buylist } from "features/buylist/ui";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
 import { MockedBuylist } from "features/create-buylist/lib/types";
 
@@ -20,7 +20,7 @@ const BuylistPreview = () => {
   };
   return (
     <div>
-      <Buylist buylist={buylist} />
+      <BuylistCard buylist={buylist} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Routes } from "shared/routes";
-import { Button, Input } from "shared/ui";
+import { Button, Container, Input } from "shared/ui";
 import { Formik } from "formik";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
 import { CreateBuylistInput } from "types/types.generated";
@@ -19,7 +19,7 @@ const Form = () => {
     setStep(CreateBuylistSteps.Products);
   };
   return (
-    <Form.Wrap>
+    <Container.Bordered className={"sm:max-w-xl sm:mx-auto"}>
       <Form.Header />
       <Formik
         initialValues={form}
@@ -143,17 +143,7 @@ const Form = () => {
           );
         }}
       </Formik>
-    </Form.Wrap>
-  );
-};
-
-Form.Wrap = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="relative py-10 sm:max-w-xl sm:mx-auto">
-      <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
-        <div className="max-w-md mx-auto">{children}</div>
-      </div>
-    </div>
+    </Container.Bordered>
   );
 };
 
