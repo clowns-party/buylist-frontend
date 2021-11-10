@@ -10,9 +10,10 @@ import { cardFontColor, isDateExpired } from "../lib";
 type Props = {
   product: CreateProductBuyListInput;
   className?: string;
+  setCardInForm?: any;
 };
 
-const Card: FC<Props> = ({ product, className }) => {
+const Card: FC<Props> = ({ product, className, setCardInForm }) => {
   let [isOpen, setIsOpen] = useState(false);
   const mark: Mark = {
     position: product?.coordinate,
@@ -21,6 +22,9 @@ const Card: FC<Props> = ({ product, className }) => {
       header: product?.name,
     },
   };
+  const setCard = (id: number | undefined) => {
+    setCardInForm(id);
+  };
   const { titleColor, textColor } = cardFontColor(product?.color || "");
 
   return (
@@ -28,6 +32,7 @@ const Card: FC<Props> = ({ product, className }) => {
       className={`shadow-lg rounded-2xl bg-white w-80 m-auto p-2 ${
         className || ""
       }`}
+      onClick={() => setCard(product?.id)}
     >
       {product?.imageUrl && (
         <img

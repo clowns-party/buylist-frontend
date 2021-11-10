@@ -11,7 +11,8 @@ export enum CreateBuylistSteps {
 
 export interface CreateBuylistState {
   products: MockedProduct[];
-  addProduct: (newProduct: Omit<MockedProduct, "id">) => void;
+  // newProduct: Omit<MockedProduct, "id">
+  addProduct: () => void;
   removeProduct: (id: number) => void;
   updateProduct: (id: number, product: Omit<MockedProduct, "id">) => void;
   step: CreateBuylistSteps;
@@ -25,10 +26,22 @@ type State = (
   get: GetState<CreateBuylistState>
 ) => CreateBuylistState;
 
+export const initialProduct: MockedProduct = {
+  id: 0,
+  comment: "",
+  price: 0,
+  buyBefore: "",
+  color: "indigo-500",
+  coordinate: undefined,
+  link: "",
+  imageUrl: "",
+  name: "",
+};
+
 const state: State = (set, get) => ({
   products: [
     {
-      id: 0,
+      id: 1,
       comment: "",
       price: 0,
       buyBefore: "",
@@ -38,11 +51,22 @@ const state: State = (set, get) => ({
       imageUrl: "",
       name: "My product",
     },
+    {
+      id: 2,
+      comment: "",
+      price: 1000,
+      buyBefore: "",
+      color: "green-500",
+      coordinate: undefined,
+      link: "",
+      imageUrl: "",
+      name: "My product 2",
+    },
   ],
-  addProduct: (newProduct) => {
+  addProduct: () => {
     const products = get().products;
-    const last = products[0]?.id || 0;
-    set({ products: [...products, { ...newProduct, id: last + 1 }] });
+    const last = products[products?.length - 1]?.id || 0;
+    set({ products: [{ ...initialProduct, id: last + 1 }, ...products] });
   },
   removeProduct: (id) => {
     const products = get().products;
@@ -62,11 +86,10 @@ const state: State = (set, get) => ({
             },
           ];
         }
-        return products;
+        return [...products, product];
       },
       []
     );
-
     set({ products: productsUpdated });
   },
   step: CreateBuylistSteps.Products,
