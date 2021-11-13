@@ -7,6 +7,7 @@ import type { AppProps } from "next/app";
 import { useEffect, useState, useMemo } from "react";
 import client, { useApollo } from "../apollo/client";
 import { AuthProvider } from "../src/features/auth/AuthContext";
+import "../styles/globals.css"
 import "tailwindcss/tailwind.css";
 import Header from "../src/entities/header/ui";
 

@@ -1,17 +1,4 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  @font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none;
 }

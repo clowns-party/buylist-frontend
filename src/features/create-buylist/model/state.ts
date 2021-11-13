@@ -35,38 +35,21 @@ export const initialProduct: MockedProduct = {
   coordinate: undefined,
   link: "",
   imageUrl: "",
-  name: "",
+  name: "My product",
 };
 
 const state: State = (set, get) => ({
-  products: [
-    {
-      id: 1,
-      comment: "",
-      price: 0,
-      buyBefore: "",
-      color: "indigo-500",
-      coordinate: undefined,
-      link: "",
-      imageUrl: "",
-      name: "My product",
-    },
-    {
-      id: 2,
-      comment: "",
-      price: 1000,
-      buyBefore: "",
-      color: "green-500",
-      coordinate: undefined,
-      link: "",
-      imageUrl: "",
-      name: "My product 2",
-    },
-  ],
+  products: [initialProduct],
   addProduct: () => {
     const products = get().products;
     const last = products[products?.length - 1]?.id || 0;
-    set({ products: [{ ...initialProduct, id: last + 1 }, ...products] });
+    const id = last + 1;
+    set({
+      products: [
+        { ...initialProduct, name: initialProduct.name + id, id },
+        ...products,
+      ],
+    });
   },
   removeProduct: (id) => {
     const products = get().products;
@@ -92,7 +75,7 @@ const state: State = (set, get) => ({
     );
     set({ products: productsUpdated });
   },
-  step: CreateBuylistSteps.Preview,
+  step: CreateBuylistSteps.Products,
   setStep: (step) => {
     set({ step });
   },
