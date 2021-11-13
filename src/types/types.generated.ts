@@ -65,6 +65,7 @@ export type CreateBuylistInput = {
 };
 
 export type CreateProductBuyListInput = {
+  id?: number;
   buyBefore?: Maybe<Scalars["DateTime"]>;
   color?: Maybe<Scalars["String"]>;
   comment: Scalars["String"];

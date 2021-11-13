@@ -1,23 +1,30 @@
+import React, { useState } from "react";
 import { SearchGeo } from "entities/map";
 import { ProductCard } from "entities/product";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
-import { Formik, useFormikContext } from "formik";
-import React from "react";
+import { Formik, useFormik, useFormikContext } from "formik";
 import { Button, ColorPicker, Input } from "shared/ui";
+import { initialProduct } from "features/create-buylist/model/state";
 
 const Form = () => {
   const products = useStoreCreateBuylist((state) => state.products);
-  const productForm = products[0];
   const updateProduct = useStoreCreateBuylist((state) => state.updateProduct);
+  const addProduct = useStoreCreateBuylist((state) => state.addProduct);
+  const [productForm, setProductForm] = useState(products[0] || initialProduct);
   const onSubmit = (values: any) => {
-    updateProduct(productForm.id, values as any);
+    updateProduct(values?.id, values as any);
   };
-  console.log(productForm);
+  const setCardInForm = (id: number | undefined) => {
+    const selectedCard: any = products?.find((el) => el.id === id);
+    setProductForm(selectedCard);
+  };
+  const emptyName = products?.some((el) => el.name === "");
 
   return (
     <div className="relative py-20 sm:mx-auto">
       <div className="flex justify-center md:space-x-6 md:flex-nowrap flex-wrap">
         <Formik
+          enableReinitialize
           initialValues={productForm}
           validate={(values) => {
             const errors: Partial<typeof values> = {};
@@ -133,16 +140,31 @@ const Form = () => {
             );
           }}
         </Formik>
-        <div className="flex justify-between flex-col h-124 md:mt-0 mt-32">
-          <div className="overflow-auto h-full pl-16 pr-16">
-            <ProductCard product={productForm} className="mb-10 border-indigo-500 border-2 border-opacity-25" />
-            <ProductCard product={productForm} className="mb-10" />
-            <ProductCard product={productForm} className="mb-10" />
-            <ProductCard product={productForm} className="mb-10" />
-            <ProductCard product={productForm} className="mb-10" />
+        <div className="flex justify-between flex-col h-1/2 md:mt-0 mt-32">
+          <div className="flex justify-end mb-10">
+            <Button onClick={() => addProduct()} disabled={emptyName}>
+              Add Product
+            </Button>
+          </div>
+          <div className="overflow-auto h-96 pl-16 pr-16">
+            {products?.map((el, index) => {
+              const active =
+                el.id === productForm?.id
+                  ? `border-indigo-500 border-2 border-opacity-25`
+                  : "";
+              return (
+                //
+                <ProductCard
+                  setCardInForm={setCardInForm}
+                  key={index.toString()}
+                  product={el}
+                  className={`mb-10 ${active}`}
+                />
+              );
+            })}
           </div>
           <div className="mt-28">
-            <Button>Submit</Button>
+            <Button className="w-full">Submit</Button>
           </div>
         </div>
       </div>
