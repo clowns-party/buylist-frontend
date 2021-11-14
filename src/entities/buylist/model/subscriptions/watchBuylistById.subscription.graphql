@@ -1,0 +1,33 @@
+subscription getBuylistByid($id: Int!) {
+  buylistWatch(id: $id) {
+    id
+    name
+    description
+    totalPrice
+    status
+    products {
+      id
+      name
+      price
+      link
+      imageUrl
+      coordinate
+      buyBefore
+      color
+      authorId
+      author {
+       ...UserFields
+      }
+    }
+    ownerId
+    owner {
+       ...UserFields
+    }
+    members {
+      id
+      user {
+      ...UserFields
+      }
+    }
+  }
+}

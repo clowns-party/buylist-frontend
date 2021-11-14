@@ -1,13 +1,13 @@
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
 import { ProductCard } from "entities/product";
 import { Button } from "shared/ui";
-import { BuylistActivity } from "..";
+import { BuylistActivity } from "../../..";
 
 const BuylistInfo = ({ buylist }: BuylistProps) => {
   return (
     <div className="mr-10 flex-auto">
       <div className="w-full px-2 hover:bg-blue-100 py-2 text-2xl font-semibold">
-        Project & Company Slug
+        {buylist?.name}
       </div>
       <div className="flex mt-1">
         <div className="flex py-1 px-3 mr-2 cursor-pointer bg-gray-200 hover:bg-gray-300 rounded">

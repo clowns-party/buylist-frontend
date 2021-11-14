@@ -14,7 +14,7 @@ interface Props {
 
 const makeUserLinks = (logout: Props["logout"]) => {
   return [
-    { name: "Your Profile", href: "#" },
+    { name: "Your Profile", href: "/profile" },
     { name: "Settings", href: "#" },
     { name: "Sign out", href: "#", fn: logout },
   ];

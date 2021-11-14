@@ -1,5 +1,5 @@
+import { GetBuylistByIdQuery } from "entities/buylist/model/queries/buylistById.query.generated";
 import { Mark } from "entities/hooks/useMark";
-import { Map } from "entities/map";
 import MapModal from "entities/map/ui/Modal";
 import { FC, useState } from "react";
 import { Button } from "shared/ui";
@@ -8,7 +8,9 @@ import { CreateProductBuyListInput } from "types/types.generated";
 import { cardFontColor, isDateExpired } from "../lib";
 
 type Props = {
-  product: CreateProductBuyListInput;
+  product:
+    | CreateProductBuyListInput
+    | GetBuylistByIdQuery["buylist"]["products"][0];
   className?: string;
 };
 
