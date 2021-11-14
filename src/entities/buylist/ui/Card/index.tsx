@@ -2,7 +2,7 @@ import { BuylistProps } from "entities/buylist/lib/buylist.types";
 import { ProductCard } from "entities/product";
 import { Button, Container } from "shared/ui";
 import { BuylistDetails, BuylistNav } from "..";
-import BuylistInfo from "../Info";
+import BuylistInfo from "./components/Info";
 
 const Card = ({ buylist }: BuylistProps) => {
   return (

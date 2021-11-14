@@ -2,23 +2,26 @@ import React, { useState } from "react";
 import { SearchGeo } from "entities/map";
 import { ProductCard } from "entities/product";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
-import { Formik, useFormik, useFormikContext } from "formik";
+import { Formik, useFormikContext } from "formik";
 import { Button, ColorPicker, Input } from "shared/ui";
 import { initialProduct } from "features/create-buylist/model/state";
+import { MockedProduct } from "features/create-buylist/lib/types";
 
 const Form = () => {
   const products = useStoreCreateBuylist((state) => state.products);
   const updateProduct = useStoreCreateBuylist((state) => state.updateProduct);
   const addProduct = useStoreCreateBuylist((state) => state.addProduct);
   const [productForm, setProductForm] = useState(products[0] || initialProduct);
-  const onSubmit = (values: any) => {
+  const onSubmit = (values: MockedProduct) => {
     updateProduct(values?.id, values as any);
   };
   const setCardInForm = (id: number | undefined) => {
     const selectedCard: any = products?.find((el) => el.id === id);
     setProductForm(selectedCard);
   };
+  const disableAdding = products?.length >= 5;
   const emptyName = products?.some((el) => el.name === "");
+  const filteredProducts = products?.sort((a, b) => a.id - b.id);
 
   return (
     <div className="relative py-20 sm:mx-auto">
@@ -140,34 +143,63 @@ const Form = () => {
             );
           }}
         </Formik>
-        <div className="flex justify-between flex-col h-1/2 md:mt-0 mt-32">
-          <div className="flex justify-end mb-10">
-            <Button onClick={() => addProduct()} disabled={emptyName}>
-              Add Product
-            </Button>
-          </div>
-          <div className="overflow-auto h-96 pl-16 pr-16">
-            {products?.map((el, index) => {
+        <div className="flex justify-between flex-col h-1/2 md:mt-0 mt-32 pl-16 pr-16">
+          <div
+            className="overflow-y-auto hide-scroll-bar"
+            style={{ height: 503 }}
+          >
+            {filteredProducts?.map((el, index) => {
               const active =
                 el.id === productForm?.id
                   ? `border-indigo-500 border-2 border-opacity-25`
                   : "";
               return (
-                //
-                <ProductCard
-                  setCardInForm={setCardInForm}
-                  key={index.toString()}
-                  product={el}
-                  className={`mb-10 ${active}`}
-                />
+                <div
+                  key={index}
+                  onClick={() => {
+                    setCardInForm(el.id);
+                  }}
+                  className="cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                >
+                  <ProductCard product={el} className={`mb-10 ${active}`} />
+                </div>
               );
             })}
+            <Form.Counter disable={disableAdding} action={addProduct} />
           </div>
-          <div className="mt-28">
-            <Button className="w-full">Submit</Button>
+          <div className="flex justify-end mt-6">
+            <Button disabled={emptyName}>Submit</Button>
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+Form.Counter = ({
+  disable,
+  action,
+}: {
+  disable: boolean;
+  action: () => void;
+}) => {
+  return (
+    <div className="flex justify-center" style={{ opacity: disable ? 0 : 1 }}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className={`h-12 w-12 ${!disable && "cursor-pointer"}`}
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        onClick={() => !disable && action()}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={0.5}
+          d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
     </div>
   );
 };

@@ -1,5 +1,5 @@
+import { GetBuylistByIdQuery } from "entities/buylist/model/queries/buylistById.query.generated";
 import { Mark } from "entities/hooks/useMark";
-import { Map } from "entities/map";
 import MapModal from "entities/map/ui/Modal";
 import { FC, useState } from "react";
 import { Button } from "shared/ui";
@@ -8,12 +8,13 @@ import { CreateProductBuyListInput } from "types/types.generated";
 import { cardFontColor, isDateExpired } from "../lib";
 
 type Props = {
-  product: CreateProductBuyListInput;
+  product:
+    | CreateProductBuyListInput
+    | GetBuylistByIdQuery["buylist"]["products"][0];
   className?: string;
-  setCardInForm?: any;
 };
 
-const Card: FC<Props> = ({ product, className, setCardInForm }) => {
+const Card: FC<Props> = ({ product, className }) => {
   let [isOpen, setIsOpen] = useState(false);
   const mark: Mark = {
     position: product?.coordinate,
@@ -22,9 +23,6 @@ const Card: FC<Props> = ({ product, className, setCardInForm }) => {
       header: product?.name,
     },
   };
-  const setCard = (id: number | undefined) => {
-    setCardInForm(id);
-  };
   const { titleColor, textColor } = cardFontColor(product?.color || "");
 
   return (
@@ -32,7 +30,6 @@ const Card: FC<Props> = ({ product, className, setCardInForm }) => {
       className={`shadow-lg rounded-2xl bg-white w-80 m-auto p-2 ${
         className || ""
       }`}
-      onClick={() => setCard(product?.id)}
     >
       {product?.imageUrl && (
         <img

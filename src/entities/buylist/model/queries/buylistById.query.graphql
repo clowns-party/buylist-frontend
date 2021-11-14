@@ -1,0 +1,34 @@
+query getBuylistById($id: Int!) {
+  buylist(id: $id) {
+    id
+    name
+    description
+    totalPrice
+    status
+    products {
+      id
+      name
+      price
+      link
+      imageUrl
+      coordinate
+      buyBefore
+      color
+      authorId
+      comment
+      author {
+        ...UserFields
+      }
+    }
+    ownerId
+    owner {
+      ...UserFields
+    }
+    members {
+      id
+      user {
+        ...UserFields
+      }
+    }
+  }
+}

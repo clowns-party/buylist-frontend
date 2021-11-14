@@ -1,3 +1,5 @@
+import React from "react";
+import Link from "next/link";
 import { GetMyBuylistsQuery } from "../../queries/getMyBuylists.query.generated";
 import EmptyList from "../EmptyList";
 
@@ -49,34 +51,38 @@ export default function MyBuylists({ buylists }: Props) {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {buylists.map((buylist) => (
                     <tr key={buylist.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {buylist.name}
+                      <Link href={`buylist/${buylist.id}`}>
+                        <a href={`buylist/${buylist.id}`} className="contents">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900">
+                                  {buylist.name}
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {buylist.description}
+                                </div>
+                              </div>
                             </div>
-                            <div className="text-sm text-gray-500">
-                              {buylist.description}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          {buylist?.totalPrice}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {buylist.status}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a
-                          href="#"
-                          className="text-indigo-600 hover:text-indigo-900"
-                        >
-                          Edit
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                              {buylist?.totalPrice}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {buylist.status}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a
+                              href="#"
+                              className="text-indigo-600 hover:text-indigo-900"
+                            >
+                              Edit
+                            </a>
+                          </td>
                         </a>
-                      </td>
+                      </Link>
                     </tr>
                   ))}
                 </tbody>
