@@ -4,13 +4,17 @@ import { ProductCard } from "entities/product";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
 import { Formik, useFormikContext } from "formik";
 import { Button, ColorPicker, Input } from "shared/ui";
-import { initialProduct } from "features/create-buylist/model/state";
+import {
+  CreateBuylistSteps,
+  initialProduct,
+} from "features/create-buylist/model/state";
 import { MockedProduct } from "features/create-buylist/lib/types";
 
 const Form = () => {
   const products = useStoreCreateBuylist((state) => state.products);
   const updateProduct = useStoreCreateBuylist((state) => state.updateProduct);
   const addProduct = useStoreCreateBuylist((state) => state.addProduct);
+  const setStep = useStoreCreateBuylist((state) => state.setStep);
   const [productForm, setProductForm] = useState(products[0] || initialProduct);
   const onSubmit = (values: MockedProduct) => {
     updateProduct(values?.id, values as any);
@@ -20,8 +24,9 @@ const Form = () => {
     setProductForm(selectedCard);
   };
   const disableAdding = products?.length >= 5;
-  const emptyName = products?.some((el) => el.name === "");
-  const filteredProducts = products?.sort((a, b) => a.id - b.id);
+  const emptyFields = products?.some(
+    (el) => !el.name || !el.comment || !el.price
+  );
 
   return (
     <div className="relative py-20 sm:mx-auto">
@@ -77,7 +82,9 @@ const Form = () => {
                     type="text"
                     placeholder="Price"
                     name="price"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue("price", Number(e.target.value) || 0)
+                    }
                     onBlur={handleBlur}
                     value={values?.price || 0}
                   />
@@ -148,7 +155,7 @@ const Form = () => {
             className="overflow-y-auto hide-scroll-bar"
             style={{ height: 503 }}
           >
-            {filteredProducts?.map((el, index) => {
+            {products?.map((el, index) => {
               const active =
                 el.id === productForm?.id
                   ? `border-indigo-500 border-2 border-opacity-25`
@@ -168,7 +175,12 @@ const Form = () => {
             <Form.Counter disable={disableAdding} action={addProduct} />
           </div>
           <div className="flex justify-end mt-6">
-            <Button disabled={emptyName}>Submit</Button>
+            <Button
+              disabled={emptyFields}
+              onClick={() => setStep(CreateBuylistSteps.Preview)}
+            >
+              Continue
+            </Button>
           </div>
         </div>
       </div>

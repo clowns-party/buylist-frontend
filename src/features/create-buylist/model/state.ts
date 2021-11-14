@@ -46,8 +46,8 @@ const state: State = (set, get) => ({
     const id = last + 1;
     set({
       products: [
-        { ...initialProduct, name: initialProduct.name + id, id },
         ...products,
+        { ...initialProduct, name: initialProduct.name + id, id },
       ],
     });
   },

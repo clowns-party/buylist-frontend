@@ -1,0 +1,14 @@
+mutation createProduct($buyListId: Int!, $input: CreateProductBuyListInput!) {
+  createProduct(buyListId: $buyListId, input: $input) {
+    products {
+      name
+      price
+      link
+      imageUrl
+      coordinate
+      comment
+      buyBefore
+      color
+    }
+  }
+}
