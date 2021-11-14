@@ -7,7 +7,7 @@ import BuylistInfo from "./components/Info";
 const Card = ({ buylist }: BuylistProps) => {
   return (
     <Container.Bordered>
-      <div className="flex w-100 h-screen">
+      <div className="flex w-100 h-screen overflow-hidden ">
         {/* <ListBar /> */}
 
         <div className="w-full relative">
