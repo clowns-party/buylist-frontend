@@ -4,4 +4,5 @@ export const Routes = {
   signin: "/signin",
   signup: "/signup",
   profile: "/profile",
+  buylistById: (id: string) => `/buylist/${id}`
 };

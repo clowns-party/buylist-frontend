@@ -1,14 +1,18 @@
+import { BuylistBar } from "widgets/buylist-bar";
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
-import { ProductCard } from "entities/product";
-import { Button, Container } from "shared/ui";
+import { FC } from "hoist-non-react-statics/node_modules/@types/react";
+import { Container } from "shared/ui";
 import { BuylistDetails, BuylistNav } from "..";
 import BuylistInfo from "./components/Info";
 
-const Card = ({ buylist }: BuylistProps) => {
+type Props = {
+  withListBar?: boolean;
+} & BuylistProps;
+const BuylistCard: FC<Props> = ({ buylist, withListBar }) => {
   return (
     <Container.Bordered>
       <div className="flex w-100 h-screen overflow-hidden ">
-        {/* <ListBar /> */}
+        {withListBar && <BuylistBar />}
 
         <div className="w-full relative">
           <BuylistNav name={buylist?.name} owner={buylist?.owner} />
@@ -22,4 +26,4 @@ const Card = ({ buylist }: BuylistProps) => {
   );
 };
 
-export default Card;
+export default BuylistCard;

@@ -5,6 +5,7 @@ import { GetServerSideProps } from "next";
 
 import Head from "next/head";
 import { getBuylistByIdSSR } from "entities/buylist/model/serverside";
+import { Container } from 'shared/ui';
 
 type Props = {
   buylist: GetBuylistByIdQuery["buylist"];
@@ -14,12 +15,12 @@ const BuylistPage: FC<Props> = ({ buylist }) => {
     return <h2>no found!</h2>;
   }
   return (
-    <div>
+    <Container>
       <Head>
         <title>Buylist | {buylist?.name}</title>
       </Head>
-      <BuylistCard buylist={buylist} />
-    </div>
+      <BuylistCard buylist={buylist} withListBar/>
+    </Container>
   );
 };
 
