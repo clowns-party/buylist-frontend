@@ -1,14 +1,19 @@
+import AlertCard from "entities/alert-card/ui/AlertCard";
 import { BuylistCard } from "entities/buylist/ui";
 import { useAuth } from "features/auth/lib/hooks/useAuth";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
 import { useCreateBuylist } from "features/create-buylist/hooks/useCreateBuylist";
 import { MockedBuylist } from "features/create-buylist/lib/types";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { Button, Container } from "shared/ui";
 
 const BuylistPreview = () => {
+  const router = useRouter();
   const products = useStoreCreateBuylist((state) => state.products);
   const form = useStoreCreateBuylist((state) => state.form);
   const { createBuylist, loading } = useCreateBuylist();
+  const [openAlert, setOpenAlert] = useState(false);
   const { user } = useAuth();
   const buylist: MockedBuylist = {
     description: form?.description,
@@ -21,21 +26,38 @@ const BuylistPreview = () => {
     status: form?.status,
     totalPrice: form?.totalPrice,
   };
+  const closeModal = () => {
+    setOpenAlert(false);
+    router.push(`/profile`);
+  };
+  const openBuylist = () => {};
   return (
     <div>
+      <AlertCard
+        isOpen={openAlert}
+        closeModal={closeModal}
+        loading={loading}
+        redirect={openBuylist}
+      />
       <Container.Bordered>
         <article className="prose lg:prose-xl">
-          <h1>Below is a preview of your buylist</h1>
-          <p>If all the fields are correct, confirm the creation.</p>
+          <div className="text-lg">Below is a preview of your buylist</div>
+          <div className="text-lg">
+            If all the fields are correct, confirm the creation.
+          </div>
         </article>
-        <Button>Create</Button>
+        <Button
+          className="mt-4"
+          disabled={loading}
+          onClick={() => {
+            createBuylist();
+            setOpenAlert(true);
+          }}
+        >
+          Create Buylist
+        </Button>
       </Container.Bordered>
       <BuylistCard buylist={buylist} />
-      <div className="flex justify-end mb-10">
-        <Button disabled={loading} onClick={() => createBuylist()}>
-          Submit
-        </Button>
-      </div>
     </div>
   );
 };

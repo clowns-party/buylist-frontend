@@ -15,7 +15,6 @@ const Form = () => {
   ]);
   const submit = (values: CreateBuylistInput) => {
     setForm(values);
-
     setStep(CreateBuylistSteps.Products);
   };
   return (

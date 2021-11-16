@@ -24,9 +24,7 @@ const Form = () => {
     setProductForm(selectedCard);
   };
   const disableAdding = products?.length >= 5;
-  const emptyFields = products?.some(
-    (el) => !el.name || !el.comment || !el.price
-  );
+  const emptyFields = products?.some((el) => !el.name || !el.comment);
 
   return (
     <div className="relative py-20 sm:mx-auto">
@@ -39,6 +37,9 @@ const Form = () => {
             if (values.name?.length < 5) {
               errors.name = "The name must be more than 5 characters";
             }
+            if (!values.comment) {
+              errors.comment = "Fill in the field";
+            }
             return errors;
           }}
           onSubmit={onSubmit}
@@ -48,6 +49,7 @@ const Form = () => {
             setFieldValue,
             handleBlur,
             values,
+            errors,
             handleSubmit,
           }) => {
             return (
@@ -59,6 +61,7 @@ const Form = () => {
                       type="text"
                       placeholder="Name"
                       name="name"
+                      error={errors?.name}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values?.name || ""}
@@ -70,6 +73,7 @@ const Form = () => {
                       type="text"
                       placeholder="Comment"
                       name="comment"
+                      error={errors?.comment}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values?.comment || ""}
@@ -82,6 +86,7 @@ const Form = () => {
                     type="text"
                     placeholder="Price"
                     name="price"
+                    error={errors?.price}
                     onChange={(e) =>
                       setFieldValue("price", Number(e.target.value) || 0)
                     }
