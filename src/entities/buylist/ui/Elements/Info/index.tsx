@@ -1,13 +1,34 @@
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
 import { ProductCard } from "entities/product";
-import { Button } from "shared/ui";
-import { BuylistActivity } from "../../..";
+import { useRef } from "react";
+import { useState } from "react";
+import { useClickAway } from "react-use";
+import { Button, Input } from "shared/ui";
+import Activity from "./components/Activity";
 
-const BuylistInfo = ({ buylist }: BuylistProps) => {
+const BuylistInfo = ({ buylist, editable }: BuylistProps) => {
+  const input = useRef(null);
+  const [edit, setEdit] = useState(false);
+  const onEdit = () => {
+    setEdit(true);
+  };
+  const onClose = () => {
+    setEdit(false);
+  };
+  const editMode = edit && editable;
+  useClickAway(input, onClose);
   return (
     <div className="mr-10 flex-auto">
-      <div className="w-full px-2 hover:bg-blue-100 py-2 text-2xl font-semibold">
-        {buylist?.name}
+      <div
+        className="w-full px-2 hover:bg-blue-100 py-2 text-2xl font-semibold"
+        onDoubleClick={onEdit}
+        ref={input}
+      >
+        {!editMode ? (
+          buylist?.name
+        ) : (
+          <Input className="transparent" value={buylist?.name} />
+        )}
       </div>
       <div className="flex mt-1">
         <div className="flex py-1 px-3 mr-2 cursor-pointer bg-gray-200 hover:bg-gray-300 rounded">
@@ -55,7 +76,7 @@ const BuylistInfo = ({ buylist }: BuylistProps) => {
         </div>
       </div>
 
-      <BuylistActivity />
+      <Activity />
       <div className="border mt-3"></div>
       <div className="items-center flex py-1 mt-5 text-sm font-medium text-gray-800 flex-col">
         {buylist?.products?.map((product) => (

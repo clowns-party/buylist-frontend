@@ -1,5 +1,5 @@
 import { useAuth } from "features/auth/lib/hooks/useAuth";
-import { useGetMyBuylistsQuery } from "features/buylist/queries/getMyBuylists.query.generated";
+import { useGetMyBuylistsQuery } from "widgets/buylists-my/model/queries/getMyBuylists.query.generated";
 import { useMemo } from "react";
 import React from "react";
 import { BuylistBarFilters, BuylistBarItem } from "..";

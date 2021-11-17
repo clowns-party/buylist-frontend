@@ -1,9 +1,9 @@
+import { BuylistPreview } from "entities/buylist-preview";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
 import { CreateBuylistSteps } from "features/create-buylist/model";
 import { ProgressBar } from "shared/ui";
 import { ProgressSteps } from "shared/ui/ProgressBar";
 import { CreateBuylistForm, CreateProductsForm } from "..";
-import BuylistPreview from "../BuylistPreview";
 
 const Process = () => {
   const step = useStoreCreateBuylist((state) => state.step);

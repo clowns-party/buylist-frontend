@@ -1,4 +1,4 @@
-import { GetMyBuylistsQuery } from "features/buylist/queries/getMyBuylists.query.generated";
+import { GetMyBuylistsQuery } from "widgets/buylists-my/model/queries/getMyBuylists.query.generated";
 import React from "react";
 import { useRouter } from "next/router";
 import { Routes } from "shared/routes";

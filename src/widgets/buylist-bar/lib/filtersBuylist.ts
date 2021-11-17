@@ -1,5 +1,5 @@
 import { BuylistBarState } from "../model/state";
-import { GetMyBuylistsQuery } from "./../../../features/buylist/queries/getMyBuylists.query.generated";
+import { GetMyBuylistsQuery } from "../../buylists-my/model/queries/getMyBuylists.query.generated";
 type Buylist = GetMyBuylistsQuery["myBuylists"][0];
 
 export const filtersBuylist = (

@@ -1,10 +1,10 @@
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
-import { Dropdown } from "shared/ui";
+import { FC } from "react";
+import { Dropdown, Input } from "shared/ui";
 
-const Nav = ({
-  owner,
-  name,
-}: Pick<BuylistProps["buylist"], "name" | "owner">) => {
+type Props = Pick<BuylistProps["buylist"], "name" | "owner">;
+
+const Nav: FC<Props> = ({ owner, name = false }) => {
   return (
     <div className="flex w-full justify-between px-1 text-center items-center">
       <div className="p-2 flex">

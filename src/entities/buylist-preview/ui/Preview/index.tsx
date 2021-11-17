@@ -1,5 +1,5 @@
 import AlertCard from "entities/alert-card/ui/AlertCard";
-import { BuylistCard } from "entities/buylist/ui";
+import { Buylist } from "entities/buylist/ui";
 import { useAuth } from "features/auth/lib/hooks/useAuth";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
 import { useCreateBuylist } from "features/create-buylist/hooks/useCreateBuylist";
@@ -57,7 +57,7 @@ const BuylistPreview = () => {
           Create Buylist
         </Button>
       </Container.Bordered>
-      <BuylistCard buylist={buylist} />
+      <Buylist buylist={buylist} />
     </div>
   );
 };

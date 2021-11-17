@@ -1,13 +1,17 @@
-import React from "react";
+import { useAuth } from "features/auth/lib/hooks/useAuth";
 import Link from "next/link";
-import { GetMyBuylistsQuery } from "../../queries/getMyBuylists.query.generated";
-import EmptyList from "../EmptyList";
+import React from "react";
+import { EmptyList } from "..";
+import { useGetMyBuylistsQuery } from "../../model/index";
 
-interface Props {
-  buylists: GetMyBuylistsQuery["myBuylists"] | undefined;
-}
+export default function MyBuylists() {
+  const { user } = useAuth();
 
-export default function MyBuylists({ buylists }: Props) {
+  const { data, error } = useGetMyBuylistsQuery({
+    skip: !user,
+  });
+  const buylists = data?.myBuylists;
+
   if (!buylists?.length) {
     return <EmptyList />;
   }

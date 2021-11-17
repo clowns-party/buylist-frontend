@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Dropdown } from "shared/ui";
 import { Statuses } from "types/types.generated";
 
-const Details = ({ buylist }: BuylistProps) => {
+const Details = ({ buylist, editable }: BuylistProps) => {
   const [status, setStatus] = useState("");
   const onSelect = (status: string) => {
     setStatus(status);

@@ -1,14 +1,12 @@
+import { ProfileEdit, ProfileInfo } from "features/profile/ui";
 import React, { useState } from "react";
+import { Container } from "shared/ui";
 import styled from "styled-components";
+import { MyBuylists } from "widgets/buylists-my/ui";
 import {
   useAuth,
-  useAuthGuard,
+  useAuthGuard
 } from "../../src/features/auth/lib/hooks/useAuth";
-import { useGetMyBuylistsQuery } from "../../src/features/buylist/queries/getMyBuylists.query.generated";
-import { MyBuylists } from "features/buylist/ui";
-import { ProfileEdit, ProfileInfo } from "features/profile/ui";
-import { Container } from "shared/ui";
-import { useUpdateUserMutation } from "features/profile/hooks";
 
 const Profile = () => {
   useAuthGuard();
@@ -17,10 +15,6 @@ const Profile = () => {
   const onEdit = () => {
     toggleEdit(!showEdit);
   };
-
-  const { data: userBuylists, error } = useGetMyBuylistsQuery({
-    skip: !user,
-  });
 
   if (showEdit) {
     return (
@@ -33,7 +27,7 @@ const Profile = () => {
   return (
     <Profile.Wrap>
       <ProfileInfo user={user} onEdit={onEdit} />
-      <MyBuylists buylists={userBuylists?.myBuylists} />
+      <MyBuylists />
     </Profile.Wrap>
   );
 };

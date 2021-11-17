@@ -4,4 +4,5 @@ import { GetBuylistByIdQuery } from "../model/queries/buylistById.query.generate
 
 export type BuylistProps = {
   buylist: Buylist | MockedBuylist | GetBuylistByIdQuery["buylist"];
+  editable?: boolean;
 };
