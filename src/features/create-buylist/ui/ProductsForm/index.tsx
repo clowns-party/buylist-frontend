@@ -24,7 +24,8 @@ const Form = () => {
     setProductForm(selectedCard);
   };
   const disableAdding = products?.length >= 5;
-  const emptyFields = products?.some((el) => !el.name || !el.comment);
+  const validateProductsFields = (items: MockedProduct[]) =>
+    items?.some((el) => !el.name || !el.comment);
 
   return (
     <div className="relative py-20 sm:mx-auto">
@@ -181,7 +182,7 @@ const Form = () => {
           </div>
           <div className="flex justify-end mt-6">
             <Button
-              disabled={emptyFields}
+              disabled={validateProductsFields(products)}
               onClick={() => setStep(CreateBuylistSteps.Preview)}
             >
               Continue

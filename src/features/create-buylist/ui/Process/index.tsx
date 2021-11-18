@@ -1,11 +1,13 @@
 import { BuylistPreview } from "entities/buylist-preview";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
+import { useValidateBuylist } from "features/create-buylist/hooks/useValidateBuylist";
 import { CreateBuylistSteps } from "features/create-buylist/model";
 import { ProgressBar } from "shared/ui";
 import { ProgressSteps } from "shared/ui/ProgressBar";
 import { CreateBuylistForm, CreateProductsForm } from "..";
 
 const Process = () => {
+  const { setStepForValidate } = useValidateBuylist();
   const step = useStoreCreateBuylist((state) => state.step);
   const setStep = useStoreCreateBuylist((state) => state.setStep);
   const steps: ProgressSteps[] = [
@@ -27,7 +29,7 @@ const Process = () => {
   ];
 
   const onChangeStep = (step: CreateBuylistSteps) => {
-    setStep(step);
+    if (!setStepForValidate(step)) setStep(step);
   };
 
   return (
