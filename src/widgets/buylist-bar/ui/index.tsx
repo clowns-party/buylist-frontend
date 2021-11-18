@@ -41,7 +41,10 @@ const BuylistBar = () => {
       <div className="flex mt-5 w-full">
         <BuylistBarFilters.Search />
       </div>
-      <div className="bg-gray-100 mt-4 rounded">
+      <div
+        className="bg-gray-100 mt-4 rounded overflow-y-auto max-h-screen pb-10"
+        style={{ paddingBottom: 120 }}
+      >
         <BuylistBarFilters />
         {buylists?.length ? (
           buylists.map((buylist, index) => (

@@ -1,4 +1,7 @@
-import { GetBuylistByIdQuery } from "entities/buylist/model/queries/buylistById.query.generated";
+import {
+  GetBuylistByIdQuery,
+  useGetBuylistByIdQuery,
+} from "entities/buylist/model/queries/buylistById.query.generated";
 import { Buylist } from "entities/buylist/ui";
 import { FC } from "hoist-non-react-statics/node_modules/@types/react";
 import { GetServerSideProps } from "next";
@@ -6,11 +9,20 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { getBuylistByIdSSR } from "entities/buylist/model/serverside";
 import { Container } from "shared/ui";
+import { useRouter } from "next/router";
 
 type Props = {
   buylist: GetBuylistByIdQuery["buylist"];
 };
 const BuylistPage: FC<Props> = ({ buylist }) => {
+  const { query } = useRouter();
+  const id = query?.id?.toString();
+
+  // TODO maybe subscription? this only for refetcher!
+  const { data: updated } = useGetBuylistByIdQuery({
+    variables: { id: Number(id) },
+  });
+
   if (!buylist) {
     return <h2>no found!</h2>;
   }
@@ -19,7 +31,7 @@ const BuylistPage: FC<Props> = ({ buylist }) => {
       <Head>
         <title>Buylist | {buylist?.name}</title>
       </Head>
-      <Buylist buylist={buylist} withListBar editable />
+      <Buylist buylist={updated?.buylist || buylist} withListBar editable />
     </Container>
   );
 };

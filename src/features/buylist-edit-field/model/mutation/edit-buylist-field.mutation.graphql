@@ -1,0 +1,8 @@
+mutation editBuylistField($id: Int!, $input: UpdateBuylistInput!) {
+  updateList(id: $id, input: $input) {
+    id
+    name
+    description
+    status
+  }
+}

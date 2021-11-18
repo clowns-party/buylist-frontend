@@ -1,35 +1,22 @@
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
 import { ProductCard } from "entities/product";
-import { useRef } from "react";
-import { useState } from "react";
-import { useClickAway } from "react-use";
-import { Button, Input } from "shared/ui";
+import { EditableField } from "features/buylist-edit-field";
+import { Button } from "shared/ui";
 import Activity from "./components/Activity";
 
 const BuylistInfo = ({ buylist, editable }: BuylistProps) => {
-  const input = useRef(null);
-  const [edit, setEdit] = useState(false);
-  const onEdit = () => {
-    setEdit(true);
-  };
-  const onClose = () => {
-    setEdit(false);
-  };
-  const editMode = edit && editable;
-  useClickAway(input, onClose);
   return (
     <div className="mr-10 flex-auto">
-      <div
-        className="w-full px-2 hover:bg-blue-100 py-2 text-2xl font-semibold"
-        onDoubleClick={onEdit}
-        ref={input}
+      <EditableField
+        editable={!!editable}
+        value={buylist?.name}
+        field="name"
+        className="w-full px-2 py-2"
       >
-        {!editMode ? (
-          buylist?.name
-        ) : (
-          <Input className="transparent" value={buylist?.name} />
-        )}
-      </div>
+        <div className="w-full px-2 hover:bg-blue-100 py-2 text-2xl font-semibold">
+          {buylist?.name}
+        </div>
+      </EditableField>
       <div className="flex mt-1">
         <div className="flex py-1 px-3 mr-2 cursor-pointer bg-gray-200 hover:bg-gray-300 rounded">
           <svg
@@ -68,13 +55,20 @@ const BuylistInfo = ({ buylist, editable }: BuylistProps) => {
       <div className="items-center py-1 mt-5 mb-1 text-sm font-medium text-gray-800">
         Description
       </div>
-      <div className="flex-col p-2 rounded hover:bg-gray-200">
-        <div className="flex">
-          <div className="text-sm ml-1 text-gray-800 antialiased tracking-normal font-normal ">
-            {buylist.description || "-"}
+      <EditableField
+        editable={!!editable}
+        value={buylist?.description}
+        field="description"
+        className="flex-col p-2 rounded"
+      >
+        <div className="flex-col p-2 rounded hover:bg-gray-200">
+          <div className="flex">
+            <div className="text-sm ml-1 text-gray-800 antialiased tracking-normal font-normal ">
+              {buylist.description || "-"}
+            </div>
           </div>
         </div>
-      </div>
+      </EditableField>
 
       <Activity />
       <div className="border mt-3"></div>
