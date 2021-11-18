@@ -2,7 +2,10 @@ import AlertCard from "entities/alert-card/ui/AlertCard";
 import { Buylist } from "entities/buylist/ui";
 import { useAuth } from "features/auth/lib/hooks/useAuth";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
-import { useCreateBuylist } from "features/create-buylist/hooks/useCreateBuylist";
+import {
+  createBuylistResult,
+  useCreateBuylist,
+} from "features/create-buylist/hooks/useCreateBuylist";
 import { MockedBuylist } from "features/create-buylist/lib/types";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -12,6 +15,7 @@ const BuylistPreview = () => {
   const router = useRouter();
   const products = useStoreCreateBuylist((state) => state.products);
   const form = useStoreCreateBuylist((state) => state.form);
+  const [buylistId, setBuylistId] = useState(0);
   const { createBuylist, loading } = useCreateBuylist();
   const [openAlert, setOpenAlert] = useState(false);
   const { user } = useAuth();
@@ -26,18 +30,26 @@ const BuylistPreview = () => {
     status: form?.status,
     totalPrice: form?.totalPrice,
   };
+  const createBuylistFunc = async () => {
+    const result: createBuylistResult | undefined = await createBuylist();
+    setBuylistId(result?.buylist_id || 0);
+    setOpenAlert(true);
+  };
   const closeModal = () => {
     setOpenAlert(false);
     router.push(`/profile`);
   };
-  const openBuylist = () => {};
+  const openBuylistById = () => {
+    router.push(`/buylist/${buylistId}`);
+    setBuylistId(0);
+  };
   return (
     <div>
       <AlertCard
         isOpen={openAlert}
         closeModal={closeModal}
         loading={loading}
-        redirect={openBuylist}
+        redirect={openBuylistById}
       />
       <Container.Bordered>
         <article className="prose lg:prose-xl">
@@ -50,8 +62,7 @@ const BuylistPreview = () => {
           className="mt-4"
           disabled={loading}
           onClick={() => {
-            createBuylist();
-            setOpenAlert(true);
+            createBuylistFunc();
           }}
         >
           Create Buylist

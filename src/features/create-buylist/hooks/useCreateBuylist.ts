@@ -2,6 +2,12 @@ import { useCreateBuylistMutation } from ".";
 import { useCreateProductMutation } from "../model/mutations/create-product/createProduct.mutation.generated";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
 import { CreateProductBuyListInput } from "types/types.generated";
+import { CreateBuylistState } from "../model/state";
+
+export type createBuylistResult = {
+  buylist_id: number | undefined;
+  data: CreateBuylistState[] | undefined;
+};
 
 export const useCreateBuylist = () => {
   const [createProductMutation, { loading: loadingPr, error: errorPr }] =
@@ -23,23 +29,26 @@ export const useCreateBuylist = () => {
     });
   };
 
-  const createBuylist = async () => {
+  const createBuylist = async (): Promise<createBuylistResult | undefined> => {
     try {
       const buyList = await createBuylistMutation({
         variables: { input: form },
       });
       const id = buyList?.data?.createList?.id;
       if (!id) throw new Error("Buylist failure");
-      const result = await products?.reduce(async (memo: any, fields) => {
-        const results = await memo;
-        const currentResult = await createProduct(id, fields);
-        return [...results, currentResult];
-      }, []);
-      return result;
+      const result: CreateBuylistState[] = await products?.reduce(
+        async (memo: any, fields) => {
+          const results = await memo;
+          const currentResult = await createProduct(id, fields);
+          return [...results, currentResult];
+        },
+        []
+      );
+      return { buylist_id: id, data: result };
     } catch (error) {}
   };
 
-  return { createBuylist: createBuylist, loading: loadingPr || loadingBl };
+  return { createBuylist, loading: loadingPr || loadingBl };
 };
 
 // const res = await fields.reduce(async (memo, field) => {
