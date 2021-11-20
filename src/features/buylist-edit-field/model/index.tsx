@@ -1,1 +1,1 @@
-export { useEditBuylistFieldMutation as useEditBuylistField } from "./mutation/edit-buylist-field.mutation.generated";
+export { useEditBuylistFieldMutation } from "./mutation/edit-buylist-field.mutation.generated";

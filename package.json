@@ -10,7 +10,6 @@
     "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
     "@apollo/client": "^3.4.16",
     "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.5",

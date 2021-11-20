@@ -27,9 +27,7 @@ const Card: FC<Props> = ({ product, className }) => {
 
   return (
     <div
-      className={`shadow-lg rounded-2xl bg-white w-80 m-auto p-2 ${
-        className || ""
-      }`}
+      className={`shadow-lg rounded-2xl bg-white w-80 p-2 ${className || ""}`}
     >
       {product?.imageUrl && (
         <img

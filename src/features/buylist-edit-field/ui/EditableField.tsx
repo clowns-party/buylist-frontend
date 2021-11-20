@@ -1,12 +1,10 @@
-import { useApolloClient } from "@apollo/client";
-import { GetBuylistByIdDocument } from "entities/buylist/model/queries/buylistById.query.generated";
 import { useRouter } from "next/router";
 import React, { FC, useRef, useState } from "react";
 import { useClickAway } from "react-use";
 import { Input } from "shared/ui";
 import styled from "styled-components";
+import useBuylistEditField from "../hooks/useBuylistEditField";
 import { EditableFieldProps } from "../lib/types";
-import { useEditBuylistField } from "../model";
 
 type Props = {
   editable: boolean;
@@ -21,18 +19,15 @@ const EditableField: FC<Props> = ({
   value,
   children,
   className,
-  fieldName = "buylist",
+  fieldName,
 }) => {
-  const [actionEdit, { loading }] = useEditBuylistField();
-  const client = useApolloClient();
+  const { edit: actionEdit, loading } = useBuylistEditField(fieldName);
 
   const input = useRef(null);
   const [edit, setEdit] = useState(false);
   const [form, setForm] = useState({ value });
 
   const { query } = useRouter();
-
-  const id = query?.id?.toString();
   const editMode = edit && editable;
 
   const onValidate = () => {
@@ -43,19 +38,13 @@ const EditableField: FC<Props> = ({
   };
 
   const onClose = async () => {
+    const id = query?.id?.toString();
+
     if (onValidate()) {
       await actionEdit({
-        variables: {
-          id: Number(id),
-          input: {
-            [field]: form.value,
-          },
-        },
-      });
-      await client.refetchQueries({
-        updateCache(cache) {
-          cache.evict({ fieldName });
-        },
+        id: Number(id),
+        value: form.value,
+        field,
       });
     }
 

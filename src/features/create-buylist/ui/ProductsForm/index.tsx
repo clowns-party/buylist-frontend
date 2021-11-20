@@ -9,6 +9,7 @@ import {
   initialProduct,
 } from "features/create-buylist/model/state";
 import { MockedProduct } from "features/create-buylist/lib/types";
+import styled from "styled-components";
 
 const Form = () => {
   const products = useStoreCreateBuylist((state) => state.products);
@@ -156,11 +157,8 @@ const Form = () => {
             );
           }}
         </Formik>
-        <div className="flex justify-between flex-col h-1/2 md:mt-0 mt-32 pl-16 pr-16">
-          <div
-            className="overflow-y-auto hide-scroll-bar"
-            style={{ height: 503 }}
-          >
+        <div className="flex justify-between flex-col h-1/2 md:overflow-visible md:mt-0 md:pr-16 md:pl-16 mt-6 pl-0 pr-0 overflow-hidden">
+          <ScrollBar className="hide-scroll-bar max-w-96">
             {products?.map((el, index) => {
               const active =
                 el.id === productForm?.id
@@ -172,14 +170,17 @@ const Form = () => {
                   onClick={() => {
                     setCardInForm(el.id);
                   }}
-                  className="cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                  className="cursor-pointer"
                 >
-                  <ProductCard product={el} className={`mb-10 ${active}`} />
+                  <ProductCard
+                    product={el}
+                    className={`ml-2 mr-2 mb-10 ${active}`}
+                  />
                 </div>
               );
             })}
             <Form.Counter disable={disableAdding} action={addProduct} />
-          </div>
+          </ScrollBar>
           <div className="flex justify-end mt-6">
             <Button
               disabled={validateProductsFields(products)}
@@ -221,6 +222,19 @@ Form.Counter = ({
     </div>
   );
 };
+
+const ScrollBar = styled.div`
+  overflow-y: auto;
+  height: 503px;
+  @media (max-width: 768px) {
+    height: auto;
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    overflow-x: auto;
+    align-items: center;
+  }
+`;
 
 const AutoSubmit = () => {
   const { values, submitForm } = useFormikContext();
