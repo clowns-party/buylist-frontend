@@ -1,8 +1,8 @@
 import { useCreateBuylistMutation } from ".";
-import { useCreateProductMutation } from "../model/mutations/create-product/createProduct.mutation.generated";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
 import { CreateProductBuyListInput } from "types/types.generated";
 import { CreateBuylistState } from "../model/state";
+import { useCreateProductMutation } from "../model";
 
 export type createBuylistResult = {
   buylist_id: number | undefined;

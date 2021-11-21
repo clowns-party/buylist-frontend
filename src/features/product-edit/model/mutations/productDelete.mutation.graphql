@@ -1,0 +1,8 @@
+mutation deleteProduct($productId: Int!, $buyListId: Int!) {
+  deleteProduct(buyListId: $buyListId, productId: $productId) {
+    id
+    products {
+      id
+    }
+  }
+}

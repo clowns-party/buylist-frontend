@@ -5,9 +5,15 @@ import { Fragment } from "react";
 export type ModalProps = {
   closeModal: () => void;
   isOpen: boolean;
+  variant?: keyof typeof Variants;
 };
 
-const Modal: FC<ModalProps> = ({ closeModal, isOpen, children }) => {
+const Modal: FC<ModalProps> = ({
+  closeModal,
+  isOpen,
+  children,
+  variant = "default",
+}) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -45,15 +51,20 @@ const Modal: FC<ModalProps> = ({ closeModal, isOpen, children }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                {children}
-              </div>
+              <div className={Variants[variant]}> {children}</div>
             </Transition.Child>
           </div>
         </Dialog>
       </Transition>
     </>
   );
+};
+
+const Variants = {
+  default:
+    "inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl",
+  transparent:
+    "inline-block overflow-hidden text-left align-middle transition-all transform",
 };
 
 export default Modal;

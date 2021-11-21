@@ -4,16 +4,32 @@ import { ProductProps } from "entities/product/ui/ProductCard";
 import { FC } from "react";
 import { Dropdown } from "shared/ui";
 import { useModal } from "shared/ui/Modal";
-import { ProductEditPopup } from "..";
+import { ProductDeletePopup, ProductEditPopup } from "..";
 
 const ProductEditable: FC<ProductProps> = (props) => {
-  const { isOpen, openModal, closeModal } = useModal();
+  const {
+    isOpen: isEditOpen,
+    openModal: editOpen,
+    closeModal: editClose,
+  } = useModal();
+  const {
+    isOpen: isDeleteOpen,
+    openModal: deleteOpen,
+    closeModal: deleteClose,
+  } = useModal();
+
   return (
     <>
       <ProductEditPopup
-        isOpen={isOpen}
-        closeModal={closeModal}
+        isOpen={isEditOpen}
+        closeModal={editClose}
         product={props.product}
+      />
+      <ProductDeletePopup
+        isOpen={isDeleteOpen}
+        closeModal={deleteClose}
+        product={props.product}
+        variant="transparent"
       />
       <ProductCard
         {...props}
@@ -22,7 +38,10 @@ const ProductEditable: FC<ProductProps> = (props) => {
             items={[{ title: "edit" }, { title: "delete" }]}
             onSelect={(title) => {
               if (title === "edit") {
-                openModal();
+                editOpen();
+              }
+              if (title === "delete") {
+                deleteOpen();
               }
             }}
             className="flex justify-end"
