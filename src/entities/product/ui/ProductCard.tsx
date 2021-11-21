@@ -1,20 +1,19 @@
-import { GetBuylistByIdQuery } from "entities/buylist/model/queries/buylistById.query.generated";
 import { Mark } from "entities/hooks/useMark";
 import MapModal from "entities/map/ui/Modal";
+import { ProductFields } from "features/create-buylist/lib/types";
 import { FC, useState } from "react";
 import { Button } from "shared/ui";
 import styled from "styled-components";
-import { CreateProductBuyListInput } from "types/types.generated";
 import { cardFontColor, isDateExpired } from "../lib";
+import { Product } from "../lib/types";
 
-type Props = {
-  product:
-    | CreateProductBuyListInput
-    | GetBuylistByIdQuery["buylist"]["products"][0];
+export type ProductProps = {
+  product: Product | ProductFields;
   className?: string;
+  header?: React.ReactNode;
 };
 
-const Card: FC<Props> = ({ product, className }) => {
+const ProductCard: FC<ProductProps> = ({ product, className, header }) => {
   let [isOpen, setIsOpen] = useState(false);
   const mark: Mark = {
     position: product?.coordinate,
@@ -29,6 +28,7 @@ const Card: FC<Props> = ({ product, className }) => {
     <div
       className={`shadow-lg rounded-2xl bg-white w-80 p-2 ${className || ""}`}
     >
+      {header || ""}
       {product?.imageUrl && (
         <img
           src={product?.imageUrl}
@@ -97,4 +97,4 @@ const Footer = styled.div`
   display: flex;
   align-items: end;
 `;
-export default Card;
+export default ProductCard;

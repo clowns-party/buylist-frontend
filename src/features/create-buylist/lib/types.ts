@@ -4,7 +4,7 @@ import {
   User,
 } from "types/types.generated";
 
-export type MockedProduct = CreateProductBuyListInput & { id: number };
+export type ProductFields = CreateProductBuyListInput & { id: number };
 
 export type MockedBuylist = {
   description: string;
@@ -13,7 +13,7 @@ export type MockedBuylist = {
   name: string;
   owner: User | undefined;
   ownerId: number | undefined;
-  products: MockedProduct[];
+  products: ProductFields[];
   status: Statuses;
   totalPrice: number;
 };

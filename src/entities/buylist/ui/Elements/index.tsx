@@ -19,7 +19,10 @@ const BuylistElements: FC<BuylistProps> = (props) => {
               <Details {...props} />
             </div>
           </div>
-          <Products products={props?.buylist?.products} />
+          <Products
+            products={props?.buylist?.products}
+            editable={props.editable}
+          />
         </div>
       </div>
     </div>

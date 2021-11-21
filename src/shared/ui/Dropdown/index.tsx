@@ -1,5 +1,5 @@
 import { Popover, Transition } from "@headlessui/react";
-import { FC } from "hoist-non-react-statics/node_modules/@types/react";
+import { FC } from "react";
 import { Fragment } from "react";
 
 type Props = {
@@ -7,16 +7,18 @@ type Props = {
   classNameItemsWrap?: string;
   onSelect: (item: string) => void;
   active?: string;
+  className?: string;
 };
 const Dropdown: FC<Props> = ({
   items,
   classNameItemsWrap,
+  className,
   onSelect,
   children,
   active,
 }) => {
   return (
-    <div>
+    <div className={className || ""}>
       <Popover className="relative">
         {({ open }) => (
           <>

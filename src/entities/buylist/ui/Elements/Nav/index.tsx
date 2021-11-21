@@ -1,3 +1,4 @@
+import { DotsHorizontalIcon } from "@heroicons/react/outline";
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
 import { FC } from "react";
 import { Dropdown, Input } from "shared/ui";
@@ -60,17 +61,7 @@ const Nav: FC<Props> = ({ owner, name = false }) => {
 
         <Dropdown items={[{ title: "edit" }]} onSelect={() => {}}>
           <div className="p-2 rounded ml-2 hover:bg-blue-100 text-gray-700">
-            <svg
-              className="h-5 w-5 "
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10.001 7.8a2.2 2.2 0 100 4.402A2.2 2.2 0 0010 7.8zm-7 0a2.2 2.2 0 100 4.402A2.2 2.2 0 003 7.8zm14 0a2.2 2.2 0 100 4.402A2.2 2.2 0 0017 7.8z"
-              />
-            </svg>
+            <DotsHorizontalIcon className="h-5 w-5 " />
           </div>
         </Dropdown>
       </div>

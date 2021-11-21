@@ -3,7 +3,7 @@ import {
   useGetBuylistByIdQuery,
 } from "entities/buylist/model/queries/buylistById.query.generated";
 import { Buylist } from "entities/buylist/ui";
-import { FC } from "hoist-non-react-statics/node_modules/@types/react";
+import { FC } from "react";
 import { GetServerSideProps } from "next";
 
 import Head from "next/head";

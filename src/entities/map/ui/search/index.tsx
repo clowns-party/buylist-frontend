@@ -23,7 +23,10 @@ const SearchGeo: FC<Props> = ({ changeGeo }) => {
 
       // Add geocoder result to container.
       geocoder.on("result", (event) => {
-        changeGeo?.(event.result.center as string[]);
+        const position = event.result.center?.map(
+          (geo: number) => `${geo}`
+        ) as string[];
+        changeGeo?.(position);
       });
 
       // Clear results container when search is cleared.

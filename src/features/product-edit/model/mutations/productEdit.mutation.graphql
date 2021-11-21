@@ -1,0 +1,12 @@
+mutation updateProduct(
+  $productId: Int!
+  $buyListId: Int!
+  $input: UpdateProductBuyListInput!
+) {
+  updateProduct(productId: $productId, buyListId: $buyListId, input: $input) {
+    id
+    products {
+      id
+    }
+  }
+}

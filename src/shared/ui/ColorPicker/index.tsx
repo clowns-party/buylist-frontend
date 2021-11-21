@@ -1,4 +1,4 @@
-import { FC } from "hoist-non-react-statics/node_modules/@types/react";
+import { FC } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { useClickAway } from "react-use";
