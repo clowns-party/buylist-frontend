@@ -1,102 +1,52 @@
-import * as Types from "../../../../types/types.generated";
+import * as Types from '../../../../types/types.generated';
 
-import { gql } from "@apollo/client";
-import { UserFieldsFragmentDoc } from "../../../user/model/user.fragment.generated";
-import * as Apollo from "@apollo/client";
-const defaultOptions = {};
+import { gql } from '@apollo/client';
+import { UserFieldsFragmentDoc } from '../../../user/model/user.fragment.generated';
+import * as Apollo from '@apollo/client';
+const defaultOptions =  {}
 export type GetBuylistByidSubscriptionVariables = Types.Exact<{
-  id: Types.Scalars["Int"];
+  id: Types.Scalars['Int'];
 }>;
 
-export type GetBuylistByidSubscription = {
-  __typename?: "Subscription";
-  buylistWatch: {
-    __typename?: "Buylist";
-    id: number;
-    name: string;
-    description: string;
-    totalPrice: number;
-    status: Types.Statuses;
-    ownerId: number;
-    products: Array<{
-      __typename?: "Product";
-      id: number;
-      name: string;
-      price: number;
-      link?: string | null | undefined;
-      imageUrl?: string | null | undefined;
-      coordinate?: Array<string> | null | undefined;
-      buyBefore?: any | null | undefined;
-      color?: string | null | undefined;
-      authorId: number;
-      author: {
-        __typename?: "User";
-        id: number;
-        firstName: string;
-        lastName: string;
-        phone: string;
-        email: string;
-      };
-    }>;
-    owner: {
-      __typename?: "User";
-      id: number;
-      firstName: string;
-      lastName: string;
-      phone: string;
-      email: string;
-    };
-    members: Array<{
-      __typename?: "Member";
-      id: number;
-      user: {
-        __typename?: "User";
-        id: number;
-        firstName: string;
-        lastName: string;
-        phone: string;
-        email: string;
-      };
-    }>;
-  };
-};
+
+export type GetBuylistByidSubscription = { __typename?: 'Subscription', buylistWatch: { __typename?: 'Buylist', id: number, name: string, description: string, totalPrice: number, status: Types.Statuses, ownerId: number, products: Array<{ __typename?: 'Product', id: number, name: string, price: number, link?: string | null | undefined, imageUrl?: string | null | undefined, coordinate?: Array<string> | null | undefined, buyBefore?: any | null | undefined, color?: string | null | undefined, authorId: number, author: { __typename?: 'User', id: number, firstName: string, lastName: string, phone: string, email: string } }>, owner: { __typename?: 'User', id: number, firstName: string, lastName: string, phone: string, email: string }, members: Array<{ __typename?: 'Member', id: number, user: { __typename?: 'User', id: number, firstName: string, lastName: string, phone: string, email: string } }> } };
+
 
 export const GetBuylistByidDocument = gql`
-  subscription getBuylistByid($id: Int!) {
-    buylistWatch(id: $id) {
+    subscription getBuylistByid($id: Int!) {
+  buylistWatch(id: $id) {
+    id
+    name
+    description
+    totalPrice
+    status
+    products {
       id
       name
-      description
-      totalPrice
-      status
-      products {
-        id
-        name
-        price
-        link
-        imageUrl
-        coordinate
-        buyBefore
-        color
-        authorId
-        author {
-          ...UserFields
-        }
-      }
-      ownerId
-      owner {
+      price
+      link
+      imageUrl
+      coordinate
+      buyBefore
+      color
+      authorId
+      author {
         ...UserFields
       }
-      members {
-        id
-        user {
-          ...UserFields
-        }
+    }
+    ownerId
+    owner {
+      ...UserFields
+    }
+    members {
+      id
+      user {
+        ...UserFields
       }
     }
   }
-  ${UserFieldsFragmentDoc}
-`;
+}
+    ${UserFieldsFragmentDoc}`;
 
 /**
  * __useGetBuylistByidSubscription__
@@ -114,20 +64,9 @@ export const GetBuylistByidDocument = gql`
  *   },
  * });
  */
-export function useGetBuylistByidSubscription(
-  baseOptions: Apollo.SubscriptionHookOptions<
-    GetBuylistByidSubscription,
-    GetBuylistByidSubscriptionVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useSubscription<
-    GetBuylistByidSubscription,
-    GetBuylistByidSubscriptionVariables
-  >(GetBuylistByidDocument, options);
-}
-export type GetBuylistByidSubscriptionHookResult = ReturnType<
-  typeof useGetBuylistByidSubscription
->;
-export type GetBuylistByidSubscriptionResult =
-  Apollo.SubscriptionResult<GetBuylistByidSubscription>;
+export function useGetBuylistByidSubscription(baseOptions: Apollo.SubscriptionHookOptions<GetBuylistByidSubscription, GetBuylistByidSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<GetBuylistByidSubscription, GetBuylistByidSubscriptionVariables>(GetBuylistByidDocument, options);
+      }
+export type GetBuylistByidSubscriptionHookResult = ReturnType<typeof useGetBuylistByidSubscription>;
+export type GetBuylistByidSubscriptionResult = Apollo.SubscriptionResult<GetBuylistByidSubscription>;

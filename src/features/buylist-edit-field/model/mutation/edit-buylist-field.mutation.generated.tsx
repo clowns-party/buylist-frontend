@@ -1,38 +1,28 @@
-import * as Types from "../../../../types/types.generated";
+import * as Types from '../../../../types/types.generated';
 
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
-const defaultOptions = {};
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
+const defaultOptions =  {}
 export type EditBuylistFieldMutationVariables = Types.Exact<{
-  id: Types.Scalars["Int"];
+  id: Types.Scalars['Int'];
   input: Types.UpdateBuylistInput;
 }>;
 
-export type EditBuylistFieldMutation = {
-  __typename?: "Mutation";
-  updateList: {
-    __typename?: "Buylist";
-    id: number;
-    name: string;
-    description: string;
-    status: Types.Statuses;
-  };
-};
+
+export type EditBuylistFieldMutation = { __typename?: 'Mutation', updateList: { __typename?: 'Buylist', id: number, name: string, description: string, status: Types.Statuses } };
+
 
 export const EditBuylistFieldDocument = gql`
-  mutation editBuylistField($id: Int!, $input: UpdateBuylistInput!) {
-    updateList(id: $id, input: $input) {
-      id
-      name
-      description
-      status
-    }
+    mutation editBuylistField($id: Int!, $input: UpdateBuylistInput!) {
+  updateList(id: $id, input: $input) {
+    id
+    name
+    description
+    status
   }
-`;
-export type EditBuylistFieldMutationFn = Apollo.MutationFunction<
-  EditBuylistFieldMutation,
-  EditBuylistFieldMutationVariables
->;
+}
+    `;
+export type EditBuylistFieldMutationFn = Apollo.MutationFunction<EditBuylistFieldMutation, EditBuylistFieldMutationVariables>;
 
 /**
  * __useEditBuylistFieldMutation__
@@ -52,24 +42,10 @@ export type EditBuylistFieldMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useEditBuylistFieldMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    EditBuylistFieldMutation,
-    EditBuylistFieldMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    EditBuylistFieldMutation,
-    EditBuylistFieldMutationVariables
-  >(EditBuylistFieldDocument, options);
-}
-export type EditBuylistFieldMutationHookResult = ReturnType<
-  typeof useEditBuylistFieldMutation
->;
-export type EditBuylistFieldMutationResult =
-  Apollo.MutationResult<EditBuylistFieldMutation>;
-export type EditBuylistFieldMutationOptions = Apollo.BaseMutationOptions<
-  EditBuylistFieldMutation,
-  EditBuylistFieldMutationVariables
->;
+export function useEditBuylistFieldMutation(baseOptions?: Apollo.MutationHookOptions<EditBuylistFieldMutation, EditBuylistFieldMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditBuylistFieldMutation, EditBuylistFieldMutationVariables>(EditBuylistFieldDocument, options);
+      }
+export type EditBuylistFieldMutationHookResult = ReturnType<typeof useEditBuylistFieldMutation>;
+export type EditBuylistFieldMutationResult = Apollo.MutationResult<EditBuylistFieldMutation>;
+export type EditBuylistFieldMutationOptions = Apollo.BaseMutationOptions<EditBuylistFieldMutation, EditBuylistFieldMutationVariables>;

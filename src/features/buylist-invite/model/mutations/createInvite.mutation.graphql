@@ -1,0 +1,12 @@
+mutation invite($toId: Int!, $buyListId: Int!) {
+  invite(toUserId: $toId, buyListId: $buyListId) {
+    id
+    from {
+      id
+    }
+    to {
+      id
+    }
+    status
+  }
+}

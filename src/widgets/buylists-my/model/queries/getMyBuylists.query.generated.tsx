@@ -1,35 +1,26 @@
-import * as Types from "../../../../types/types.generated";
+import * as Types from '../../../../types/types.generated';
 
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
-const defaultOptions = {};
-export type GetMyBuylistsQueryVariables = Types.Exact<{ [key: string]: never }>;
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
+const defaultOptions =  {}
+export type GetMyBuylistsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
-export type GetMyBuylistsQuery = {
-  __typename?: "Query";
-  myBuylists: Array<{
-    __typename?: "Buylists";
-    id: number;
-    name: string;
-    description: string;
-    totalPrice: number;
-    status: Types.Statuses;
-    ownerId: number;
-  }>;
-};
+
+export type GetMyBuylistsQuery = { __typename?: 'Query', myBuylists: Array<{ __typename?: 'Buylists', id: number, name: string, description: string, totalPrice: number, status: Types.Statuses, ownerId: number }> };
+
 
 export const GetMyBuylistsDocument = gql`
-  query getMyBuylists {
-    myBuylists {
-      id
-      name
-      description
-      totalPrice
-      status
-      ownerId
-    }
+    query getMyBuylists {
+  myBuylists {
+    id
+    name
+    description
+    totalPrice
+    status
+    ownerId
   }
-`;
+}
+    `;
 
 /**
  * __useGetMyBuylistsQuery__
@@ -46,37 +37,14 @@ export const GetMyBuylistsDocument = gql`
  *   },
  * });
  */
-export function useGetMyBuylistsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetMyBuylistsQuery,
-    GetMyBuylistsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetMyBuylistsQuery, GetMyBuylistsQueryVariables>(
-    GetMyBuylistsDocument,
-    options
-  );
-}
-export function useGetMyBuylistsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetMyBuylistsQuery,
-    GetMyBuylistsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetMyBuylistsQuery, GetMyBuylistsQueryVariables>(
-    GetMyBuylistsDocument,
-    options
-  );
-}
-export type GetMyBuylistsQueryHookResult = ReturnType<
-  typeof useGetMyBuylistsQuery
->;
-export type GetMyBuylistsLazyQueryHookResult = ReturnType<
-  typeof useGetMyBuylistsLazyQuery
->;
-export type GetMyBuylistsQueryResult = Apollo.QueryResult<
-  GetMyBuylistsQuery,
-  GetMyBuylistsQueryVariables
->;
+export function useGetMyBuylistsQuery(baseOptions?: Apollo.QueryHookOptions<GetMyBuylistsQuery, GetMyBuylistsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyBuylistsQuery, GetMyBuylistsQueryVariables>(GetMyBuylistsDocument, options);
+      }
+export function useGetMyBuylistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyBuylistsQuery, GetMyBuylistsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyBuylistsQuery, GetMyBuylistsQueryVariables>(GetMyBuylistsDocument, options);
+        }
+export type GetMyBuylistsQueryHookResult = ReturnType<typeof useGetMyBuylistsQuery>;
+export type GetMyBuylistsLazyQueryHookResult = ReturnType<typeof useGetMyBuylistsLazyQuery>;
+export type GetMyBuylistsQueryResult = Apollo.QueryResult<GetMyBuylistsQuery, GetMyBuylistsQueryVariables>;

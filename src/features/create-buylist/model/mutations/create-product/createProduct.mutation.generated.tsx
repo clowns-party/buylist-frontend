@@ -1,51 +1,34 @@
-import * as Types from "../../../../../types/types.generated";
+import * as Types from '../../../../../types/types.generated';
 
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
-const defaultOptions = {};
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
+const defaultOptions =  {}
 export type CreateProductMutationVariables = Types.Exact<{
-  buyListId: Types.Scalars["Int"];
+  buyListId: Types.Scalars['Int'];
   input: Types.CreateProductBuyListInput;
 }>;
 
-export type CreateProductMutation = {
-  __typename?: "Mutation";
-  createProduct: {
-    __typename?: "Buylist";
-    products: Array<{
-      __typename?: "Product";
-      name: string;
-      price: number;
-      link?: string | null | undefined;
-      imageUrl?: string | null | undefined;
-      coordinate?: Array<string> | null | undefined;
-      comment: string;
-      buyBefore?: any | null | undefined;
-      color?: string | null | undefined;
-    }>;
-  };
-};
+
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct: { __typename?: 'Buylist', products: Array<{ __typename?: 'Product', name: string, price: number, link?: string | null | undefined, imageUrl?: string | null | undefined, coordinate?: Array<string> | null | undefined, comment: string, buyBefore?: any | null | undefined, color?: string | null | undefined }> } };
+
 
 export const CreateProductDocument = gql`
-  mutation createProduct($buyListId: Int!, $input: CreateProductBuyListInput!) {
-    createProduct(buyListId: $buyListId, input: $input) {
-      products {
-        name
-        price
-        link
-        imageUrl
-        coordinate
-        comment
-        buyBefore
-        color
-      }
+    mutation createProduct($buyListId: Int!, $input: CreateProductBuyListInput!) {
+  createProduct(buyListId: $buyListId, input: $input) {
+    products {
+      name
+      price
+      link
+      imageUrl
+      coordinate
+      comment
+      buyBefore
+      color
     }
   }
-`;
-export type CreateProductMutationFn = Apollo.MutationFunction<
-  CreateProductMutation,
-  CreateProductMutationVariables
->;
+}
+    `;
+export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
 
 /**
  * __useCreateProductMutation__
@@ -65,24 +48,10 @@ export type CreateProductMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateProductMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateProductMutation,
-    CreateProductMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateProductMutation,
-    CreateProductMutationVariables
-  >(CreateProductDocument, options);
-}
-export type CreateProductMutationHookResult = ReturnType<
-  typeof useCreateProductMutation
->;
-export type CreateProductMutationResult =
-  Apollo.MutationResult<CreateProductMutation>;
-export type CreateProductMutationOptions = Apollo.BaseMutationOptions<
-  CreateProductMutation,
-  CreateProductMutationVariables
->;
+export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
+      }
+export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
+export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;

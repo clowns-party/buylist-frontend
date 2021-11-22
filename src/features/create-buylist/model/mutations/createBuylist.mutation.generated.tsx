@@ -1,41 +1,29 @@
-import * as Types from "../../../../types/types.generated";
+import * as Types from '../../../../types/types.generated';
 
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
-const defaultOptions = {};
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
+const defaultOptions =  {}
 export type CreateBuylistMutationVariables = Types.Exact<{
   input: Types.CreateBuylistInput;
 }>;
 
-export type CreateBuylistMutation = {
-  __typename?: "Mutation";
-  createList: {
-    __typename?: "Buylist";
-    id: number;
-    name: string;
-    description: string;
-    totalPrice: number;
-    status: Types.Statuses;
-    ownerId: number;
-  };
-};
+
+export type CreateBuylistMutation = { __typename?: 'Mutation', createList: { __typename?: 'Buylist', id: number, name: string, description: string, totalPrice: number, status: Types.Statuses, ownerId: number } };
+
 
 export const CreateBuylistDocument = gql`
-  mutation createBuylist($input: CreateBuylistInput!) {
-    createList(input: $input) {
-      id
-      name
-      description
-      totalPrice
-      status
-      ownerId
-    }
+    mutation createBuylist($input: CreateBuylistInput!) {
+  createList(input: $input) {
+    id
+    name
+    description
+    totalPrice
+    status
+    ownerId
   }
-`;
-export type CreateBuylistMutationFn = Apollo.MutationFunction<
-  CreateBuylistMutation,
-  CreateBuylistMutationVariables
->;
+}
+    `;
+export type CreateBuylistMutationFn = Apollo.MutationFunction<CreateBuylistMutation, CreateBuylistMutationVariables>;
 
 /**
  * __useCreateBuylistMutation__
@@ -54,24 +42,10 @@ export type CreateBuylistMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateBuylistMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateBuylistMutation,
-    CreateBuylistMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateBuylistMutation,
-    CreateBuylistMutationVariables
-  >(CreateBuylistDocument, options);
-}
-export type CreateBuylistMutationHookResult = ReturnType<
-  typeof useCreateBuylistMutation
->;
-export type CreateBuylistMutationResult =
-  Apollo.MutationResult<CreateBuylistMutation>;
-export type CreateBuylistMutationOptions = Apollo.BaseMutationOptions<
-  CreateBuylistMutation,
-  CreateBuylistMutationVariables
->;
+export function useCreateBuylistMutation(baseOptions?: Apollo.MutationHookOptions<CreateBuylistMutation, CreateBuylistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateBuylistMutation, CreateBuylistMutationVariables>(CreateBuylistDocument, options);
+      }
+export type CreateBuylistMutationHookResult = ReturnType<typeof useCreateBuylistMutation>;
+export type CreateBuylistMutationResult = Apollo.MutationResult<CreateBuylistMutation>;
+export type CreateBuylistMutationOptions = Apollo.BaseMutationOptions<CreateBuylistMutation, CreateBuylistMutationVariables>;
