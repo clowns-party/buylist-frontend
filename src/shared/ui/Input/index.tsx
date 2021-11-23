@@ -1,12 +1,12 @@
 import { ErrorWaring } from "shared/icons";
 import { Loader } from "../Loader/Loader";
 
-type Props = {
+export type InputProps = {
   error?: string;
   loading?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-function Input({ error, loading, ...props }: Props) {
+function Input({ error, loading, ...props }: InputProps) {
   const className =
     props?.disabled || loading
       ? Input.VariantClasses.Disabled

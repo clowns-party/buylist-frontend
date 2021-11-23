@@ -4,4 +4,5 @@ export { default as Input } from "./Input";
 export { default as ColorPicker } from "./ColorPicker";
 export { default as ProgressBar } from "./ProgressBar";
 export { default as Dropdown } from "./Dropdown";
+export { default as SearchInput } from "./SearchInput";
 export { Modal } from "./Modal";
