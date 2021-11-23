@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useRouter } from "next/router";
 import React, { FC, useRef, useState } from "react";
 import { useClickAway } from "react-use";
@@ -30,17 +31,16 @@ const EditableField: FC<Props> = ({
   const { query } = useRouter();
   const editMode = edit && editable;
 
-  const onValidate = () => {
+  const onValidate = useCallback(() => {
     if (form.value === value) {
       return false;
     }
     return true;
-  };
+  }, [value, form?.value]);
 
-  const onClose = async () => {
+  const onClose = useCallback(async () => {
     const id = query?.id?.toString();
-
-    if (onValidate()) {
+    if (onValidate() && edit) {
       await actionEdit({
         id: Number(id),
         value: form.value,
@@ -49,7 +49,7 @@ const EditableField: FC<Props> = ({
     }
 
     setEdit(false);
-  };
+  }, [query?.id, onValidate]);
 
   const onEdit = () => {
     setEdit(true);

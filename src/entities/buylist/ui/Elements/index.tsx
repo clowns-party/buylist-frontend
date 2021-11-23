@@ -7,7 +7,7 @@ import Details from "./Details";
 
 const BuylistElements: FC<BuylistProps> = (props) => {
   return (
-    <div className="w-full relative">
+    <div className="w-full relative" key={props?.buylist?.id}>
       <Nav name={props?.buylist?.name} owner={props?.buylist?.owner} />
       <div className="flex overflow-auto h-screen">
         <div className="mr-10 flex-auto">
