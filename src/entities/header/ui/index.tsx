@@ -3,7 +3,10 @@
 import { Disclosure, Menu } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
+import { useUserInvitesQuery } from "entities/invites/model/queries/userInvites.query.generated";
+import { useEffect } from "react";
 import { useAuth } from "../../../features/auth/lib/hooks/useAuth";
+import InviteList from "../../invites/ui/InviteList";
 import UserInfo from "./UserInfo";
 import UserNavigation from "./UserNavigation";
 
@@ -16,6 +19,7 @@ const navigation = [
 ];
 
 export default function Header() {
+  const { data } = useUserInvitesQuery();
   const { logout, user } = useAuth();
   return (
     <>
@@ -55,14 +59,10 @@ export default function Header() {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
-                      <button
-                        type="button"
-                        className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                      >
-                        <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
-                      </button>
-
+                      {/* Notification dropdown */}
+                      <Menu as="div" className="ml-3 relative">
+                        <InviteList />
+                      </Menu>
                       {/* Profile dropdown */}
                       <Menu as="div" className="ml-3 relative">
                         <UserNavigation logout={logout} user={user} />

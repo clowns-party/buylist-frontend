@@ -1,0 +1,17 @@
+query userInvites {
+  myInvites {
+    id
+    buylist {
+      name
+    }
+    from {
+      firstName
+      lastName
+    }
+    to {
+      firstName
+      lastName
+    }
+    status
+  }
+}
