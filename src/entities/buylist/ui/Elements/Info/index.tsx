@@ -1,5 +1,6 @@
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
 import { EditableField } from "features/buylist-edit-field";
+import { Tooltip } from "shared/ui";
 import Activity from "./components/Activity";
 
 const BuylistInfo = ({ buylist, editable }: BuylistProps) => {
@@ -12,9 +13,11 @@ const BuylistInfo = ({ buylist, editable }: BuylistProps) => {
           field="name"
           className="w-full px-2 py-2"
         >
-          <div className="w-full px-2 hover:bg-blue-100 py-2 text-2xl font-semibold">
-            {buylist?.name}
-          </div>
+          <Tooltip content="To edit, double-click">
+            <div className="w-full px-2 hover:bg-blue-100 py-2 text-2xl font-semibold">
+              {buylist?.name}
+            </div>
+          </Tooltip>
         </EditableField>
         <div className="flex mt-1">
           <div className="flex py-1 px-3 mr-2 cursor-pointer bg-gray-200 hover:bg-gray-300 rounded">

@@ -62,8 +62,13 @@ const InviteUser = () => {
     [searchedItems?.searchUsers]
   );
   return (
-    <div>
-      <ShareIcons className="h-5 w-5 cursor-pointer" onClick={openModal} />
+    <>
+      <div
+        className="p-2 rounded ml-2 hover:bg-blue-100 text-gray-700 cursor-pointer flex items-center"
+        onClick={openModal}
+      >
+        <ShareIcons className="h-5 w-5" />
+      </div>
       <Modal isOpen={isOpen} closeModal={closeModal}>
         <div className="h-96">
           <div className="text-center w-full mx-auto py-2 px-4 sm:px-6 lg:px-8 z-20">
@@ -143,7 +148,7 @@ const InviteUser = () => {
           </div>
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
 

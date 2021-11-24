@@ -2,3 +2,15 @@
   display: none;
   scrollbar-width: none;
 }
+
+::-webkit-scrollbar {
+  width: 0.4em;
+}
+::-webkit-scrollbar,
+::-webkit-scrollbar-thumb {
+  overflow: visible;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}

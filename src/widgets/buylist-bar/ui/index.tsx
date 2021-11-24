@@ -7,9 +7,10 @@ import { useStoreBuylistBar } from "../model/store";
 import { filtersBuylist } from "../lib/filtersBuylist";
 import { Hamburger } from "shared/icons";
 import { useState } from "react";
+import styled from "styled-components";
 
 const BuylistBar = () => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const { order, filter, search } = useStoreBuylistBar((state) => ({
     order: state.order,
     filter: state.filter,
@@ -41,19 +42,19 @@ const BuylistBar = () => {
   );
 
   return (
-    <div className="mr-10 h-full" style={{ width: show ? 400 : 150 }}>
-      <div className="text-2xl mt-3 text-black font-semibold antialiased tracking-normal flex items-center">
-        <Hamburger className="h-6 w-6 mr-4 cursor-pointer" onClick={toggle} />
-        All Buylists
+    <div>
+      <div className="text-2xl text-black font-semibold antialiased tracking-normal flex items-center py-5">
+        <Hamburger className="h-6 w-6 cursor-pointer" onClick={toggle} />
       </div>
+
       {show && (
-        <>
-          <div className="flex mt-5 w-full">
+        <Wrapper className="h-full">
+          <div className="flex mt-5 w-full pb-4">
             <BuylistBarFilters.Search />
           </div>
           <div
-            className="bg-gray-100 mt-4 rounded overflow-y-auto max-h-screen pb-10"
-            style={{ paddingBottom: 120 }}
+            className="bg-gray-100 rounded overflow-y-auto max-h-screen pb-10 absolute top 0 z-10 w-full"
+            style={{ paddingBottom: 162 }}
           >
             <BuylistBarFilters />
             {buylists?.length ? (
@@ -61,13 +62,27 @@ const BuylistBar = () => {
                 <BuylistBarItem key={index} buylist={buylist} />
               ))
             ) : (
-              <></>
+              <>
+                <h2>no results</h2>
+              </>
             )}
           </div>
-        </>
+        </Wrapper>
       )}
     </div>
   );
 };
+
+const Wrapper = styled.div`
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  background: white;
+  margin-right: 10px;
+  @media (min-width: 991.98px) {
+    position: relative;
+    width: 270px;
+  }
+`;
 
 export default BuylistBar;

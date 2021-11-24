@@ -27,11 +27,13 @@ const BuylistPage: FC<Props> = ({ buylist }) => {
     return <h2>no found!</h2>;
   }
   return (
-    <Container>
-      <Head>
-        <title>Buylist | {buylist?.name}</title>
-      </Head>
-      <Buylist buylist={updated?.buylist || buylist} withListBar editable />
+    <Container fullWidth>
+      <Container.Bordered>
+        <Head>
+          <title>Buylist | {buylist?.name}</title>
+        </Head>
+        <Buylist buylist={updated?.buylist || buylist} withListBar editable />
+      </Container.Bordered>
     </Container>
   );
 };

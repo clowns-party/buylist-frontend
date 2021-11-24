@@ -2,8 +2,7 @@ import { DotsHorizontalIcon } from "@heroicons/react/outline";
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
 import { InviteUser } from "features/buylist-invite/ui";
 import { FC } from "react";
-import { ShareIcons } from "shared/icons";
-import { Dropdown, Input } from "shared/ui";
+import { Dropdown } from "shared/ui";
 
 type Props = Pick<BuylistProps["buylist"], "name" | "owner">;
 
@@ -34,7 +33,7 @@ const Nav: FC<Props> = ({ owner, name = false }) => {
         </div>
       </div>
       <div className="flex">
-        <div className="p-2 rounded hover:bg-blue-100 text-blue-700">
+        <div className="p-2 rounded hover:bg-blue-100 text-blue-700 flex items-center">
           <svg
             className="h-5 w-5 "
             xmlns="http://www.w3.org/2000/svg"
@@ -47,9 +46,8 @@ const Nav: FC<Props> = ({ owner, name = false }) => {
             />
           </svg>
         </div>
-        <div className="p-2 rounded ml-2 hover:bg-blue-100 text-gray-700">
-          <InviteUser />
-        </div>
+
+        <InviteUser />
 
         <Dropdown items={[{ title: "edit" }]} onSelect={() => {}}>
           <div className="p-2 rounded ml-2 hover:bg-blue-100 text-gray-700">

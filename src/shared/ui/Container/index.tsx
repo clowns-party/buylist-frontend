@@ -3,13 +3,19 @@ import styled from "styled-components";
 
 type Props = {
   children: React.ReactNode;
+  fullWidth?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const Container = ({ children }: Props) => {
-  return <Container.Root>{children}</Container.Root>;
+const Container = ({ children, fullWidth = false }: Props) => {
+  return <Container.Root fullWidth={fullWidth}>{children}</Container.Root>;
 };
 
-Container.Bordered = ({ children, className, ...ownProps }: Props) => {
+Container.Bordered = ({
+  children,
+  className,
+  fullWidth,
+  ...ownProps
+}: Props) => {
   return (
     <div className={`relative py-10 ${className || ""}`} {...ownProps}>
       <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
@@ -19,11 +25,11 @@ Container.Bordered = ({ children, className, ...ownProps }: Props) => {
   );
 };
 
-Container.Root = styled.div`
+Container.Root = styled.div<{ fullWidth: boolean }>`
   padding: 0 15px;
 
   @media (min-width: 575.98px) {
-    max-width: 540px;
+    max-width: ${({ fullWidth }) => (fullWidth ? "100%" : "540px")};
     margin: auto;
     padding: 0;
   }
