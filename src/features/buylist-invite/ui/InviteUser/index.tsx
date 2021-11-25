@@ -70,7 +70,7 @@ const InviteUser = () => {
         <ShareIcons className="h-5 w-5" />
       </div>
       <Modal isOpen={isOpen} closeModal={closeModal}>
-        <div className="h-96">
+        <div>
           <div className="text-center w-full mx-auto py-2 px-4 sm:px-6 lg:px-8 z-20">
             <h2 className="text-2xl font-extrabold text-black dark:text-white sm:text-4xl">
               <span className="block">Share your buylist.</span>

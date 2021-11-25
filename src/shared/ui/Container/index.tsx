@@ -3,39 +3,31 @@ import styled from "styled-components";
 
 type Props = {
   children: React.ReactNode;
-  fullWidth?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const Container = ({ children, fullWidth = false }: Props) => {
-  return <Container.Root fullWidth={fullWidth}>{children}</Container.Root>;
+const Container = ({ children }: Props) => {
+  return <Container.Root>{children}</Container.Root>;
 };
 
-Container.Bordered = ({
-  children,
-  className,
-  fullWidth,
-  ...ownProps
-}: Props) => {
+Container.Bordered = ({ children, className, ...ownProps }: Props) => {
   return (
-    <div className={`relative py-10 ${className || ""}`} {...ownProps}>
-      <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
-        {children}
-      </div>
+    <div className={`relative ${className || ""}`} {...ownProps}>
+      <div className="relative px-4 py-10 bg-white shadow rounded-3xl">{children}</div>
     </div>
   );
 };
 
-Container.Root = styled.div<{ fullWidth: boolean }>`
+Container.Root = styled.div`
   padding: 0 15px;
 
   @media (min-width: 575.98px) {
-    max-width: ${({ fullWidth }) => (fullWidth ? "100%" : "540px")};
+    /* max-width: 540px; */
     margin: auto;
     padding: 0;
   }
 
   @media (min-width: 767.98px) {
-    max-width: 720px;
+    max-width: 95%;
   }
 
   @media (min-width: 991.98px) {

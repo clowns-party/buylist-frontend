@@ -51,7 +51,7 @@ const BuylistPreview = () => {
         loading={loading}
         redirect={openBuylistById}
       />
-      <Container.Bordered style={{ paddingBottom: 6 }}>
+      <Container.Bordered className="mb-14">
         <article className="prose lg:prose-xl">
           <div className="text-lg">Below is a preview of your buylist</div>
           <div className="text-lg">

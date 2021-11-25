@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ProductCard } from "entities/product";
 import { useStoreCreateBuylist } from "features/create-buylist/hooks";
 import { useFormikContext } from "formik";
-import { Button } from "shared/ui";
+import { Button, Container } from "shared/ui";
 import {
   CreateBuylistSteps,
   initialProduct,
@@ -29,10 +29,10 @@ const Form = () => {
     items?.some((el) => !el.name || !el.comment);
 
   return (
-    <div className="relative py-20 sm:mx-auto">
+    <Container.Bordered>
       <div className="flex justify-center md:space-x-6 md:flex-nowrap flex-wrap">
         <ProductForm product={productForm} onSubmit={onSubmit} />
-        <div className="flex justify-between flex-col h-1/2 md:overflow-visible md:mt-0 md:pr-16 md:pl-16 mt-6 pl-0 pr-0 overflow-hidden">
+        <div className="flex justify-between flex-col h-1/2 md:overflow-visible md:mt-0 mt-6 pl-0 pr-0 overflow-hidden">
           <ScrollBar className="hide-scroll-bar max-w-96">
             {products?.map((el, index) => {
               const active =
@@ -66,7 +66,7 @@ const Form = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Container.Bordered>
   );
 };
 

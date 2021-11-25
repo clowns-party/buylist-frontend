@@ -9,13 +9,13 @@ type Props = {
 } & BuylistProps;
 const Buylist: FC<Props> = ({ buylist, editable = false, withListBar }) => {
   return (
-    <div>
+    <Container.Bordered className="mb-6">
       <div className="flex w-100 h-screen overflow-hidden relative">
         {withListBar && <BuylistBar />}
 
         <BuylistElements buylist={buylist} editable={editable} />
       </div>
-    </div>
+    </Container.Bordered>
   );
 };
 

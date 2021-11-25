@@ -13,7 +13,7 @@ type Props = {
 
 const ProgressBar: FC<Props> = ({ steps, onChangeStep }) => {
   return (
-    <div className="w-full absolute top-6 z-10">
+    <div className="w-full">
       <div className="flex justify-center">
         {steps?.map((step) => (
           <Progress

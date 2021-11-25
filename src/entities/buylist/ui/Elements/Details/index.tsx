@@ -3,7 +3,7 @@ import DetailsStatus from "./components/DetailsStatus";
 
 const Details = ({ buylist, editable }: BuylistProps) => {
   return (
-    <div className="bg-white rounded" style={{ width: 240 }}>
+    <div className="bg-white rounded w-full">
       <DetailsStatus status={buylist.status} editable={editable} />
       <div className="mx-2 bg-white rounded">
         <div className="flex-col">
@@ -49,7 +49,6 @@ const Details = ({ buylist, editable }: BuylistProps) => {
               </div>
             </div>
           </div>
-          <div className="border mt-2"></div>
         </div>
       </div>
       <div className="flex justify-between px-1 text-left ">

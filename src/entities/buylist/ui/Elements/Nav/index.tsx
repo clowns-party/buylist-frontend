@@ -1,12 +1,21 @@
 import { DotsHorizontalIcon } from "@heroicons/react/outline";
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
+import { useDeleteBuylist } from "features/buylist-delete/hooks";
 import { InviteUser } from "features/buylist-invite/ui";
 import { FC } from "react";
 import { Dropdown } from "shared/ui";
 
-type Props = Pick<BuylistProps["buylist"], "name" | "owner">;
+type Props = Pick<BuylistProps["buylist"], "name" | "owner" | "id"> &
+  Pick<BuylistProps, "editable">;
 
-const Nav: FC<Props> = ({ owner, name = false }) => {
+const Nav: FC<Props> = ({ owner, editable, id, name = false }) => {
+  const { onDelete: actionDelete, loading } = useDeleteBuylist();
+  const onDelete = async () => {
+    if (!editable || loading || !id) {
+      return;
+    }
+    await actionDelete(id);
+  };
   return (
     <div className="flex w-full justify-between px-1 text-center items-center">
       <div className="p-2 flex">
@@ -32,7 +41,7 @@ const Nav: FC<Props> = ({ owner, name = false }) => {
           </div>
         </div>
       </div>
-      <div className="flex">
+      <div className="flex w-40">
         <div className="p-2 rounded hover:bg-blue-100 text-blue-700 flex items-center">
           <svg
             className="h-5 w-5 "
@@ -49,7 +58,14 @@ const Nav: FC<Props> = ({ owner, name = false }) => {
 
         <InviteUser />
 
-        <Dropdown items={[{ title: "edit" }]} onSelect={() => {}}>
+        <Dropdown
+          items={[{ title: "delete" }]}
+          onSelect={async (title) => {
+            if (title === "delete") {
+              // await onDelete();
+            }
+          }}
+        >
           <div className="p-2 rounded ml-2 hover:bg-blue-100 text-gray-700">
             <DotsHorizontalIcon className="h-5 w-5 " />
           </div>

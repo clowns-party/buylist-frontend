@@ -73,7 +73,7 @@ const BuylistInfo = ({ buylist, editable }: BuylistProps) => {
         </EditableField>
 
         <Activity />
-        <div className="border mt-3"></div>
+        <div className="border mt-3 block sm:hidden"></div>
       </div>
     </>
   );

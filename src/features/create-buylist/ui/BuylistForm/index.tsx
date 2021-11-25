@@ -108,11 +108,11 @@ const Form = () => {
                   </div>
                 </div>
 
-                <div className="pt-4 flex items-center space-x-4">
+                <div className="pt-4 flex items-center space-x-4 flex-wrap">
                   <Button
                     onClick={() => router.push(Routes.profile)}
                     variant="text"
-                    className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none bg-transparent"
+                    className="flex flex-auto justify-center items-center text-gray-900 px-4 py-3 rounded-md focus:outline-none bg-transparent"
                   >
                     <svg
                       className="w-6 h-6 mr-3"
@@ -132,7 +132,7 @@ const Form = () => {
                   </Button>
                   <Button
                     disabled={!valid}
-                    className="flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
+                    className="flex flex-auto  justify-center items-center text-white px-4 py-3 rounded-md focus:outline-none"
                   >
                     Continue
                   </Button>
@@ -148,7 +148,7 @@ const Form = () => {
 
 Form.Header = () => {
   return (
-    <div className="flex items-center space-x-5">
+    <div className="flex items-center space-x-5 flex-col sm:flex-row">
       <div className="h-14 w-14 bg-yellow-200 rounded-full flex flex-shrink-0 justify-center items-center text-yellow-500 text-2xl font-mono">
         i
       </div>
