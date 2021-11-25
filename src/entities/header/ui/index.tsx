@@ -3,6 +3,7 @@
 import { Disclosure, Menu } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
+import { useInvites } from "entities/invites/hooks/useInvites";
 import { useUserInvitesQuery } from "entities/invites/model/queries/userInvites.query.generated";
 import { useEffect } from "react";
 import { useAuth } from "../../../features/auth/lib/hooks/useAuth";
@@ -19,7 +20,7 @@ const navigation = [
 ];
 
 export default function Header() {
-  const { data } = useUserInvitesQuery();
+  const { invites, acceptInvite, declineInvite } = useInvites();
   const { logout, user } = useAuth();
   return (
     <>
@@ -61,7 +62,11 @@ export default function Header() {
                     <div className="ml-4 flex items-center md:ml-6">
                       {/* Notification dropdown */}
                       <Menu as="div" className="ml-3 relative">
-                        <InviteList />
+                        <InviteList
+                          invites={invites}
+                          acceptInvite={acceptInvite}
+                          declineInvite={declineInvite}
+                        />
                       </Menu>
                       {/* Profile dropdown */}
                       <Menu as="div" className="ml-3 relative">

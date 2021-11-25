@@ -1,0 +1,17 @@
+mutation declineInvite($id: Int!) {
+  declineInvite(id: $id) {
+    id
+    buylist {
+      name
+    }
+    from {
+      firstName
+      lastName
+    }
+    to {
+      firstName
+      lastName
+    }
+    status
+  }
+}
