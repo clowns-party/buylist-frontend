@@ -28,14 +28,7 @@ const ProductForm: FC<Props> = ({ product, onSubmit }) => {
       }}
       onSubmit={onSubmit}
     >
-      {({
-        handleChange,
-        setFieldValue,
-        handleBlur,
-        values,
-        errors,
-        handleSubmit,
-      }) => {
+      {({ handleChange, setFieldValue, handleBlur, values, errors }) => {
         return (
           <div className="w-96 flex flex-col">
             <div className="flex space-x-4 items-left justify-between mb-5">

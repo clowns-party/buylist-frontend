@@ -1,8 +1,8 @@
 import { Menu, Transition } from "@headlessui/react";
-import { BellIcon, UserIcon } from "@heroicons/react/outline";
+import { BellIcon } from "@heroicons/react/outline";
 import { UserInvitesQuery } from "entities/invites/model/queries/userInvites.query.generated";
 import React, { Fragment } from "react";
-import { EmptyIcon } from "shared/icons";
+import { UserAvatar } from "shared/icons";
 
 type InviteType = {
   invites: UserInvitesQuery["myInvites"] | undefined;
@@ -77,7 +77,7 @@ InviteList.Invite = ({
               >
                 <div className="flex justify-start mb-2">
                   <div className="border border-gray-300 rounded-full mr-2">
-                    <UserIcon className="h-10 w-10 rounded-full bg-white p-2" />
+                    <UserAvatar className="h-10 w-10 rounded-full bg-white" />
                   </div>
                   <div>
                     <p className="font-medium leading-tight text-gray-700">

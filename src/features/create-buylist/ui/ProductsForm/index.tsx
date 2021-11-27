@@ -64,6 +64,11 @@ const Form = () => {
               Continue
             </Button>
           </div>
+          {validateProductsFields(products) && (
+            <div className="flex justify-end mt-4 text-red-600">
+              Check that all the cards are filled in correctly
+            </div>
+          )}
         </div>
       </div>
     </Container.Bordered>
