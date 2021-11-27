@@ -3,6 +3,7 @@ import { UserIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import Link from "next/link";
 import React, { Fragment } from "react";
+import { UserAvatar } from "shared/icons";
 import { Routes } from "shared/routes";
 import { GetProfileQuery } from "../../../../features/profile/queries/getProfile.query.generated";
 import Button from "../../../../shared/ui/Button";
@@ -36,8 +37,8 @@ const UserNavigation = ({ logout, user }: Props) => {
       <div>
         <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
           <span className="sr-only">Open user menu</span>
-
-          <UserIcon className="h-10 w-10 rounded-full bg-white p-2" />
+          <UserAvatar className="h-10 w-10 rounded-full bg-white" />
+          {/* <UserIcon className="h-10 w-10 rounded-full bg-white p-2" /> */}
         </Menu.Button>
       </div>
       <Transition

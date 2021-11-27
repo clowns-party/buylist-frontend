@@ -13,7 +13,12 @@ const UserInfo = ({
   return (
     <div className="flex items-center px-5">
       <div className="flex-shrink-0">
-        <UserIcon className="h-10 w-10 rounded-full bg-white p-2" />
+        <img
+          className="h-10 w-10 rounded-full bg-white p-2"
+          src="https://tailwind-css-components.appseed.us/placeholders/pictures/male_avatar.svg"
+          alt=""
+        />
+        {/* <UserIcon className="h-10 w-10 rounded-full bg-white p-2" /> */}
       </div>
       <div className="ml-3">
         <div className="text-base font-medium leading-none text-white">
