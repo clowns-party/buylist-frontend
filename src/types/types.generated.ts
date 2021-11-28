@@ -87,7 +87,6 @@ export type Invite = {
 export enum InviteStatuses {
   Accepted = "ACCEPTED",
   Expectation = "EXPECTATION",
-  Rejected = "REJECTED",
 }
 
 export type Member = {

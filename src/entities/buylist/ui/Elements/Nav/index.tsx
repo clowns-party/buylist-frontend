@@ -1,21 +1,15 @@
-import { DotsHorizontalIcon } from "@heroicons/react/outline";
 import { BuylistProps } from "entities/buylist/lib/buylist.types";
-import { useDeleteBuylist } from "features/buylist-delete/hooks";
 import { InviteUser } from "features/buylist-invite/ui";
 import { FC } from "react";
-import { Dropdown } from "shared/ui";
+import BuylistActions from "features/buylist-actions/ui";
 
-type Props = Pick<BuylistProps["buylist"], "name" | "owner" | "id"> &
+export type BuylistNavProps = Pick<
+  BuylistProps["buylist"],
+  "name" | "owner" | "id"
+> &
   Pick<BuylistProps, "editable">;
 
-const Nav: FC<Props> = ({ owner, editable, id, name = false }) => {
-  const { onDelete: actionDelete, loading } = useDeleteBuylist();
-  const onDelete = async () => {
-    if (!editable || loading || !id) {
-      return;
-    }
-    await actionDelete(id);
-  };
+const Nav: FC<BuylistNavProps> = ({ owner, editable, id, name = false }) => {
   return (
     <div className="flex w-full justify-between px-1 text-center items-center">
       <div className="p-2 flex">
@@ -55,21 +49,8 @@ const Nav: FC<Props> = ({ owner, editable, id, name = false }) => {
             />
           </svg>
         </div>
-
         <InviteUser />
-
-        <Dropdown
-          items={[{ title: "delete" }]}
-          onSelect={async (title) => {
-            if (title === "delete") {
-              // await onDelete();
-            }
-          }}
-        >
-          <div className="p-2 rounded ml-2 hover:bg-blue-100 text-gray-700">
-            <DotsHorizontalIcon className="h-5 w-5 " />
-          </div>
-        </Dropdown>
+        <BuylistActions owner={owner} editable={editable} id={id} />
       </div>
     </div>
   );

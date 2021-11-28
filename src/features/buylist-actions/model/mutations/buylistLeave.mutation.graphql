@@ -1,0 +1,3 @@
+mutation leave($buylistId: Int!) {
+  leave(id: $buylistId)
+}
