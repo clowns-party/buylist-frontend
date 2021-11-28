@@ -1,22 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
-/* This example requires Tailwind CSS v2.0+ */
 import { Disclosure, Menu } from "@headlessui/react";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import { useInvites } from "entities/invites/hooks/useInvites";
-import { useUserInvitesQuery } from "entities/invites/model/queries/userInvites.query.generated";
-import { useEffect } from "react";
+import { Routes } from "shared/routes";
 import { useAuth } from "../../../features/auth/lib/hooks/useAuth";
 import InviteList from "../../invites/ui/InviteList";
 import UserInfo from "./UserInfo";
 import UserNavigation from "./UserNavigation";
+import Link from "next/link";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Reports", href: "#", current: false },
+  { name: "Main", href: Routes.home, current: true },
+  { name: "Create buylist", href: Routes.createBuylist, current: false },
+  { name: "Profile", href: Routes.profile, current: false },
 ];
 
 export default function Header() {
@@ -24,7 +21,7 @@ export default function Header() {
   const { logout, user } = useAuth();
   return (
     <>
-      <div className="min-h-full">
+      <div className="fixed top-0 w-full z-50">
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
             <>
@@ -41,19 +38,20 @@ export default function Header() {
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
-                          <a
-                            key={item.name}
-                            href={item.href}
-                            className={classNames(
-                              item.current
-                                ? "bg-gray-900 text-white"
-                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                              "px-3 py-2 rounded-md text-sm font-medium"
-                            )}
-                            aria-current={item.current ? "page" : undefined}
-                          >
-                            {item.name}
-                          </a>
+                          <Link key={item.name} href={item.href}>
+                            <a
+                              href={item.href}
+                              className={classNames(
+                                item.current
+                                  ? "bg-gray-900 text-white"
+                                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                "px-3 py-2 rounded-md text-sm font-medium"
+                              )}
+                              aria-current={item.current ? "page" : undefined}
+                            >
+                              {item.name}
+                            </a>
+                          </Link>
                         ))}
                       </div>
                     </div>
@@ -121,6 +119,7 @@ export default function Header() {
           )}
         </Disclosure>
       </div>
+      <div className="mb-16"></div>
     </>
   );
 }

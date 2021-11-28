@@ -1,20 +1,34 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useAuth } from "features/auth/lib/hooks/useAuth";
+import { useMemo } from "react";
 import Link from "next/link";
 import React from "react";
+import { useStoreMyBuylists } from "widgets/buylists-my/model/store";
 import { EmptyList } from "..";
 import { useGetMyBuylistsQuery } from "../../model/index";
 
 export default function MyBuylists() {
+  const search = useStoreMyBuylists((state) => state.search);
   const { user } = useAuth();
 
   const { data, error } = useGetMyBuylistsQuery({
     skip: !user,
   });
   const buylists = data?.myBuylists;
+  const myBuylists = useMemo(
+    () =>
+      search?.length
+        ? buylists?.filter(
+            (el) => el?.name?.toLowerCase()?.indexOf(search?.toLowerCase()) > -1
+          )
+        : buylists,
+    [search, buylists]
+  );
 
   if (!buylists?.length) {
     return <EmptyList />;
   }
+
   return (
     <>
       <div className="flex justify-between items-center mb-4">
@@ -53,7 +67,7 @@ export default function MyBuylists() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {buylists.map((buylist) => (
+                  {myBuylists?.map((buylist) => (
                     <tr key={buylist.id}>
                       <Link href={`buylist/${buylist.id}`}>
                         <a href={`buylist/${buylist.id}`} className="contents">
@@ -100,6 +114,7 @@ export default function MyBuylists() {
 }
 
 MyBuylists.Filters = () => {
+  const setSearch = useStoreMyBuylists((state) => state.setSearch);
   return (
     <div className="text-end">
       <div className="flex flex-col md:flex-row w-3/4 md:w-full max-w-sm md:space-x-3 space-y-3 md:space-y-0 justify-center">
@@ -109,6 +124,9 @@ MyBuylists.Filters = () => {
             id='"form-subscribe-Filter'
             className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
             placeholder="name"
+            onChange={({ target }) => {
+              setSearch(target.value);
+            }}
           />
         </div>
         <EmptyList.CreateNow />

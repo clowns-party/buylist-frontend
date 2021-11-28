@@ -1,12 +1,12 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { UserIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
-import Link from "next/link";
+import { useAuth } from "features/auth/lib/hooks/useAuth";
 import React, { Fragment } from "react";
 import { UserAvatar } from "shared/icons";
 import { Routes } from "shared/routes";
 import { GetProfileQuery } from "../../../../features/profile/queries/getProfile.query.generated";
 import Button from "../../../../shared/ui/Button";
+import Link from "next/link";
 
 interface Props {
   logout: () => void;
@@ -15,19 +15,19 @@ interface Props {
 
 const makeUserLinks = (logout: Props["logout"]) => {
   return [
-    { name: "Your Profile", href: "/profile" },
-    { name: "Settings", href: "#" },
-    { name: "Sign out", href: "#", fn: logout },
+    { name: "Your Profile", href: Routes.profile },
+    { name: "Sign out", href: Routes.signin, fn: logout },
   ];
 };
 
 const UserNavigation = ({ logout, user }: Props) => {
+  const { loading } = useAuth();
   const userNavigation = makeUserLinks(logout);
   if (!user) {
     return (
       <Link href={Routes.signin}>
         <a href={Routes.signin}>
-          <Button>Sign in</Button>
+          <Button disabled={loading}>Sign in</Button>
         </a>
       </Link>
     );
@@ -54,20 +54,22 @@ const UserNavigation = ({ logout, user }: Props) => {
           {userNavigation.map((item) => (
             <Menu.Item key={item.name}>
               {({ active }) => (
-                <a
-                  href={item.href}
-                  onClick={() => {
-                    if (item?.fn) {
-                      item.fn();
-                    }
-                  }}
-                  className={classNames(
-                    active ? "bg-gray-100" : "",
-                    "block px-4 py-2 text-sm text-gray-700"
-                  )}
-                >
-                  {item.name}
-                </a>
+                <Link href={item.href}>
+                  <a
+                    href={item.href}
+                    onClick={() => {
+                      if (item?.fn) {
+                        item.fn();
+                      }
+                    }}
+                    className={classNames(
+                      active ? "bg-gray-100" : "",
+                      "block px-4 py-2 text-sm text-gray-700"
+                    )}
+                  >
+                    {item.name}
+                  </a>
+                </Link>
               )}
             </Menu.Item>
           ))}

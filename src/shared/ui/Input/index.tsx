@@ -39,7 +39,7 @@ function Input({ error, loading, ...props }: InputProps) {
 // Sub components
 Input.ErrorLabel = ({ error }: { error: string }) => {
   return (
-    <p className="absolute text-left text-sm text-red-500 h-full w-full" style={{ top: 50 }}>
+    <p className="absolute text-left text-sm text-red-500 h-full w-full" style={{ top: 43 }}>
       {error}
     </p>
   );
