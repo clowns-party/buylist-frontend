@@ -1,34 +1,92 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <img src="https://avatars.githubusercontent.com/u/71570015?s=200&v=4" alt="Logo" width="150" height="150" />
+</p>
+<h1 align="center">@itparty/buylist</h1>
+<p align="center">
+<img src="https://img.shields.io/badge/contributors-2-red"/>
+<img src="https://img.shields.io/badge/packages-1-blue"/>
+<img src="https://img.shields.io/badge/release-v0.0-blue"/>
+<img src="https://img.shields.io/badge/typescript-4.2.4-blue"/>
+<img src="https://img.shields.io/badge/next-10.1.3-blue"/>
+<img src="https://img.shields.io/badge/graphql-15.6.1-blue"/>
+<img src="https://img.shields.io/badge/apollo-client-3.4.16-blue"/>
+	</p>
 
-## Getting Started
+<p align="center">
+  <b>The pet project is like a website with a database of anime series and   <br/>
+  movies, with the ability to add a user to the list.</b>
+  <br/>
+  <sub>
+  The basis of the database was to take the <code>anime-offline-database.json</code> from manami-project. This repository is   <br/>
+ released as a frontend part of the project.<sub>
+</p>
+<br/>
 
-First, run the development server:
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<br/>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ➤ Links
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+[![production](https://img.shields.io/badge/production-v1-blue)](https://buylist-client.herokuapp.com/)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+<br/>
 
-To learn more about Next.js, take a look at the following resources:
+## ➤ Launch
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. Requirements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+To run project, you need to install Git, Node.js (version >= 14), and Yarn package manager.
 
-## Deploy on Vercel
+- Git can be installed from the official site: https://git-scm.com/downloads
+- Node.js can be installed from the official site: https://nodejs.org
+- After Node.js is installed, you can run the following command in the console to install Yarn:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`$ npm install --global yarn `
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 2. Clone project
+
+Go to the directory where your projects are stored, and run the following command to clone the project code.
+
+`$ git clone https://github.com/clowns-party/animeover-frontend.git `
+
+### 3. Install project dependencies
+
+Now, go to alium-frontend project folder, and execute in the console:
+
+`$ yarn install `
+
+### 4. Start local development mode
+
+Being in the project directory, execute in the console:
+
+`$ yarn dev `
+
+<br/>
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
+
+## ➤ Features
+- Search
+- Step-by-step creation a buylist
+- Edit buylist
+- User buylists
+- Authorization
+- Share your buylist
+- Invite to buylist
+
+<br/>
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
+
+
+## ➤ Contributors
+
+
+| [<img alt="sieugene" src="https://avatars.githubusercontent.com/u/37626545?v=4" width="100">](https://sieugene.vercel.app) | [<img alt="dLebrov" src="https://avatars.githubusercontent.com/u/51052818?v=4" width="100">](https://github.com/dLebrov) |
+|:--------------------------------------------------:|:--------------------------------------------------:|
+| [Sieugene](https://sieugene.vercel.app) | [dLebrov](https://github.com/dLebrov) |
+
