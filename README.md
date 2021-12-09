@@ -9,7 +9,7 @@
 <img src="https://img.shields.io/badge/typescript-4.2.4-blue"/>
 <img src="https://img.shields.io/badge/next-10.1.3-blue"/>
 <img src="https://img.shields.io/badge/graphql-15.6.1-blue"/>
-<img src="https://img.shields.io/badge/apollo-client-3.4.16-blue"/>
+<img src="https://img.shields.io/badge/apollo/client-3.4.16-blue"/>
 	</p>
 
 <p align="center">
