@@ -117,7 +117,7 @@ MyBuylists.Filters = () => {
   const setSearch = useStoreMyBuylists((state) => state.setSearch);
   return (
     <div className="text-end">
-      <div className="flex flex-col md:flex-row w-3/4 md:w-full max-w-sm md:space-x-3 space-y-3 md:space-y-0 justify-center">
+      <div className="flex flex-col md:flex-row md:w-full max-w-sm md:space-x-3 space-y-3 md:space-y-0 justify-center items-end">
         <div className=" relative ">
           <input
             type="text"

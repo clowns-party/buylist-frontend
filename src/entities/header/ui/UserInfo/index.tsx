@@ -1,5 +1,6 @@
 import { Menu } from "@headlessui/react";
 import { BellIcon, UserIcon } from "@heroicons/react/outline";
+import { UserAvatar } from "shared/icons";
 import { GetProfileQuery } from "../../../../features/profile/queries/getProfile.query.generated";
 
 const UserInfo = ({
@@ -13,12 +14,7 @@ const UserInfo = ({
   return (
     <div className="flex items-center px-5">
       <div className="flex-shrink-0">
-        <img
-          className="h-10 w-10 rounded-full bg-white p-2"
-          src="https://tailwind-css-components.appseed.us/placeholders/pictures/male_avatar.svg"
-          alt=""
-        />
-        {/* <UserIcon className="h-10 w-10 rounded-full bg-white p-2" /> */}
+        <UserAvatar className="h-10 w-10 rounded-full bg-white" />
       </div>
       <div className="ml-3">
         <div className="text-base font-medium leading-none text-white">
