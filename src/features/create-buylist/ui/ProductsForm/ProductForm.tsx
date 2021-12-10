@@ -6,24 +6,31 @@ import { FC } from "react";
 import { useEffect } from "react";
 import { ColorPicker, Input } from "shared/ui";
 
+export type ProductFormT = Product | ProductFields;
+
 type Props = {
-  product: Product | ProductFields;
-  onSubmit: (values: Product | ProductFields) => void;
+  product: ProductFormT;
+  onSubmit: (values: ProductFormT) => void;
+  onValidate?: (hasErors: boolean, errors?: Partial<ProductFormT>) => void;
 };
 
-const ProductForm: FC<Props> = ({ product, onSubmit }) => {
+const ProductForm: FC<Props> = ({ product, onSubmit, onValidate }) => {
   return (
     <Formik
+      validateOnMount
       enableReinitialize
       initialValues={product}
       validate={(values) => {
-        const errors: Partial<typeof values> = {};
+        const errors: Partial<ProductFormT> = {};
         if (values.name?.length < 5) {
           errors.name = "The name must be more than 5 characters";
         }
         if (!values.comment) {
           errors.comment = "Fill in the field";
         }
+        const hasErrors = Object.values(errors).some((error) => !!error);
+        onValidate?.(hasErrors, errors);
+
         return errors;
       }}
       onSubmit={onSubmit}
@@ -112,6 +119,7 @@ const ProductForm: FC<Props> = ({ product, onSubmit }) => {
             <div className="flex flex-col mb-5">
               <label className="leading-loose">Address</label>
               <SearchGeo
+                coordinate={values.coordinate}
                 changeGeo={(geo) => {
                   setFieldValue("coordinate", geo);
                 }}

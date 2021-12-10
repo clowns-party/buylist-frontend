@@ -12,12 +12,6 @@ const Details = ({ buylist, editable }: BuylistProps) => {
               Owner
             </div>
             <div className="flex px-2 py-2 hover:bg-gray-200">
-              <img
-                className="w-6 h-6 rounded-full"
-                src="https://media-exp1.licdn.com/dms/image/C4E03AQH1yPpzWPPbwA/profile-displayphoto-shrink_100_100/0/1597572102197?e=1616630400&v=beta&t=bKny37OM7-qwl1IyJQNjKOj7wSeBmDE8ScYAto5Ul3s"
-                alt=""
-              />
-
               <div className="font-normal text-gray-700 ml-3 text-xs">
                 {buylist?.owner?.firstName}
                 {buylist?.owner?.lastName}
@@ -29,11 +23,6 @@ const Details = ({ buylist, editable }: BuylistProps) => {
               Members
             </div>
             <div className="flex px-2 py-2 hover:bg-gray-200">
-              <img
-                className="w-6 h-6 rounded-full"
-                src="https://media-exp1.licdn.com/dms/image/C4E35AQFvDRbBk0Ousw/profile-framedphoto-shrink_400_400/0/1610941682185?e=1611381600&v=beta&t=W-wz9MDSoHzY8ApKoSKoSCW41lsP98UqsvjtitjBnQ4"
-                alt=""
-              />
               <div className="font-normal text-gray-700 ml-3 text-xs">
                 {buylist?.members?.length}
               </div>

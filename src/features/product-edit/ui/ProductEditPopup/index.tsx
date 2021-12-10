@@ -13,6 +13,7 @@ const ProductEditPopup: FC<Props> = ({ isOpen, closeModal, product }) => {
   const { query } = useRouter();
   const [form, setForm] = useState(product);
   const { edit, loading } = useProductEdit();
+  const [hasErrors, setHasErrors] = useState(false);
 
   const id = Number(query?.id?.toString());
 
@@ -25,11 +26,14 @@ const ProductEditPopup: FC<Props> = ({ isOpen, closeModal, product }) => {
     await edit(form, id);
     closeModal();
   };
+  const onValidate = (hasErrors: boolean) => {
+    setHasErrors(hasErrors);
+  };
 
   return (
     <Modal isOpen={isOpen} closeModal={!loading ? closeModal : () => {}}>
-      <ProductForm product={form} onSubmit={onChange} />
-      <Button onClick={onSubmit} loading={loading}>
+      <ProductForm product={form} onSubmit={onChange} onValidate={onValidate} />
+      <Button onClick={onSubmit} loading={loading} disabled={hasErrors}>
         Submit
       </Button>
     </Modal>

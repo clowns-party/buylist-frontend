@@ -9,16 +9,31 @@ import InviteList from "../../invites/ui/InviteList";
 import UserInfo from "./UserInfo";
 import UserNavigation from "./UserNavigation";
 import Link from "next/link";
-
-const navigation = [
-  { name: "Main", href: Routes.home, current: true },
-  { name: "Create buylist", href: Routes.createBuylist, current: false },
-  { name: "Profile", href: Routes.profile, current: false },
-];
+import { useRouter } from "next/router";
 
 export default function Header() {
   const { invites, acceptInvite, declineInvite } = useInvites();
   const { logout, user } = useAuth();
+  const { pathname } = useRouter();
+  let navigation = [
+    { name: "Main", href: Routes.home, current: pathname === Routes.home },
+  ];
+  if (user) {
+    navigation = [
+      ...navigation,
+      {
+        name: "Create buylist",
+        href: Routes.createBuylist,
+        current: pathname.includes(Routes.createBuylist),
+      },
+      {
+        name: "Profile",
+        href: Routes.profile,
+        current: pathname.includes(Routes.profile),
+      },
+    ];
+  }
+
   return (
     <>
       <div className="fixed top-0 w-full z-50">

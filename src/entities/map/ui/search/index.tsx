@@ -1,28 +1,30 @@
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import { LngLatLike } from "mapbox-gl";
+import { geocoderAPI } from "entities/map/model";
 import { FC, useEffect, useRef, useState } from "react";
 import { Input } from "shared/ui";
 import styled from "styled-components";
+import { Maybe } from "types/types.generated";
 
 type Props = {
   changeGeo?: (value: string[]) => void;
+  coordinate?: Maybe<string[]> | undefined;
 };
-const SearchGeo: FC<Props> = ({ changeGeo }) => {
+const SearchGeo: FC<Props> = ({ changeGeo, coordinate }) => {
   const input = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<MapboxGeocoder | null>(null);
 
   useEffect(() => {
-    if (!map && input.current) {
+    if (!map && input?.current?.id) {
       const geocoder = new MapboxGeocoder({
         accessToken: process.env.MAPBOX_ACCESS as string,
         // types: "country,region,place,postcode,locality,neighborhood",
       });
 
-      geocoder.addTo(`#${input.current.id}`);
+      geocoder?.addTo(`#${input.current.id}`);
 
       // Add geocoder result to container.
-      geocoder.on("result", (event) => {
+      geocoder?.on("result", (event) => {
         const position = event.result.center?.map(
           (geo: number) => `${geo}`
         ) as string[];
@@ -30,7 +32,7 @@ const SearchGeo: FC<Props> = ({ changeGeo }) => {
       });
 
       // Clear results container when search is cleared.
-      geocoder.on("clear", () => {
+      geocoder?.on("clear", () => {
         // ?
       });
 
@@ -41,6 +43,13 @@ const SearchGeo: FC<Props> = ({ changeGeo }) => {
       searchElement.className = Input.VariantClasses.Base;
 
       setMap(geocoder);
+
+      (async () => {
+        if (coordinate?.length) {
+          const result = await geocoderAPI.getByCoordinates(coordinate);
+          geocoder.setInput(result);
+        }
+      })();
     }
   }, []);
 

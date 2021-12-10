@@ -30,7 +30,7 @@ export const initialProduct: ProductFields = {
   id: 0,
   comment: "",
   price: 0,
-  buyBefore: "",
+  buyBefore: null,
   color: "indigo-500",
   coordinate: undefined,
   link: "",
